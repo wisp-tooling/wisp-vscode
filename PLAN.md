@@ -90,11 +90,13 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Next sprint
 
 - Sprint: surround and match foundation
-  - [ ] Define MVP surround/match command subset.
-  - [ ] Implement pure core helpers where practical.
-  - [ ] Delegate or adapter-handle VS Code-specific behavior only when needed.
-  - [ ] Add fixture/unit coverage.
-  - [ ] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
+  - [x] Define MVP surround/match command subset: `mm`, `ms<char>`.
+  - [x] Implement pure core helpers where practical.
+  - [x] Delegate or adapter-handle VS Code-specific behavior only when needed.
+  - [x] Add fixture/unit coverage.
+  - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
+  - [ ] Local-test in Extension Development Host.
+  - [ ] Doc sync before closing sprint.
 
 ## Backlog
 

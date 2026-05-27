@@ -1,0 +1,42 @@
+[
+  {
+    "name": "ms paren surrounds selection",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 5 }],
+    "keys": ["m", "s", "("],
+    "want": { "text": "(hello) world\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 7 }] }
+  },
+  {
+    "name": "ms closing paren surrounds selection with pair",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 6, "head": 11 }],
+    "keys": ["m", "s", ")"],
+    "want": { "text": "hello (world)\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 13 }] }
+  },
+  {
+    "name": "ms quote surrounds selection",
+    "text": "hello\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 5 }],
+    "keys": ["m", "s", "'"],
+    "want": { "text": "'hello'\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 7 }] }
+  },
+  {
+    "name": "mm jumps from opening bracket to closing bracket",
+    "text": "a(b)c\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["m", "m"],
+    "want": { "text": "a(b)c\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 3 }] }
+  },
+  {
+    "name": "mm jumps from closing bracket to opening bracket",
+    "text": "a(b)c\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 3, "head": 3 }],
+    "keys": ["m", "m"],
+    "want": { "text": "a(b)c\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  }
+]

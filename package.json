@@ -36,6 +36,12 @@
     ],
     "keybindings": [
       {
+        "key": "'",
+        "command": "wisp-vscode.key",
+        "args": "'",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "[",
         "command": "wisp-vscode.key",
         "args": "[",
@@ -51,6 +57,12 @@
         "key": "/",
         "command": "wisp-vscode.key",
         "args": "/",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "`",
+        "command": "wisp-vscode.key",
+        "args": "`",
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
@@ -197,6 +209,12 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "m",
+        "command": "wisp-vscode.key",
+        "args": "m",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "n",
         "command": "wisp-vscode.key",
         "args": "n",
@@ -221,15 +239,51 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "shift+,",
+        "command": "wisp-vscode.key",
+        "args": "<",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+.",
+        "command": "wisp-vscode.key",
+        "args": ">",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+[",
+        "command": "wisp-vscode.key",
+        "args": "{",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+]",
+        "command": "wisp-vscode.key",
+        "args": "}",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "shift+/",
         "command": "wisp-vscode.key",
         "args": "?",
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "shift+0",
+        "command": "wisp-vscode.key",
+        "args": ")",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "shift+5",
         "command": "wisp-vscode.key",
         "args": "%",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+9",
+        "command": "wisp-vscode.key",
+        "args": "(",
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {

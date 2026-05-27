@@ -1,5 +1,6 @@
 import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
+import { gotoMatchingBracket, surroundSelections } from './surround.js'
 import type { DelegateCommand, DispatchResult, EditorState } from './types.js'
 
 function withMode(state: EditorState, mode: EditorState['mode']): EditorState {
@@ -123,6 +124,12 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: gotoLineEnd(commandState) }
     case 'g s':
       return { kind: 'state', state: gotoFirstNonWhitespace(commandState) }
+    case 'm m':
+      return { kind: 'state', state: gotoMatchingBracket(commandState) }
+  }
+
+  if (pending.length === 2 && pending[0] === 'm' && pending[1] === 's') {
+    return { kind: 'state', state: surroundSelections(commandState, key) }
   }
 
   const delegate = delegates[seq]
@@ -132,6 +139,10 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
 
   if (['g', 'space', '[', ']', 'z', 'm'].includes(seq)) {
     return { kind: 'state', state: { ...state, pending: [key] } }
+  }
+
+  if (seq === 'm s') {
+    return { kind: 'state', state: { ...state, pending: ['m', 's'] } }
   }
 
   return { kind: 'state', state: { ...withCountCleared(state), pending: undefined } }
