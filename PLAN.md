@@ -96,12 +96,13 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Current sprint
 
 - Sprint: search motion foundation
-  - [x] Delegate `/`, `?`, `n`, `N` to VS Code find actions.
+  - [x] Implement shared extension search state for `/`, `?`, `*`, `n`, `N`.
   - [x] Add `*` search from current selection/word.
   - [x] Add `s` select matches inside current selections via input box.
+  - [x] Add `,` collapse-to-primary selection support.
   - [x] Add delegate/keybinding coverage.
   - [ ] Local-test in Extension Development Host.
-  - [ ] Doc sync before closing sprint.
+  - [x] Doc sync before closing sprint.
 
 ## Recently completed sprint
 

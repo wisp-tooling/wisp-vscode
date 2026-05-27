@@ -10,6 +10,7 @@ let pending: string[] | undefined
 let count: number | undefined
 let status: vscode.StatusBarItem | undefined
 let prefixPicker: vscode.QuickPick<PrefixPickItem> | undefined
+let lastSearchQuery: string | undefined
 
 type PrefixPickItem = vscode.QuickPickItem & { key: string }
 
@@ -71,6 +72,14 @@ async function handleKey(key: string): Promise<void> {
       await navigateDiagnosticExtreme(editor, result.command === 'diagnostic.first' ? 'first' : 'last')
       return
     }
+    if (result.command === 'find.open' || result.command === 'find.prevOpen') {
+      await promptSearch(editor, result.command === 'find.prevOpen' ? -1 : 1)
+      return
+    }
+    if (result.command === 'find.next' || result.command === 'find.prev') {
+      await repeatSearch(editor, result.command === 'find.prev' ? -1 : 1)
+      return
+    }
     if (result.command === 'search.selection') {
       await searchSelection(editor)
       return
@@ -80,7 +89,6 @@ async function handleKey(key: string): Promise<void> {
       return
     }
     await vscode.commands.executeCommand(delegateCommands[result.command])
-    if (result.command === 'find.prevOpen') await vscode.commands.executeCommand(delegateCommands['find.prev'])
   }
 }
 
@@ -195,10 +203,32 @@ async function navigateDiagnosticExtreme(editor: vscode.TextEditor, which: 'firs
   editor.revealRange(target.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }
 
+async function promptSearch(editor: vscode.TextEditor, direction: -1 | 1): Promise<void> {
+  const options: vscode.InputBoxOptions = { prompt: direction > 0 ? 'Search forward' : 'Search backward' }
+  if (lastSearchQuery !== undefined) options.value = lastSearchQuery
+  const query = await vscode.window.showInputBox(options)
+  if (!query) return
+  lastSearchQuery = query
+  selectSearchMatch(editor, query, direction)
+}
+
+async function repeatSearch(editor: vscode.TextEditor, direction: -1 | 1): Promise<void> {
+  if (!lastSearchQuery) {
+    await vscode.commands.executeCommand(direction > 0 ? delegateCommands['find.next'] : delegateCommands['find.prev'])
+    return
+  }
+  selectSearchMatch(editor, lastSearchQuery, direction)
+}
+
 async function searchSelection(editor: vscode.TextEditor): Promise<void> {
-  const selected = editor.document.getText(editor.selection)
-  if (selected.length === 0) await selectWordUnderCursor(editor)
-  await vscode.commands.executeCommand(delegateCommands['search.selection'])
+  let selected = editor.document.getText(editor.selection)
+  if (selected.length === 0) {
+    await selectWordUnderCursor(editor)
+    selected = editor.document.getText(editor.selection)
+  }
+  if (selected.length === 0) return
+  lastSearchQuery = selected
+  selectSearchMatch(editor, selected, 1, editor.document.offsetAt(editor.selection.start))
 }
 
 async function selectWordUnderCursor(editor: vscode.TextEditor): Promise<void> {
@@ -239,6 +269,34 @@ function createMatcher(query: string): Matcher {
     return { kind: 'regex', value: new RegExp(query.slice(1, -1), 'gu') }
   }
   return { kind: 'literal', value: query }
+}
+
+function selectSearchMatch(editor: vscode.TextEditor, query: string, direction: -1 | 1, explicitStart?: number): void {
+  const text = editor.document.getText()
+  const matcher = createMatcher(query)
+  const matches = findMatches(text, matcher)
+  if (matches.length === 0) {
+    void vscode.window.setStatusBarMessage(`No matches: ${query}`, 1500)
+    return
+  }
+
+  const active = explicitStart ?? editor.document.offsetAt(editor.selection.active)
+  const found = direction > 0
+    ? (matches.find((match) => match.start > active) ?? matches[0]!)
+    : (findLastMatchBefore(matches, active) ?? matches[matches.length - 1]!)
+  const start = editor.document.positionAt(found.start)
+  const end = editor.document.positionAt(found.end)
+  editor.selection = new vscode.Selection(start, end)
+  editor.selections = [editor.selection]
+  editor.revealRange(editor.selection, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+}
+
+function findLastMatchBefore(matches: Array<{ start: number; end: number }>, offset: number): { start: number; end: number } | undefined {
+  for (let i = matches.length - 1; i >= 0; i--) {
+    const match = matches[i]!
+    if (match.end < offset) return match
+  }
+  return undefined
 }
 
 function findMatches(text: string, matcher: Matcher): Array<{ start: number; end: number }> {

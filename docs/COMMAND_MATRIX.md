@@ -38,9 +38,12 @@ Priority table for the VS Code extension.
 | `g w` | jump.visibleWord | Adapter/Core helpers | P1 | Decoration-based visible word jump. |
 | `g d` | lsp.definition | Delegate | P0 | `editor.action.revealDefinition`. |
 | `g r` | lsp.references | Delegate | P1 | VS Code references command. |
-| `/` | search.forward | Delegate | P0 | Open find widget first. |
-| `n` | search.next | Delegate | P1 | Find next. |
-| `N` | search.prev | Delegate | P1 | Find previous. |
+| `/` | search.forward | Adapter | P0 | Prompt and store last query. |
+| `?` | search.backward | Adapter | P1 | Prompt and search backward. |
+| `*` | search.selection | Adapter | P1 | Search current selection/word. |
+| `s` | search.selectInSelections | Adapter | P1 | Select matches inside selections. |
+| `n` | search.next | Adapter | P1 | Next extension search match. |
+| `N` | search.prev | Adapter | P1 | Previous extension search match. |
 | `space f` | file.quickOpen | Delegate | P0 | `workbench.action.quickOpen`. |
 | `space b` | buffer.quickOpen | Delegate | P1 | `workbench.action.showAllEditors`. |
 | `space ?` | command.palette | Delegate | P0 | `workbench.action.showCommands`. |

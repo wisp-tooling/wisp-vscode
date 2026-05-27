@@ -195,13 +195,17 @@ MVP limitations:
 
 ## Search motions
 
-Initial extension can delegate `/`, `n`, `N` to VS Code find actions or implement simple literal search later.
+Current adapter keeps an extension-level last search query so `/`, `?`, `*`, `n`, and `N` share predictable state.
 
-Recommended MVP:
+MVP behavior:
 
-- `/`: open VS Code find widget
-- `n`: next find match
-- `N`: previous find match
+- `/`: prompt for search query and select next match
+- `?`: prompt for search query and select previous match
+- `*`: search using current selection or word under cursor
+- `n`: next match for last query
+- `N`: previous match for last query
+
+Search query input supports literal text and regex form `/pattern/`.
 
 ## Diagnostics motions
 
