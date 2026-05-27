@@ -1,6 +1,6 @@
 import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
-import { gotoMatchingBracket, surroundSelections } from './surround.js'
+import { deleteSurround, gotoMatchingBracket, replaceSurround, selectSurround, surroundSelections } from './surround.js'
 import type { DelegateCommand, DispatchResult, EditorState } from './types.js'
 
 function withMode(state: EditorState, mode: EditorState['mode']): EditorState {
@@ -131,6 +131,18 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
   if (pending.length === 2 && pending[0] === 'm' && pending[1] === 's') {
     return { kind: 'state', state: surroundSelections(commandState, key) }
   }
+  if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'i') {
+    return { kind: 'state', state: selectSurround(commandState, key, false) }
+  }
+  if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'a') {
+    return { kind: 'state', state: selectSurround(commandState, key, true) }
+  }
+  if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'd') {
+    return { kind: 'state', state: deleteSurround(commandState, key) }
+  }
+  if (pending.length === 3 && pending[0] === 'm' && pending[1] === 'r') {
+    return { kind: 'state', state: replaceSurround(commandState, pending[2]!, key) }
+  }
 
   const delegate = delegates[seq]
   if (delegate) {
@@ -141,8 +153,16 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     return { kind: 'state', state: { ...state, pending: [key] } }
   }
 
-  if (seq === 'm s') {
-    return { kind: 'state', state: { ...state, pending: ['m', 's'] } }
+  if (seq === 'm s' || seq === 'm i' || seq === 'm a' || seq === 'm d') {
+    return { kind: 'state', state: { ...state, pending: ['m', key] } }
+  }
+
+  if (seq === 'm r') {
+    return { kind: 'state', state: { ...state, pending: ['m', 'r'] } }
+  }
+
+  if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'r') {
+    return { kind: 'state', state: { ...state, pending: ['m', 'r', key] } }
   }
 
   return { kind: 'state', state: { ...withCountCleared(state), pending: undefined } }

@@ -90,7 +90,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Next sprint
 
 - Sprint: surround and match foundation
-  - [x] Define MVP surround/match command subset: `mm`, `ms<char>`.
+  - [x] Define MVP surround/match command subset: `mm`, `ms<char>`, `mi<char>`, `ma<char>`, `md<char>`, `mr<from><to>`.
   - [x] Implement pure core helpers where practical.
   - [x] Delegate or adapter-handle VS Code-specific behavior only when needed.
   - [x] Add fixture/unit coverage.

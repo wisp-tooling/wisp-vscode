@@ -38,5 +38,37 @@
     "selections": [{ "anchor": 3, "head": 3 }],
     "keys": ["m", "m"],
     "want": { "text": "a(b)c\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "mi selects inside surrounding pair",
+    "text": "a(hello)c\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 4, "head": 4 }],
+    "keys": ["m", "i", "("],
+    "want": { "text": "a(hello)c\n", "mode": "normal", "selections": [{ "anchor": 2, "head": 7 }] }
+  },
+  {
+    "name": "ma selects around surrounding pair",
+    "text": "a(hello)c\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 4, "head": 4 }],
+    "keys": ["m", "a", "("],
+    "want": { "text": "a(hello)c\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 8 }] }
+  },
+  {
+    "name": "md deletes surrounding pair",
+    "text": "a(hello)c\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 4, "head": 4 }],
+    "keys": ["m", "d", "("],
+    "want": { "text": "ahelloc\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "mr replaces surrounding pair",
+    "text": "a(hello)c\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 4, "head": 4 }],
+    "keys": ["m", "r", "(", "["],
+    "want": { "text": "a[hello]c\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
   }
 ]

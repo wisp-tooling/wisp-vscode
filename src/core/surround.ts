@@ -63,6 +63,43 @@ export function gotoMatchingBracket(state: EditorState): EditorState {
   })
 }
 
+export function selectSurround(state: EditorState, delimiter: string, includeDelimiters: boolean): EditorState {
+  const pair = pairs[delimiter]
+  if (!pair) return { ...state, pending: undefined }
+  return normalizeState({
+    ...state,
+    selections: state.selections.map((selection) => {
+      const found = findEnclosingPair(state.text, selection.head, pair)
+      if (!found) return selection
+      return includeDelimiters
+        ? { anchor: found.open, head: found.close + pair.close.length }
+        : { anchor: found.open + pair.open.length, head: found.close }
+    }),
+    pending: undefined,
+  })
+}
+
+export function deleteSurround(state: EditorState, delimiter: string): EditorState {
+  const pair = pairs[delimiter]
+  if (!pair) return { ...state, pending: undefined }
+  const found = findEnclosingPair(state.text, state.selections[state.primary]?.head ?? 0, pair)
+  if (!found) return { ...state, pending: undefined }
+  const text = state.text.slice(0, found.close) + state.text.slice(found.close + pair.close.length)
+  const nextText = text.slice(0, found.open) + text.slice(found.open + pair.open.length)
+  return normalizeState({ ...state, text: nextText, selections: [cursor(found.open)], primary: 0, pending: undefined })
+}
+
+export function replaceSurround(state: EditorState, fromDelimiter: string, toDelimiter: string): EditorState {
+  const from = pairs[fromDelimiter]
+  const to = pairs[toDelimiter]
+  if (!from || !to) return { ...state, pending: undefined }
+  const found = findEnclosingPair(state.text, state.selections[state.primary]?.head ?? 0, from)
+  if (!found) return { ...state, pending: undefined }
+  let text = state.text.slice(0, found.close) + to.close + state.text.slice(found.close + from.close.length)
+  text = text.slice(0, found.open) + to.open + text.slice(found.open + from.open.length)
+  return normalizeState({ ...state, text, selections: [cursor(found.open)], primary: 0, pending: undefined })
+}
+
 function findMatchingBracket(text: string, offset: number): number | undefined {
   const at = text[offset]
   const before = offset > 0 ? text[offset - 1] : undefined
@@ -89,6 +126,21 @@ function findBackward(text: string, offset: number, open: string, close: string)
     if (text[i] === close) depth++
     if (text[i] === open) depth--
     if (depth === 0) return i
+  }
+  return undefined
+}
+
+function findEnclosingPair(text: string, offset: number, pair: Pair): { open: number; close: number } | undefined {
+  if (pair.open === pair.close) {
+    const open = text.lastIndexOf(pair.open, Math.max(0, offset - 1))
+    if (open < 0) return undefined
+    const close = text.indexOf(pair.close, offset)
+    return close < 0 ? undefined : { open, close }
+  }
+  for (let i = Math.min(offset, text.length - 1); i >= 0; i--) {
+    if (text[i] !== pair.open) continue
+    const close = findForward(text, i, pair.open, pair.close)
+    if (close !== undefined && close >= offset) return { open: i, close }
   }
   return undefined
 }
