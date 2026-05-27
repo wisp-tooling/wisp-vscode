@@ -17,6 +17,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `g e` moves to file end.
 - [ ] `g h` / `g l` / `g s` execute correctly without requiring Enter.
 - [ ] Prefix clears after completed command.
+- [ ] Dismissing the prefix QuickPick clears pending prefix state.
 
 ## Core motion behavior spot-check
 

@@ -111,28 +111,38 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
   if (!nextPending || hints.length === 0) return
 
   const picker = vscode.window.createQuickPick<PrefixPickItem>()
+  let dispatched = false
   prefixPicker = picker
   picker.title = nextPending.join(' ')
-  picker.placeholder = 'Select a command or type the next key in the editor after closing this picker.'
+  picker.placeholder = 'Type a listed key to run it immediately, or use arrows and Enter.'
   picker.matchOnDescription = true
   picker.items = hints.map((hint) => ({ label: hint.key, description: hint.label, key: hint.key }))
   picker.onDidChangeValue((value) => {
     const typed = value.trim()
     const matched = picker.items.find((item) => item.key === typed)
     if (!matched) return
+    dispatched = true
     picker.hide()
     void handleKey(matched.key)
   })
   picker.onDidAccept(() => {
     const picked = picker.selectedItems[0]
+    dispatched = true
     picker.hide()
     if (picked) void handleKey(picked.key)
   })
   picker.onDidHide(() => {
     picker.dispose()
     if (prefixPicker === picker) prefixPicker = undefined
+    if (!dispatched && pending) void clearPendingPrefix()
   })
   picker.show()
+}
+
+async function clearPendingPrefix(): Promise<void> {
+  pending = undefined
+  count = undefined
+  await setMode(mode, undefined)
 }
 
 function updateCursorStyle(nextMode: Mode): void {
