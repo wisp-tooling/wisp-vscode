@@ -84,4 +84,4 @@ VS Code implementation options:
 2. quick pick with matching commands,
 3. webview/decorations later.
 
-Current MVP uses status bar hints plus a VS Code QuickPick prefix popup populated from the pure core prefix table. A custom Wisp-style webview/decorated picker remains deferred.
+Current MVP uses status bar hints plus a VS Code QuickPick prefix popup populated from the pure core prefix table. Typing an exact key match while the popup is open dispatches immediately; arrow-key navigation and Enter remain available for discovery. A custom Wisp-style webview/decorated picker remains deferred.

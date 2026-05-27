@@ -116,6 +116,13 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
   picker.placeholder = 'Select a command or type the next key in the editor after closing this picker.'
   picker.matchOnDescription = true
   picker.items = hints.map((hint) => ({ label: hint.key, description: hint.label, key: hint.key }))
+  picker.onDidChangeValue((value) => {
+    const typed = value.trim()
+    const matched = picker.items.find((item) => item.key === typed)
+    if (!matched) return
+    picker.hide()
+    void handleKey(matched.key)
+  })
   picker.onDidAccept(() => {
     const picked = picker.selectedItems[0]
     picker.hide()
