@@ -3,7 +3,7 @@ import { prefixHints } from '../src/core/prefixes.js'
 
 describe('prefix hints', () => {
   test('g prefix exposes ordered goto commands', () => {
-    expect(prefixHints(['g']).map((hint) => hint.key)).toEqual(['g', 'e', 'h', 'l', 's', 'd', 'r'])
+    expect(prefixHints(['g']).map((hint) => hint.key)).toEqual(['g', 'e', 'h', 'l', 's', 'd', 'r', 'w'])
   })
 
   test('space prefix exposes command palette', () => {

@@ -12,6 +12,7 @@ const hints: Record<string, PrefixHint[]> = {
     { key: 's', label: 'go to first non-whitespace' },
     { key: 'd', label: 'go to definition' },
     { key: 'r', label: 'go to references' },
+    { key: 'w', label: 'visible word jump' },
   ],
   space: [
     { key: 'f', label: 'quick open' },

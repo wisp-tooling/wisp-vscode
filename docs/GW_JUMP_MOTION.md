@@ -306,7 +306,7 @@ For multiple selections, MVP can update only the primary VS Code selection. Late
 
 Flow:
 
-1. user presses `g`, core/extension enters pending prefix state,
+1. user presses `g`, core/extension enters pending prefix state and prefix UI includes `w`,
 2. user presses `w`, extension starts jump session,
 3. next two key presses are consumed as jump label input,
 4. session ends.
