@@ -158,6 +158,13 @@ Surround each current selection with the delimiter pair. Supported delimiters:
 
 Select inside or around the nearest enclosing delimiter pair.
 
+Supported textobjects:
+
+- `miw` / `maw`: word inside/around
+- `miW` / `maW`: WORD inside/around
+- `mip` / `map`: paragraph inside/around
+- `miP` / `maP`: paragraph inside/around, equivalent to `p` for MVP
+
 ### `m d <char>` / `m r <from><to>`
 
 Delete or replace the nearest enclosing delimiter pair around the primary selection.
@@ -166,7 +173,8 @@ MVP limitations:
 
 - `ms<char>` supports multiple selections.
 - `mi`, `ma`, `md`, and `mr` currently focus on nearest pair behavior and primary-edit behavior for delete/replace.
-- Tree-sitter-aware matching is deferred.
+- Word, WORD, and paragraph textobjects are implemented without tree-sitter.
+- Tree-sitter-aware matching/textobjects are deferred.
 
 ## Page motions
 

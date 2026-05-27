@@ -57,6 +57,9 @@ Priority table for the VS Code extension.
 | `m a <char>` | surround.selectAround | Core | P1 | Select around nearest surrounding pair. |
 | `m d <char>` | surround.delete | Core | P1 | Delete nearest surrounding pair. |
 | `m r <from><to>` | surround.replace | Core | P1 | Replace nearest surrounding pair. |
+| `m i w` / `m a w` | textobject.word | Core | P1 | Select inside/around word. |
+| `m i W` / `m a W` | textobject.WORD | Core | P1 | Select inside/around WORD. |
+| `m i p` / `m a p` | textobject.paragraph | Core | P1 | Select inside/around paragraph. |
 | `z f` | fold.close | Delegate | P2 | VS Code fold command. |
 | `z o` | fold.open | Delegate | P2 | VS Code unfold command. |
 | `ctrl-u` | page.up | Delegate | P1 | VS Code `cursorPageUp`. |

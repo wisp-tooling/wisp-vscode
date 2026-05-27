@@ -33,6 +33,9 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `m a (` selects around nearest parentheses.
 - [ ] `m d (` deletes nearest surrounding parentheses.
 - [ ] `m r (` `[` replaces nearest parentheses with square brackets.
+- [ ] `m i w` / `m a w` select inside/around word.
+- [ ] `m i W` / `m a W` select inside/around WORD.
+- [ ] `m i p` / `m a P` select paragraph textobjects.
 
 ## Delegate commands
 
