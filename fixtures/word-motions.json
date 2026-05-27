@@ -24,6 +24,30 @@
     "want": { "text": "hello   \nworld\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 8 }] }
   },
   {
+    "name": "w at newline moves to first word on next line",
+    "text": "hello   \nworld again\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 8 }],
+    "keys": ["w"],
+    "want": { "text": "hello   \nworld again\n", "mode": "normal", "selections": [{ "anchor": 9, "head": 15 }] }
+  },
+  {
+    "name": "e at newline moves to end of first word on next line",
+    "text": "hello\nworld again\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 5 }],
+    "keys": ["e"],
+    "want": { "text": "hello\nworld again\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 11 }] }
+  },
+  {
+    "name": "b at line start moves to previous line word start",
+    "text": "hello world\nagain\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 12, "head": 17 }],
+    "keys": ["b"],
+    "want": { "text": "hello world\nagain\n", "mode": "normal", "selections": [{ "anchor": 12, "head": 6 }] }
+  },
+  {
     "name": "b selects backward to previous word start",
     "text": "hello world\n",
     "mode": "normal",

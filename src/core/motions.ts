@@ -48,9 +48,15 @@ export function moveWordNext(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
     const from = endOf(sel)
     let pos = from
+    let anchor = from
+    if (state.text[pos] === '\n') {
+      pos++
+      while (pos < state.text.length && state.text[pos] !== '\n' && !isWord(state.text[pos])) pos++
+      anchor = pos
+    }
     while (pos < state.text.length && isWord(state.text[pos])) pos++
     while (pos < state.text.length && state.text[pos] !== '\n' && !isWord(state.text[pos])) pos++
-    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor: from, head: pos }
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
   })
 }
 
