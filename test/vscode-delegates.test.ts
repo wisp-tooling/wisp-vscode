@@ -19,6 +19,8 @@ const expected: DelegateCommand[] = [
   'lsp.hover',
   'diagnostic.next',
   'diagnostic.prev',
+  'diagnostic.first',
+  'diagnostic.last',
   'fold.close',
   'fold.open',
 ]

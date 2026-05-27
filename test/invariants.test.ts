@@ -3,11 +3,12 @@ import coreMotions from '../fixtures/core-motions.json' with { type: 'json' }
 import wordMotions from '../fixtures/word-motions.json' with { type: 'json' }
 import edits from '../fixtures/edits.json' with { type: 'json' }
 import edgeCases from '../fixtures/edge-cases.json' with { type: 'json' }
+import counts from '../fixtures/counts.json' with { type: 'json' }
 import { dispatchKey } from '../src/core/commands.js'
 import { endOf, normalizeState, startOf } from '../src/core/selection.js'
 import type { EditorState, ReplayCase } from '../src/core/types.js'
 
-const cases = [...coreMotions, ...wordMotions, ...edits, ...edgeCases] as ReplayCase[]
+const cases = [...coreMotions, ...wordMotions, ...edits, ...edgeCases, ...counts] as ReplayCase[]
 
 function expectInvariants(state: EditorState): void {
   expect(state.selections.length).toBeGreaterThan(0)

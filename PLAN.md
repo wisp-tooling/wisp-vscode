@@ -78,8 +78,8 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
    - Ensure `g r` reference navigation/delegation works reliably.
 
 2. Count support and diagnostics completion
-   - Add count support for documented MVP motions.
-   - Add diagnostics coverage for `[d`, `]d`, `[D`, `]D`.
+   - [x] Add count support for documented MVP motions.
+   - [x] Add diagnostics coverage for `[d`, `]d`, `[D`, `]D`.
 
 3. Text object/operator expansion
    - Implement fuller surround and match behavior.

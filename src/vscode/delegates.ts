@@ -17,6 +17,8 @@ export const delegateCommands: Record<DelegateCommand, string> = {
   'lsp.hover': 'editor.action.showHover',
   'diagnostic.next': 'editor.action.marker.next',
   'diagnostic.prev': 'editor.action.marker.prev',
+  'diagnostic.first': 'editor.action.marker.prev',
+  'diagnostic.last': 'editor.action.marker.next',
   'fold.close': 'editor.fold',
   'fold.open': 'editor.unfold',
 }

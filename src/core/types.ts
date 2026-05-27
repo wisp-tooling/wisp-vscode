@@ -11,6 +11,7 @@ export type EditorState = {
   primary: number
   mode: Mode
   pending?: string[] | undefined
+  count?: number | undefined
   preferredColumns?: Array<number | null> | undefined
 }
 
@@ -31,6 +32,8 @@ export type DelegateCommand =
   | 'lsp.hover'
   | 'diagnostic.next'
   | 'diagnostic.prev'
+  | 'diagnostic.first'
+  | 'diagnostic.last'
   | 'fold.close'
   | 'fold.open'
 
@@ -60,6 +63,7 @@ export function cloneState(state: EditorState): EditorState {
     primary: state.primary,
     mode: state.mode,
     pending: state.pending ? [...state.pending] : undefined,
+    count: state.count,
     preferredColumns: state.preferredColumns ? [...state.preferredColumns] : undefined,
   }
 }

@@ -5,6 +5,7 @@ import { delegateCommands } from './delegates.js'
 
 let mode: Mode = 'normal'
 let pending: string[] | undefined
+let count: number | undefined
 let status: vscode.StatusBarItem | undefined
 
 
@@ -31,11 +32,16 @@ async function handleKey(key: string): Promise<void> {
   const result = dispatch(state, key)
   mode = result.state.mode
   pending = result.state.pending
+  count = result.state.count
 
   await applyState(editor, state, result.state)
   await setMode(result.state.mode, result.state.pending)
 
   if (result.kind === 'delegate') {
+    if (result.command === 'diagnostic.first' || result.command === 'diagnostic.last') {
+      await navigateDiagnosticExtreme(editor, result.command === 'diagnostic.first' ? 'first' : 'last')
+      return
+    }
     await vscode.commands.executeCommand(delegateCommands[result.command])
   }
 }
@@ -48,6 +54,7 @@ function editorToState(editor: vscode.TextEditor): EditorState {
     primary: Math.max(0, editor.selections.findIndex((selection) => selection.isEqual(editor.selection))),
     mode,
     pending,
+    count,
   }
 }
 
@@ -80,4 +87,16 @@ async function setMode(nextMode: Mode, pending?: string[]): Promise<void> {
     status.text = `WISP ${nextMode.toUpperCase()}${prefix}`
     status.show()
   }
+}
+
+async function navigateDiagnosticExtreme(editor: vscode.TextEditor, which: 'first' | 'last'): Promise<void> {
+  const diagnostics = vscode.languages
+    .getDiagnostics(editor.document.uri)
+    .slice()
+    .sort((a, b) => editor.document.offsetAt(a.range.start) - editor.document.offsetAt(b.range.start))
+  if (diagnostics.length === 0) return
+  const target = which === 'first' ? diagnostics[0]! : diagnostics[diagnostics.length - 1]!
+  editor.selection = new vscode.Selection(target.range.start, target.range.end)
+  editor.selections = [editor.selection]
+  editor.revealRange(target.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }

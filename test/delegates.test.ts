@@ -29,6 +29,8 @@ const cases: Array<{ keys: string[]; command: DelegateCommand }> = [
   { keys: ['space', 'h'], command: 'lsp.hover' },
   { keys: [']', 'd'], command: 'diagnostic.next' },
   { keys: ['[', 'd'], command: 'diagnostic.prev' },
+  { keys: [']', 'D'], command: 'diagnostic.last' },
+  { keys: ['[', 'D'], command: 'diagnostic.first' },
   { keys: ['z', 'f'], command: 'fold.close' },
   { keys: ['z', 'o'], command: 'fold.open' },
 ]

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "count repeats right motion",
+    "text": "abcdef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["3", "l"],
+    "want": { "text": "abcdef\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 3 }] }
+  },
+  {
+    "name": "count repeats down motion",
+    "text": "abc\ndef\nghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["2", "j"],
+    "want": { "text": "abc\ndef\nghi\n", "mode": "normal", "selections": [{ "anchor": 9, "head": 9 }] }
+  },
+  {
+    "name": "count repeats word motion",
+    "text": "one two three\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["2", "w"],
+    "want": { "text": "one two three\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 8 }] }
+  },
+  {
+    "name": "multi-digit count repeats left motion",
+    "text": "abcdef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 6, "head": 6 }],
+    "keys": ["1", "0", "h"],
+    "want": { "text": "abcdef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  }
+]

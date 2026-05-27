@@ -54,6 +54,66 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "0",
+        "command": "wisp-vscode.key",
+        "args": "0",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "1",
+        "command": "wisp-vscode.key",
+        "args": "1",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "2",
+        "command": "wisp-vscode.key",
+        "args": "2",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "3",
+        "command": "wisp-vscode.key",
+        "args": "3",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "4",
+        "command": "wisp-vscode.key",
+        "args": "4",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "5",
+        "command": "wisp-vscode.key",
+        "args": "5",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "6",
+        "command": "wisp-vscode.key",
+        "args": "6",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "7",
+        "command": "wisp-vscode.key",
+        "args": "7",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "8",
+        "command": "wisp-vscode.key",
+        "args": "8",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "9",
+        "command": "wisp-vscode.key",
+        "args": "9",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "a",
         "command": "wisp-vscode.key",
         "args": "a",
@@ -176,6 +236,12 @@
         "key": "shift+b",
         "command": "wisp-vscode.key",
         "args": "B",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+d",
+        "command": "wisp-vscode.key",
+        "args": "D",
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
