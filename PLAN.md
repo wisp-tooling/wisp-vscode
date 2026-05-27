@@ -96,14 +96,14 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Current sprint
 
 - Sprint: `g w` visible word jump motion
-  - [ ] Implement pure label generation and visible word-start helpers.
-  - [ ] Add pure helper tests for labels and word-start detection.
-  - [ ] Implement VS Code jump controller with decorations.
-  - [ ] Route `g w` into jump session instead of normal word motion.
-  - [ ] Capture two-character label input while jump is active.
-  - [ ] Support normal-mode replace selection and select-mode extension.
-  - [ ] Cancel cleanly on escape, editor/document/visibility changes.
-  - [ ] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
+  - [x] Implement pure label generation and visible word-start helpers.
+  - [x] Add pure helper tests for labels and word-start detection.
+  - [x] Implement VS Code jump controller with decorations.
+  - [x] Route `g w` into jump session instead of normal word motion.
+  - [x] Capture two-character label input while jump is active.
+  - [x] Support normal-mode replace selection and select-mode extension.
+  - [x] Cancel cleanly on escape, editor/document/visibility changes.
+  - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
   - [ ] Local-test in Extension Development Host.
   - [ ] Doc sync before closing sprint.
 

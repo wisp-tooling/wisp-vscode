@@ -3,6 +3,7 @@ import { dispatch } from '../core/commands.js'
 import { prefixHints } from '../core/prefixes.js'
 import type { EditorState, Mode, Selection } from '../core/types.js'
 import { delegateCommands } from './delegates.js'
+import { cancelJump, handleJumpInput, jumpActive, startJump } from './jumpController.js'
 
 let mode: Mode = 'normal'
 let pending: string[] | undefined
@@ -19,6 +20,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(vscode.commands.registerCommand('wisp-vscode.key', (key: string) => handleKey(key)))
   context.subscriptions.push(vscode.commands.registerCommand('wisp-vscode.enterNormal', () => handleKey('escape')))
+  context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => cancelJump()))
+  context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(() => cancelJump(vscode.window.activeTextEditor)))
+  context.subscriptions.push(vscode.window.onDidChangeTextEditorVisibleRanges((event) => cancelJump(event.textEditor)))
 
   void setMode('normal')
 }
@@ -34,7 +38,20 @@ async function handleKey(key: string): Promise<void> {
   const editor = vscode.window.activeTextEditor
   if (!editor) return
 
+  if (jumpActive()) {
+    await handleJumpInput(editor, key)
+    return
+  }
+
   const state = editorToState(editor)
+  if (state.pending?.length === 1 && state.pending[0] === 'g' && key === 'w') {
+    pending = undefined
+    await setMode(mode, undefined)
+    prefixPicker?.hide()
+    startJump(editor, mode === 'select')
+    return
+  }
+
   const result = dispatch(state, key)
   mode = result.state.mode
   pending = result.state.pending
