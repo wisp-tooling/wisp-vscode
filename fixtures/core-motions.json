@@ -24,6 +24,22 @@
     "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 5 }] }
   },
   {
+    "name": "h moves left from selection head without skipping selection",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 6, "head": 11 }],
+    "keys": ["h"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 10, "head": 10 }] }
+  },
+  {
+    "name": "l moves right from reversed selection head without skipping selection",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 11, "head": 6 }],
+    "keys": ["l"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 7, "head": 7 }] }
+  },
+  {
     "name": "select mode l extends selection",
     "text": "abc\n",
     "mode": "select",

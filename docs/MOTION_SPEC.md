@@ -16,14 +16,14 @@ This file defines the MVP behavior for the Wisp/Helix-style VS Code extension.
 
 Move one character left.
 
-- normal: collapse to `max(0, selectionStart - 1)`
+- normal: collapse to `max(0, head - 1)` so movement does not skip over an active selection
 - select: move `head` one char left
 
 ### `l` / right
 
 Move one character right.
 
-- normal: collapse to `min(text.length, selectionEnd + 1)`
+- normal: collapse to `min(text.length, head + 1)` so movement does not skip over an active selection
 - select: move `head` one char right
 
 ### `j` / down

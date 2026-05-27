@@ -24,14 +24,14 @@ function wordAt(text: string, pos: number): Selection {
 
 export function moveLeft(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const pos = Math.max(0, startOf(sel) - 1)
+    const pos = Math.max(0, sel.head - 1)
     return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : cursor(pos)
   })
 }
 
 export function moveRight(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const pos = Math.min(state.text.length, endOf(sel) + 1)
+    const pos = Math.min(state.text.length, sel.head + 1)
     return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : cursor(pos)
   })
 }
