@@ -70,5 +70,45 @@
     "selections": [{ "anchor": 4, "head": 4 }],
     "keys": ["m", "r", "(", "["],
     "want": { "text": "a[hello]c\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "ma selects nearest nested pair",
+    "text": "outer(inner[target])\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 13, "head": 13 }],
+    "keys": ["m", "a", "["],
+    "want": { "text": "outer(inner[target])\n", "mode": "normal", "selections": [{ "anchor": 11, "head": 19 }] }
+  },
+  {
+    "name": "md deletes quote surround",
+    "text": "say 'hello' now\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 6, "head": 6 }],
+    "keys": ["m", "d", "'"],
+    "want": { "text": "say hello now\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "mr replaces quote surround",
+    "text": "say 'hello' now\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 6, "head": 6 }],
+    "keys": ["m", "r", "'", "\""],
+    "want": { "text": "say \"hello\" now\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "ms surrounds multiple selections",
+    "text": "one two\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["m", "s", "["],
+    "want": { "text": "[one] [two]\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 5 }, { "anchor": 6, "head": 11 }] }
+  },
+  {
+    "name": "mi missing pair leaves selection unchanged",
+    "text": "hello\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["m", "i", "("],
+    "want": { "text": "hello\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
   }
 ]

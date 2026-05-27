@@ -46,6 +46,13 @@ export function surroundSelections(state: EditorState, delimiter: string): Edito
     text = text.slice(0, item.end) + pair.close + text.slice(item.end)
     text = text.slice(0, item.start) + pair.open + text.slice(item.start)
     nextSelections[item.index] = { anchor: item.start, head: item.end + pair.open.length + pair.close.length }
+    for (let i = 0; i < nextSelections.length; i++) {
+      if (i === item.index) continue
+      if (startOf(nextSelections[i]!) > item.start) {
+        nextSelections[i]!.anchor += pair.open.length + pair.close.length
+        nextSelections[i]!.head += pair.open.length + pair.close.length
+      }
+    }
   }
 
   return normalizeState({ ...state, text, selections: nextSelections, pending: undefined })
