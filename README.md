@@ -51,13 +51,14 @@ The pure TypeScript core currently includes:
 
 - normal, insert, and select modes
 - `h`, `j`, `k`, `l` and arrow-equivalent movement dispatch
-- `w`, `b`, `e` word motions with line-boundary behavior
+- `w`, `b`, `e` word motions and `W`, `B`, `E` WORD motions with line-boundary behavior
+- count prefixes for core motions, including multi-digit counts
 - `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs` line/file motions
 - `d` delete and `c` change edits
 - prefix tracking for command sequences such as `g g` / `space ?` across keypresses in the VS Code adapter
 - selection normalization with clamping, sorting, and overlap merging
 - replay fixtures and invariant tests for edge cases
-- extension prototype with status bar, keybindings, command delegation, viewport reveal on cursor jumps
+- extension prototype with status bar, keybindings, command delegation, diagnostics navigation, viewport reveal on cursor jumps
 
 ## Important docs
 
@@ -73,7 +74,7 @@ The pure TypeScript core currently includes:
 Implement first:
 
 - modes: normal, insert, select
-- motions: `h`, `j`, `k`, `l`, arrows, `w`, `b`, `e`, `x`, `%`, `gg`, `G`, `gh`, `gl`, `gs`
+- motions: `h`, `j`, `k`, `l`, arrows, `w`, `b`, `e`, `W`, `B`, `E`, `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs`
 - edits: `d`, `c`
 - prefixes: `g`, `space`, `[`, `]`
 - delegates: diagnostics, definition, references, rename, code actions, comment toggle

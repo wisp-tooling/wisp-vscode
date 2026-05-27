@@ -50,7 +50,9 @@ Word chars for MVP:
 /[A-Za-z0-9_]/
 ```
 
-Whitespace and punctuation are separators.
+Whitespace and punctuation are separators for `w`, `b`, and `e`.
+
+WORD motions `W`, `B`, and `E` treat any consecutive non-whitespace run as a WORD, so punctuation remains part of the selected unit.
 
 ### `w`
 
@@ -89,6 +91,12 @@ From any offset:
 3. if at a line boundary, move to the next line word end without carrying newline whitespace.
 
 In normal mode, each `e` replaces from the previous selection end.
+
+### `W`, `B`, `E`
+
+Capitalized WORD motions mirror `w`, `b`, and `e`, but WORD chars are any non-whitespace characters. For example, `test-string` is one WORD.
+
+Line-boundary behavior matches lowercase word motions: trailing whitespace does not carry across newlines, and a motion at a newline moves to the next/previous line's WORD as appropriate.
 
 ## Line motions
 
@@ -159,9 +167,13 @@ Delegate to VS Code commands:
 
 ## Counts
 
-MVP should support counts only for simple motions if easy. Recommended first count support:
+Counts are supported for core motions:
 
 - arrows
 - `h/j/k/l`
+- `w/b/e`
+- `W/B/E`
+
+Multi-digit counts are supported, e.g. `10h`.
 
 Full operator/motion count semantics are deferred.

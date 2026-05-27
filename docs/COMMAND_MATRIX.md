@@ -21,6 +21,9 @@ Priority table for the VS Code extension.
 | `w` | move.word.next | Core | P0 | Selection-first. |
 | `b` | move.word.prev | Core | P0 | Selection-first. |
 | `e` | move.word.end | Core | P1 | Selection-first. |
+| `W` | move.WORD.next | Core | P1 | Non-whitespace WORD semantics. |
+| `B` | move.WORD.prev | Core | P1 | Non-whitespace WORD semantics. |
+| `E` | move.WORD.end | Core | P1 | Non-whitespace WORD semantics. |
 | `x` | select.line | Core | P0 | Include newline if possible. |
 | `%` | select.file | Core | P0 | Whole file. |
 | `d` | edit.delete | Core | P0 | Delete selections. |
@@ -46,6 +49,8 @@ Priority table for the VS Code extension.
 | `space h` | lsp.hover | Delegate | P1 | `editor.action.showHover`. |
 | `] d` | diagnostic.next | Delegate | P1 | VS Code marker nav. |
 | `[ d` | diagnostic.prev | Delegate | P1 | VS Code marker nav. |
+| `] D` | diagnostic.last | Delegate/API | P1 | Uses VS Code diagnostics API. |
+| `[ D` | diagnostic.first | Delegate/API | P1 | Uses VS Code diagnostics API. |
 | `z f` | fold.close | Delegate | P2 | VS Code fold command. |
 | `z o` | fold.open | Delegate | P2 | VS Code unfold command. |
 | `ctrl-n` | snippet.next/completion.next | Delegate | P2 | Context dependent. |

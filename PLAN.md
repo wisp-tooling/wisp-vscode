@@ -73,15 +73,15 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Short-term plan (approved)
 
-1. Word-motion expansion and navigation parity
-   - Implement `W`, `B`, `E` motions (WORD semantics).
-   - Ensure `g r` reference navigation/delegation works reliably.
+1. Word-motion expansion and navigation parity — complete
+   - [x] Implement `W`, `B`, `E` motions (WORD semantics).
+   - [x] Ensure `g r` reference navigation/delegation works reliably.
 
-2. Count support and diagnostics completion
+2. Count support and diagnostics completion — complete
    - [x] Add count support for documented MVP motions.
    - [x] Add diagnostics coverage for `[d`, `]d`, `[D`, `]D`.
 
-3. Text object/operator expansion
+3. Text object/operator expansion — next
    - Implement fuller surround and match behavior.
 
 4. UX layer
@@ -89,17 +89,17 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Next sprint
 
-- Sprint: word-motion expansion + delegate parity
-  - [x] Implement `W`, `B`, `E`.
-  - [x] Add fixtures/tests for WORD semantics and line-boundary behavior.
-  - [x] Validate and harden `g r` delegate path in adapter.
-  - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
+- Sprint: surround and match foundation
+  - [ ] Define MVP surround/match command subset.
+  - [ ] Implement pure core helpers where practical.
+  - [ ] Delegate or adapter-handle VS Code-specific behavior only when needed.
+  - [ ] Add fixture/unit coverage.
+  - [ ] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
 
 ## Backlog
 
 ### Core behavior
 
-- Count support for simple motions: `h`, `j`, `k`, `l`, arrows.
 - More complete multiple-selection behavior for all motions.
 - Search command modeling or simple literal search, if still desirable after adapter delegation.
 - Additional edit commands beyond `d`/`c`.
