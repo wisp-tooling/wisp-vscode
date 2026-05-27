@@ -51,6 +51,12 @@ Priority table for the VS Code extension.
 | `[ d` | diagnostic.prev | Delegate | P1 | VS Code marker nav. |
 | `] D` | diagnostic.last | Delegate/API | P1 | Uses VS Code diagnostics API. |
 | `[ D` | diagnostic.first | Delegate/API | P1 | Uses VS Code diagnostics API. |
+| `m m` | match.bracket | Core | P1 | Jump to matching bracket. |
+| `m s <char>` | surround.add | Core | P1 | Surround selection with pair/quote. |
+| `m i <char>` | surround.selectInside | Core | P1 | Select inside nearest surrounding pair. |
+| `m a <char>` | surround.selectAround | Core | P1 | Select around nearest surrounding pair. |
+| `m d <char>` | surround.delete | Core | P1 | Delete nearest surrounding pair. |
+| `m r <from><to>` | surround.replace | Core | P1 | Replace nearest surrounding pair. |
 | `z f` | fold.close | Delegate | P2 | VS Code fold command. |
 | `z o` | fold.open | Delegate | P2 | VS Code unfold command. |
 | `ctrl-n` | snippet.next/completion.next | Delegate | P2 | Context dependent. |

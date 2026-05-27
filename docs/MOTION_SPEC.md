@@ -136,6 +136,38 @@ Go to line end, before newline. In select mode, keep `anchor` fixed and move `he
 
 Go to first non-whitespace on current line. In select mode, keep `anchor` fixed and move `head`.
 
+## Match and surround motions
+
+### `m m`
+
+Jump to the matching bracket for `()`, `[]`, `{}`, and `<>`.
+
+### `m s <char>`
+
+Surround each current selection with the delimiter pair. Supported delimiters:
+
+- `(` / `)`
+- `[` / `]`
+- `{` / `}`
+- `<` / `>`
+- `'`
+- `"`
+- `` ` ``
+
+### `m i <char>` / `m a <char>`
+
+Select inside or around the nearest enclosing delimiter pair.
+
+### `m d <char>` / `m r <from><to>`
+
+Delete or replace the nearest enclosing delimiter pair around the primary selection.
+
+MVP limitations:
+
+- `ms<char>` supports multiple selections.
+- `mi`, `ma`, `md`, and `mr` currently focus on nearest pair behavior and primary-edit behavior for delete/replace.
+- Tree-sitter-aware matching is deferred.
+
 ## Search motions
 
 Initial extension can delegate `/`, `n`, `N` to VS Code find actions or implement simple literal search later.

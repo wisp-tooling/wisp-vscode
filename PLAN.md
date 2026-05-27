@@ -96,7 +96,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Add fixture/unit coverage.
   - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
   - [ ] Local-test in Extension Development Host.
-  - [ ] Doc sync before closing sprint.
+  - [x] Doc sync before closing sprint.
 
 ## Backlog
 

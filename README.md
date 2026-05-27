@@ -55,6 +55,7 @@ The pure TypeScript core currently includes:
 - count prefixes for core motions, including multi-digit counts
 - `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs` line/file motions
 - `d` delete and `c` change edits
+- match/surround foundation: `mm`, `ms<char>`, `mi<char>`, `ma<char>`, `md<char>`, `mr<from><to>`
 - prefix tracking for command sequences such as `g g` / `space ?` across keypresses in the VS Code adapter
 - selection normalization with clamping, sorting, and overlap merging
 - replay fixtures and invariant tests for edge cases
@@ -83,6 +84,5 @@ Defer:
 
 - exact Wisp picker UI
 - full snippet anchors
-- full surround/match commands
 - tree-sitter
 - external `wi` process integration

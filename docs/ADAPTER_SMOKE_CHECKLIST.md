@@ -24,6 +24,15 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] repeated `x` extends by full lines.
 - [ ] `%` selects full file.
 
+## Match/surround
+
+- [ ] `m m` jumps between matching brackets.
+- [ ] `m s (` surrounds the current selection with parentheses.
+- [ ] `m i (` selects inside nearest parentheses.
+- [ ] `m a (` selects around nearest parentheses.
+- [ ] `m d (` deletes nearest surrounding parentheses.
+- [ ] `m r (` `[` replaces nearest parentheses with square brackets.
+
 ## Delegate commands
 
 - [ ] `space ?` opens command palette.
