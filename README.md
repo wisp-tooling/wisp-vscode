@@ -60,7 +60,7 @@ The pure TypeScript core currently includes:
 - prefix tracking for command sequences such as `g g` / `space ?` across keypresses in the VS Code adapter
 - selection normalization with clamping, sorting, and overlap merging
 - replay fixtures and invariant tests for edge cases
-- extension prototype with status bar prefix hints, keybindings, command delegation, diagnostics navigation, viewport reveal on cursor jumps
+- extension prototype with status bar/QuickPick prefix hints, keybindings, command delegation, diagnostics navigation, viewport reveal on cursor jumps
 
 ## Important docs
 

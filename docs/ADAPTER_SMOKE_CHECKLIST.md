@@ -12,7 +12,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 
 ## Prefix handling
 
-- [ ] Press `g` and confirm pending indicator appears in status bar.
+- [ ] Press `g` and confirm pending indicator appears in status bar and QuickPick.
 - [ ] `g g` moves to file start.
 - [ ] `g e` moves to file end.
 - [ ] `g h` / `g l` / `g s` execute correctly.

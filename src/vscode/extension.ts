@@ -8,6 +8,9 @@ let mode: Mode = 'normal'
 let pending: string[] | undefined
 let count: number | undefined
 let status: vscode.StatusBarItem | undefined
+let prefixPicker: vscode.QuickPick<PrefixPickItem> | undefined
+
+type PrefixPickItem = vscode.QuickPickItem & { key: string }
 
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -21,6 +24,8 @@ export function activate(context: vscode.ExtensionContext): void {
 }
 
 export function deactivate(): void {
+  prefixPicker?.dispose()
+  prefixPicker = undefined
   status?.dispose()
   status = undefined
 }
@@ -37,6 +42,7 @@ async function handleKey(key: string): Promise<void> {
 
   await applyState(editor, state, result.state)
   await setMode(result.state.mode, result.state.pending)
+  showPrefixPicker(result.state.pending)
 
   if (result.kind === 'delegate') {
     if (result.command === 'diagnostic.first' || result.command === 'diagnostic.last') {
@@ -95,6 +101,31 @@ function formatHints(pending: string[]): string {
   const hints = prefixHints(pending)
   if (hints.length === 0) return ''
   return hints.map((hint) => `${hint.key} ${hint.label}`).join('  ')
+}
+
+function showPrefixPicker(nextPending: string[] | undefined): void {
+  prefixPicker?.dispose()
+  prefixPicker = undefined
+
+  const hints = prefixHints(nextPending)
+  if (!nextPending || hints.length === 0) return
+
+  const picker = vscode.window.createQuickPick<PrefixPickItem>()
+  prefixPicker = picker
+  picker.title = nextPending.join(' ')
+  picker.placeholder = 'Select a command or type the next key in the editor after closing this picker.'
+  picker.matchOnDescription = true
+  picker.items = hints.map((hint) => ({ label: hint.key, description: hint.label, key: hint.key }))
+  picker.onDidAccept(() => {
+    const picked = picker.selectedItems[0]
+    picker.hide()
+    if (picked) void handleKey(picked.key)
+  })
+  picker.onDidHide(() => {
+    picker.dispose()
+    if (prefixPicker === picker) prefixPicker = undefined
+  })
+  picker.show()
 }
 
 function updateCursorStyle(nextMode: Mode): void {

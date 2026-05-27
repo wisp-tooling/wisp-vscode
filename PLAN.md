@@ -86,6 +86,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 4. UX layer
    - [x] Implement status-bar prefix hint foundation.
+   - [x] Implement VS Code QuickPick prefix popup foundation.
    - [ ] Implement richer Wisp picker UI.
 
 5. Page movement polish — complete
