@@ -66,6 +66,7 @@ The pure TypeScript core currently includes:
 - `docs/MOTION_SPEC.md`: motion behavior.
 - `docs/COMMAND_MATRIX.md`: key/command priority table.
 - `docs/VSCODE_ADAPTER.md`: extension integration notes.
+- `docs/ADAPTER_SMOKE_CHECKLIST.md`: manual extension smoke checks.
 
 ## MVP scope
 

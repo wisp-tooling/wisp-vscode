@@ -69,7 +69,12 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Sprint status
 
 - VS Code integration foundation: complete.
-- Adapter smoke hardening (light pass): in progress.
+- Adapter smoke hardening (light pass): complete.
+
+## Next sprint candidates
+
+1. Feature sprint: additional motions/commands from backlog.
+2. Delegate behavior polish where command IDs differ by VS Code context/version.
 
 ## Backlog
 
