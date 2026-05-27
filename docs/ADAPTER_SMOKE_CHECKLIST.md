@@ -16,6 +16,10 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `g g` moves to file start without requiring Enter in the QuickPick.
 - [ ] `g e` moves to file end.
 - [ ] `g h` / `g l` / `g s` execute correctly without requiring Enter.
+- [ ] `g w` shows visible word jump labels.
+- [ ] Typing a valid two-character `g w` label selects the target word.
+- [ ] `g w` in select mode extends the primary selection.
+- [ ] `escape` cancels active `g w` jump labels.
 - [ ] Prefix clears after completed command.
 - [ ] Dismissing the prefix QuickPick clears pending prefix state.
 

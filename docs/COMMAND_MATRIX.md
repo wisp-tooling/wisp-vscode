@@ -35,6 +35,7 @@ Priority table for the VS Code extension.
 | `g h` | goto.line.start | Core | P0 | |
 | `g l` | goto.line.end | Core | P0 | Before newline. |
 | `g s` | goto.line.firstNonWhitespace | Core | P0 | |
+| `g w` | jump.visibleWord | Adapter/Core helpers | P1 | Decoration-based visible word jump. |
 | `g d` | lsp.definition | Delegate | P0 | `editor.action.revealDefinition`. |
 | `g r` | lsp.references | Delegate | P1 | VS Code references command. |
 | `/` | search.forward | Delegate | P0 | Open find widget first. |

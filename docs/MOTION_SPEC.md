@@ -136,6 +136,19 @@ Go to line end, before newline. In select mode, keep `anchor` fixed and move `he
 
 Go to first non-whitespace on current line. In select mode, keep `anchor` fixed and move `head`.
 
+### `g w`
+
+Start visible word jump mode.
+
+- Labels visible word starts using deterministic two-character labels.
+- Labels are rendered with VS Code decorations and do not mutate document text.
+- Normal mode selects the target word.
+- Select mode extends the primary selection toward the target word.
+- `escape` cancels the jump session.
+- Unknown labels cancel and show a short status message.
+
+See `docs/GW_JUMP_MOTION.md` for implementation details.
+
 ## Match and surround motions
 
 ### `m m`

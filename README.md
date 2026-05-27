@@ -53,7 +53,7 @@ The pure TypeScript core currently includes:
 - `h`, `j`, `k`, `l`, arrow-equivalent movement, and delegated `ctrl-u` / `ctrl-d` page movement
 - `w`, `b`, `e` word motions and `W`, `B`, `E` WORD motions with line-boundary behavior
 - count prefixes for core motions, including multi-digit counts
-- `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs` line/file motions
+- `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs`, `gw` line/file/jump motions
 - `d` delete and `c` change edits
 - match/surround foundation: `mm`, `ms<char>`, `mi<char>`, `ma<char>`, `md<char>`, `mr<from><to>`
 - textobjects for `miw`/`maw`, `miW`/`maW`, and `mip`/`maP`
@@ -61,6 +61,7 @@ The pure TypeScript core currently includes:
 - selection normalization with clamping, sorting, and overlap merging
 - replay fixtures and invariant tests for edge cases
 - extension prototype with status bar/QuickPick prefix hints, keybindings, command delegation, diagnostics navigation, viewport reveal on cursor jumps
+- visible word jump labels for `gw` using VS Code decorations
 
 ## Important docs
 
@@ -76,7 +77,7 @@ The pure TypeScript core currently includes:
 Implement first:
 
 - modes: normal, insert, select
-- motions: `h`, `j`, `k`, `l`, arrows, `w`, `b`, `e`, `W`, `B`, `E`, `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs`
+- motions: `h`, `j`, `k`, `l`, arrows, `w`, `b`, `e`, `W`, `B`, `E`, `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs`, `gw`
 - edits: `d`, `c`
 - prefixes: `g`, `space`, `[`, `]`
 - delegates: diagnostics, definition, references, rename, code actions, comment toggle

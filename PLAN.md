@@ -104,8 +104,8 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Support normal-mode replace selection and select-mode extension.
   - [x] Cancel cleanly on escape, editor/document/visibility changes.
   - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
-  - [ ] Local-test in Extension Development Host.
-  - [ ] Doc sync before closing sprint.
+  - [x] Local-test in Extension Development Host.
+  - [x] Doc sync before closing sprint.
 
 ## Recently completed sprint
 
