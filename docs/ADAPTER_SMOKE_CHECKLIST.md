@@ -52,6 +52,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 
 ## Safety/regression
 
+- [ ] `g w` labels using keys without normal motions, e.g. `sf`, are fully captured as jump input.
 - [ ] No unexpected mode drop during prefix sequences.
 - [ ] No text edits for pure motions.
 - [ ] No crashes when no active editor.

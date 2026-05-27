@@ -242,7 +242,7 @@ Example package.json keybinding shape:
 }
 ```
 
-Because labels only use lowercase alphabet characters, make sure those keys are captured while not in insert mode.
+Because labels only use lowercase alphabet characters, make sure every character in the jump label alphabet is captured while not in insert mode. Missing keybindings can leak label input into normal VS Code typing/commands.
 
 Input handler:
 

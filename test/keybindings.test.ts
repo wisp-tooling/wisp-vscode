@@ -25,4 +25,10 @@ describe('extension keybindings', () => {
     expect(has('ctrl+u', 'ctrl-u')).toBe(true)
     expect(has('ctrl+d', 'ctrl-d')).toBe(true)
   })
+
+  test('captures every jump label alphabet key', () => {
+    for (const key of 'asdfghjklqwertyuiopzxcvbnm') {
+      expect(has(key, key)).toBe(true)
+    }
+  })
 })
