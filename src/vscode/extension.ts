@@ -116,7 +116,7 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
   picker.title = nextPending.join(' ')
   picker.placeholder = 'Type a listed key to run it immediately, or use arrows and Enter.'
   picker.matchOnDescription = true
-  picker.items = hints.map((hint) => ({ label: hint.key, description: hint.label, key: hint.key }))
+  picker.items = hints.map((hint) => ({ label: hint.key, description: hint.label, detail: `${nextPending.join(' ')} ${hint.key}`, key: hint.key }))
   picker.onDidChangeValue((value) => {
     const typed = value.trim()
     const matched = picker.items.find((item) => item.key === typed)

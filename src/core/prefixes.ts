@@ -5,13 +5,13 @@ export type PrefixHint = {
 
 const hints: Record<string, PrefixHint[]> = {
   g: [
-    { key: 'g', label: 'file start' },
-    { key: 'e', label: 'file end' },
-    { key: 'h', label: 'line start' },
-    { key: 'l', label: 'line end' },
-    { key: 's', label: 'first non-whitespace' },
-    { key: 'd', label: 'definition' },
-    { key: 'r', label: 'references' },
+    { key: 'g', label: 'go to file start' },
+    { key: 'e', label: 'go to file end' },
+    { key: 'h', label: 'go to line start' },
+    { key: 'l', label: 'go to line end' },
+    { key: 's', label: 'go to first non-whitespace' },
+    { key: 'd', label: 'go to definition' },
+    { key: 'r', label: 'go to references' },
   ],
   space: [
     { key: 'f', label: 'quick open' },
@@ -76,13 +76,28 @@ const hints: Record<string, PrefixHint[]> = {
     { key: "'", label: 'delete quotes' },
   ],
   'm r': [
-    { key: '(', label: 'from parentheses' },
-    { key: '[', label: 'from brackets' },
-    { key: '{', label: 'from braces' },
-    { key: "'", label: 'from quotes' },
+    { key: '(', label: 'replace from parentheses' },
+    { key: '[', label: 'replace from brackets' },
+    { key: '{', label: 'replace from braces' },
+    { key: '<', label: 'replace from angles' },
+    { key: "'", label: 'replace from single quotes' },
+    { key: '"', label: 'replace from double quotes' },
+    { key: '`', label: 'replace from backticks' },
   ],
 }
 
+const replacementTargets: PrefixHint[] = [
+  { key: '(', label: 'replace to parentheses' },
+  { key: '[', label: 'replace to brackets' },
+  { key: '{', label: 'replace to braces' },
+  { key: '<', label: 'replace to angles' },
+  { key: "'", label: 'replace to single quotes' },
+  { key: '"', label: 'replace to double quotes' },
+  { key: '`', label: 'replace to backticks' },
+]
+
 export function prefixHints(pending: string[] | undefined): PrefixHint[] {
-  return pending ? (hints[pending.join(' ')] ?? []) : []
+  if (!pending) return []
+  if (pending.length === 3 && pending[0] === 'm' && pending[1] === 'r') return replacementTargets
+  return hints[pending.join(' ')] ?? []
 }
