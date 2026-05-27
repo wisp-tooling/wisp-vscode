@@ -64,9 +64,16 @@ export function moveWordPrev(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
     const from = startOf(sel)
     let pos = from - 1
-    while (pos > 0 && !isWord(state.text[pos])) pos--
+    let anchor = from
+    if (state.text[pos] === '\n') {
+      pos--
+      while (pos > 0 && state.text[pos] !== '\n' && !isWord(state.text[pos])) pos--
+      anchor = pos + 1
+    } else {
+      while (pos > 0 && !isWord(state.text[pos])) pos--
+    }
     while (pos > 0 && isWord(state.text[pos - 1])) pos--
-    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor: from, head: pos }
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
   })
 }
 
@@ -74,9 +81,16 @@ export function moveWordEnd(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
     const from = endOf(sel)
     let pos = from
-    while (pos < state.text.length && !isWord(state.text[pos])) pos++
+    let anchor = from
+    if (state.text[pos] === '\n') {
+      pos++
+      while (pos < state.text.length && state.text[pos] !== '\n' && !isWord(state.text[pos])) pos++
+      anchor = pos
+    } else {
+      while (pos < state.text.length && !isWord(state.text[pos])) pos++
+    }
     while (pos < state.text.length && isWord(state.text[pos])) pos++
-    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor: from, head: pos }
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
   })
 }
 
