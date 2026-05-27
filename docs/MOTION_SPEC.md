@@ -54,43 +54,41 @@ Whitespace and punctuation are separators.
 
 ### `w`
 
-Select next word.
+Select forward to the next word start.
 
 From any offset:
 
-1. if inside current word, move to its end,
-2. skip separators,
-3. select the next word start..end.
+1. if inside a word, move to that word end,
+2. include trailing separators on the same line,
+3. stop before crossing line boundaries,
+4. if already at newline, move to/select first word start on next line.
 
-If there is no next word, collapse/select at EOF.
-
-Example:
-
-```text
-hello world
-^ -> w selects world
-```
+In normal mode, each `w` replaces the previous selection from the previous head/end (does not keep extending from the original anchor).
 
 ### `b`
 
-Select previous word.
+Select backward to previous word start.
 
 From any offset:
 
 1. move left over separators,
 2. move left over word chars,
-3. select that word.
+3. stop at previous word start,
+4. if at a line boundary, do not carry newline/trailing whitespace into selection.
 
-If there is no previous word, select/collapse at BOF.
+In normal mode, each `b` replaces from the previous selection start.
 
 ### `e`
 
-Select to end of current/next word.
+Select forward to current/next word end.
 
-MVP:
+From any offset:
 
-1. if before or inside a word, select that word,
-2. otherwise skip separators and select next word.
+1. if before/inside a word, move to that word end,
+2. otherwise skip separators to next word and move to its end,
+3. if at a line boundary, move to the next line word end without carrying newline whitespace.
+
+In normal mode, each `e` replaces from the previous selection end.
 
 ## Line motions
 
@@ -113,6 +111,10 @@ MVP: in normal mode collapse to offset `0`; in select mode extend `head` to offs
 Move/select last line.
 
 MVP: in normal mode collapse to start of last line; in select mode extend `head` to start of last line.
+
+### `g e`
+
+Go to end of file.
 
 ### `g h`
 

@@ -64,7 +64,11 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - `npm test`
   - `npm run typecheck`
   - `npm audit`
-- [ ] Run doc sync before closing sprint.
+- [x] Run doc sync before closing sprint.
+
+## Sprint status
+
+- VS Code integration foundation: complete.
 
 ## Backlog
 

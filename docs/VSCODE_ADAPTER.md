@@ -87,6 +87,10 @@ await vscode.commands.executeCommand('redo')
 
 For core edits applied via `TextEditor.edit`, VS Code should create undo stops. Tune later.
 
+Prefix-pending state should be preserved across VS Code keypress dispatches so multi-key sequences like `g g`, `g s`, and `space ?` resolve reliably.
+
+After cursor-jump motions (`gg`, `G`, `ge`, etc.), reveal the active selection in the viewport.
+
 ## Status bar
 
 Show mode clearly:

@@ -25,8 +25,8 @@ Normal mode still operates on selections. Motions usually replace each selection
 
 Examples:
 
-- `w` selects the next word.
-- `x` selects the current line.
+- `w` selects forward to next word start (line-aware for trailing whitespace/newlines).
+- `x` selects the current line; repeated `x` extends by full lines.
 - `h`/`l` collapse/move to neighboring characters for simple cursor-like movement in MVP.
 
 This is not Vim operator-pending editing. The MVP should prefer direct selection transformations.
