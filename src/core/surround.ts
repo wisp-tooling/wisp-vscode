@@ -107,6 +107,17 @@ export function replaceSurround(state: EditorState, fromDelimiter: string, toDel
   return normalizeState({ ...state, text, selections: [cursor(found.open)], primary: 0, pending: undefined })
 }
 
+export function selectTextObject(state: EditorState, object: string, includeAround: boolean): EditorState {
+  return normalizeState({
+    ...state,
+    selections: state.selections.map((selection) => {
+      const range = textObjectRange(state.text, selection.head, object, includeAround)
+      return range ?? selection
+    }),
+    pending: undefined,
+  })
+}
+
 function findMatchingBracket(text: string, offset: number): number | undefined {
   const at = text[offset]
   const before = offset > 0 ? text[offset - 1] : undefined
@@ -150,4 +161,68 @@ function findEnclosingPair(text: string, offset: number, pair: Pair): { open: nu
     if (close !== undefined && close >= offset) return { open: i, close }
   }
   return undefined
+}
+
+function textObjectRange(text: string, offset: number, object: string, includeAround: boolean): Selection | undefined {
+  if (object === 'w') return wordTextObject(text, offset, includeAround, isWordChar)
+  if (object === 'W') return wordTextObject(text, offset, includeAround, isLongWordChar)
+  if (object === 'p' || object === 'P') return paragraphTextObject(text, offset, includeAround)
+  return undefined
+}
+
+function isWordChar(ch: string | undefined): boolean {
+  return ch !== undefined && /[A-Za-z0-9_]/.test(ch)
+}
+
+function isLongWordChar(ch: string | undefined): boolean {
+  return ch !== undefined && !/\s/.test(ch)
+}
+
+function wordTextObject(text: string, offset: number, includeAround: boolean, isUnit: (ch: string | undefined) => boolean): Selection | undefined {
+  if (text.length === 0) return undefined
+  let pos = Math.min(offset, text.length - 1)
+  if (!isUnit(text[pos]) && pos > 0 && isUnit(text[pos - 1])) pos--
+  while (pos < text.length && !isUnit(text[pos])) pos++
+  if (pos >= text.length) return undefined
+
+  let start = pos
+  while (start > 0 && isUnit(text[start - 1])) start--
+  let end = pos
+  while (end < text.length && isUnit(text[end])) end++
+
+  if (includeAround) {
+    while (end < text.length && text[end] !== '\n' && !isUnit(text[end])) end++
+    if (end === start) while (start > 0 && text[start - 1] !== '\n' && !isUnit(text[start - 1])) start--
+  }
+
+  return { anchor: start, head: end }
+}
+
+function paragraphTextObject(text: string, offset: number, includeAround: boolean): Selection | undefined {
+  if (text.length === 0) return undefined
+  let start = lineStartAt(text, offset)
+  while (start > 0 && !isBlankLine(text, previousLineStart(text, start))) start = previousLineStart(text, start)
+
+  let end = lineEndAt(text, offset)
+  while (end < text.length && !isBlankLine(text, end)) end = lineEndAt(text, end)
+  if (includeAround) while (end < text.length && isBlankLine(text, end)) end = lineEndAt(text, end)
+  return { anchor: start, head: end }
+}
+
+function lineStartAt(text: string, offset: number): number {
+  return text.lastIndexOf('\n', Math.max(0, offset - 1)) + 1
+}
+
+function previousLineStart(text: string, lineStart: number): number {
+  return text.lastIndexOf('\n', Math.max(0, lineStart - 2)) + 1
+}
+
+function lineEndAt(text: string, offset: number): number {
+  const next = text.indexOf('\n', offset)
+  return next < 0 ? text.length : next + 1
+}
+
+function isBlankLine(text: string, lineStart: number): boolean {
+  const end = lineEndAt(text, lineStart)
+  return text.slice(lineStart, end).trim() === ''
 }

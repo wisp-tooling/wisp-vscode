@@ -1,6 +1,6 @@
 import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
-import { deleteSurround, gotoMatchingBracket, replaceSurround, selectSurround, surroundSelections } from './surround.js'
+import { deleteSurround, gotoMatchingBracket, replaceSurround, selectSurround, selectTextObject, surroundSelections } from './surround.js'
 import type { DelegateCommand, DispatchResult, EditorState } from './types.js'
 
 function withMode(state: EditorState, mode: EditorState['mode']): EditorState {
@@ -132,10 +132,12 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     return { kind: 'state', state: surroundSelections(commandState, key) }
   }
   if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'i') {
-    return { kind: 'state', state: selectSurround(commandState, key, false) }
+    const state = ['w', 'W', 'p', 'P'].includes(key) ? selectTextObject(commandState, key, false) : selectSurround(commandState, key, false)
+    return { kind: 'state', state }
   }
   if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'a') {
-    return { kind: 'state', state: selectSurround(commandState, key, true) }
+    const state = ['w', 'W', 'p', 'P'].includes(key) ? selectTextObject(commandState, key, true) : selectSurround(commandState, key, true)
+    return { kind: 'state', state }
   }
   if (pending.length === 2 && pending[0] === 'm' && pending[1] === 'd') {
     return { kind: 'state', state: deleteSurround(commandState, key) }

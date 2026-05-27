@@ -110,5 +110,45 @@
     "selections": [{ "anchor": 1, "head": 1 }],
     "keys": ["m", "i", "("],
     "want": { "text": "hello\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "miw selects word textobject",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 7, "head": 7 }],
+    "keys": ["m", "i", "w"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 11 }] }
+  },
+  {
+    "name": "maw selects word and trailing separator",
+    "text": "hello world again\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 7, "head": 7 }],
+    "keys": ["m", "a", "w"],
+    "want": { "text": "hello world again\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 12 }] }
+  },
+  {
+    "name": "miW selects WORD textobject",
+    "text": "hello test-string now\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 9, "head": 9 }],
+    "keys": ["m", "i", "W"],
+    "want": { "text": "hello test-string now\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 17 }] }
+  },
+  {
+    "name": "mip selects paragraph textobject",
+    "text": "one\ntwo\n\nthree\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["m", "i", "p"],
+    "want": { "text": "one\ntwo\n\nthree\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 8 }] }
+  },
+  {
+    "name": "maP selects paragraph and following blank separator",
+    "text": "one\ntwo\n\nthree\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["m", "a", "P"],
+    "want": { "text": "one\ntwo\n\nthree\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 9 }] }
   }
 ]
