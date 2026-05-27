@@ -1,0 +1,106 @@
+[
+  {
+    "name": "l moves right from cursor",
+    "text": "abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["l"],
+    "want": { "text": "abc\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "h moves left from cursor",
+    "text": "abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 2, "head": 2 }],
+    "keys": ["h"],
+    "want": { "text": "abc\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "j keeps column",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["j"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 5 }] }
+  },
+  {
+    "name": "select mode l extends selection",
+    "text": "abc\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["l"],
+    "want": { "text": "abc\n", "mode": "select", "selections": [{ "anchor": 0, "head": 1 }] }
+  },
+  {
+    "name": "x selects current line including newline",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["x"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 4 }] }
+  },
+  {
+    "name": "percent selects whole file",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["%"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 8 }] }
+  },
+  {
+    "name": "gg goes to file start",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["g", "g"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "select mode gg extends to file start",
+    "text": "abc\ndef\n",
+    "mode": "select",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["g", "g"],
+    "want": { "text": "abc\ndef\n", "mode": "select", "selections": [{ "anchor": 5, "head": 0 }] }
+  },
+  {
+    "name": "G goes to last line start",
+    "text": "abc\ndef",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["G"],
+    "want": { "text": "abc\ndef", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "gh goes to line start",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["g", "h"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "gl goes to line end",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["g", "l"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 3 }] }
+  },
+  {
+    "name": "gs goes to first non-whitespace",
+    "text": "  abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["g", "s"],
+    "want": { "text": "  abc\n", "mode": "normal", "selections": [{ "anchor": 2, "head": 2 }] }
+  },
+  {
+    "name": "select mode gl extends to line end",
+    "text": "abc\ndef\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 1 }],
+    "keys": ["g", "l"],
+    "want": { "text": "abc\ndef\n", "mode": "select", "selections": [{ "anchor": 0, "head": 3 }] }
+  }
+]

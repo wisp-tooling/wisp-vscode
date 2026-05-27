@@ -1,0 +1,108 @@
+# Development Plan
+
+## Completed sprint: harden the pure core
+
+Goal: improve correctness of the dependency-light TypeScript core before building the VS Code adapter.
+
+### In scope
+
+- [x] Add replay coverage for edge cases:
+  - [x] empty file motions/edits
+  - [x] final line without trailing newline
+  - [x] reversed selections
+  - [x] select-mode `w`, `b`, `e`
+  - [x] vertical motion at file boundaries
+  - [x] multi-selection delete behavior
+  - [x] multi-selection change behavior
+- [x] Improve selection normalization for multiple selections:
+  - [x] sort selections by range start where needed
+  - [x] merge or drop overlapping selections safely
+  - [x] preserve a valid primary selection
+- [x] Add invariant tests for replay cases.
+- [x] Ensure completed prefix commands clear pending state.
+- [x] Validate after each change:
+  - `npm test`
+  - `npm run typecheck`
+  - `npm audit`
+- [x] Run doc sync before closing sprint:
+  - [x] update README/docs for behavior changes
+  - [x] ensure PLAN reflects completed/deferred work
+  - [x] confirm dependency/security notes are current
+
+### Acceptance criteria
+
+- Core invariants hold after dispatch:
+  - at least one selection
+  - selections within UTF-16 text bounds
+  - valid primary index
+  - no unsafe overlapping selections after normalization
+- Existing replay tests keep passing.
+- New edge-case replay tests pass.
+- No new dependencies are introduced.
+
+## Working agreement
+
+- Each progress update should end with the current next agenda item.
+- Before closing any sprint, run a documentation sync so README/docs/PLAN match implementation reality.
+
+## Current sprint: VS Code integration foundation
+
+Goal: define a pure core boundary for delegated commands, then build the minimal VS Code extension shell around that boundary.
+
+### In scope
+
+- [x] Add core delegate command modeling without importing VS Code APIs into `src/core`.
+- [x] Add replay/unit coverage for delegated command dispatch.
+- [x] Add VS Code extension shell under `src/vscode/`.
+- [x] Add package metadata/contributions/keybindings needed for the extension shell.
+- [x] Add mode status bar and context updates.
+- [x] Keep insert mode minimally invasive.
+- [x] Review and harden initial keybinding coverage for MVP keys.
+- [x] Review and harden packaging/build viability without adding a bundler.
+- [x] Add local Extension Development Host launch/task scaffolding.
+- [x] Validate:
+  - `npm test`
+  - `npm run typecheck`
+  - `npm audit`
+- [ ] Run doc sync before closing sprint.
+
+## Backlog
+
+### Core behavior
+
+- Count support for simple motions: `h`, `j`, `k`, `l`, arrows.
+- More complete multiple-selection behavior for all motions.
+- Search command modeling or simple literal search, if still desirable after adapter delegation.
+- Additional edit commands beyond `d`/`c`.
+
+### VS Code extension shell
+
+- Add VS Code extension entrypoint under `src/vscode/`.
+- Add `package.json` extension contributions and keybindings.
+- Add activation events and commands.
+- Add mode status bar.
+- Add prefix status display.
+
+### VS Code adapter
+
+- Map VS Code document text/selections to `EditorState`.
+- Dispatch core keys from VS Code commands.
+- Apply MVP full-document replacement on text edits.
+- Restore VS Code selections from core selections.
+- Set VS Code context keys for mode-specific keybindings.
+
+### VS Code delegation
+
+- Delegate undo/redo.
+- Delegate definition/references.
+- Delegate diagnostics navigation.
+- Delegate comment toggle.
+- Delegate rename, code actions, hover.
+- Delegate quick open and command palette.
+
+### Performance/security/auditability
+
+- Review per-keypress allocations and hot paths.
+- Avoid external executables and runtime dependencies.
+- Keep dependency list minimal and explicitly justified.
+- Optimize full-document replacement after MVP if needed.

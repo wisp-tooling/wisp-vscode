@@ -1,0 +1,18 @@
+[
+  {
+    "name": "d deletes selected line",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 4 }],
+    "keys": ["d"],
+    "want": { "text": "def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "c deletes selection and enters insert",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }],
+    "keys": ["c"],
+    "want": { "text": "\ndef\n", "mode": "insert", "selections": [{ "anchor": 0, "head": 0 }] }
+  }
+]

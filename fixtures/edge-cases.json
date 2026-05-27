@@ -1,0 +1,106 @@
+[
+  {
+    "name": "empty file l stays at bof",
+    "text": "",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["l"],
+    "want": { "text": "", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "empty file d keeps empty cursor",
+    "text": "",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["d"],
+    "want": { "text": "", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "x selects final line without newline",
+    "text": "abc\ndef",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["x"],
+    "want": { "text": "abc\ndef", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }] }
+  },
+  {
+    "name": "d deletes reversed selection",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 4, "head": 1 }],
+    "keys": ["d"],
+    "want": { "text": "adef\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "select mode w extends to next word end",
+    "text": "hello world\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["w"],
+    "want": { "text": "hello world\n", "mode": "select", "selections": [{ "anchor": 0, "head": 11 }] }
+  },
+  {
+    "name": "select mode b extends to previous word start",
+    "text": "hello world\n",
+    "mode": "select",
+    "selections": [{ "anchor": 11, "head": 11 }],
+    "keys": ["b"],
+    "want": { "text": "hello world\n", "mode": "select", "selections": [{ "anchor": 11, "head": 6 }] }
+  },
+  {
+    "name": "select mode e extends to current word end",
+    "text": "hello world\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 1 }],
+    "keys": ["e"],
+    "want": { "text": "hello world\n", "mode": "select", "selections": [{ "anchor": 0, "head": 5 }] }
+  },
+  {
+    "name": "k at first line stays in bounds",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["k"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "j at last line stays in bounds",
+    "text": "abc\ndef",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["j"],
+    "want": { "text": "abc\ndef", "mode": "normal", "selections": [{ "anchor": 5, "head": 5 }] }
+  },
+  {
+    "name": "multi-selection delete applies from end without offset drift",
+    "text": "abc\ndef\nghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 4 }, { "anchor": 8, "head": 12 }],
+    "keys": ["d"],
+    "want": { "text": "def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "overlapping selections are merged before delete",
+    "text": "abcdef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 4 }, { "anchor": 3, "head": 6 }],
+    "keys": ["d"],
+    "want": { "text": "a\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
+  },
+  {
+    "name": "multi-selection change deletes ranges and enters insert",
+    "text": "abc\ndef\nghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 4 }, { "anchor": 8, "head": 12 }],
+    "keys": ["c"],
+    "want": { "text": "def\n", "mode": "insert", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "overlapping selections are merged before change",
+    "text": "abcdef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 4 }, { "anchor": 3, "head": 6 }],
+    "keys": ["c"],
+    "want": { "text": "a\n", "mode": "insert", "selections": [{ "anchor": 1, "head": 1 }] }
+  }
+]

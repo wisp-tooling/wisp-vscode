@@ -1,0 +1,231 @@
+{
+  "name": "wisp-vscode-core-seed",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.120.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.7"
+  },
+  "main": "./dist/src/vscode/extension.js",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onCommand:wisp-vscode.key",
+    "onCommand:wisp-vscode.enterNormal"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "wisp-vscode.key",
+        "title": "Wisp: Handle Key"
+      },
+      {
+        "command": "wisp-vscode.enterNormal",
+        "title": "Wisp: Enter Normal Mode"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "[",
+        "command": "wisp-vscode.key",
+        "args": "[",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "]",
+        "command": "wisp-vscode.key",
+        "args": "]",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "/",
+        "command": "wisp-vscode.key",
+        "args": "/",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "a",
+        "command": "wisp-vscode.key",
+        "args": "a",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "b",
+        "command": "wisp-vscode.key",
+        "args": "b",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "c",
+        "command": "wisp-vscode.key",
+        "args": "c",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "d",
+        "command": "wisp-vscode.key",
+        "args": "d",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "down",
+        "command": "wisp-vscode.key",
+        "args": "down",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "e",
+        "command": "wisp-vscode.key",
+        "args": "e",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "escape",
+        "command": "wisp-vscode.enterNormal",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "g",
+        "command": "wisp-vscode.key",
+        "args": "g",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "h",
+        "command": "wisp-vscode.key",
+        "args": "h",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "i",
+        "command": "wisp-vscode.key",
+        "args": "i",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "j",
+        "command": "wisp-vscode.key",
+        "args": "j",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "k",
+        "command": "wisp-vscode.key",
+        "args": "k",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "l",
+        "command": "wisp-vscode.key",
+        "args": "l",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "left",
+        "command": "wisp-vscode.key",
+        "args": "left",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "n",
+        "command": "wisp-vscode.key",
+        "args": "n",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "right",
+        "command": "wisp-vscode.key",
+        "args": "right",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+/",
+        "command": "wisp-vscode.key",
+        "args": "?",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+5",
+        "command": "wisp-vscode.key",
+        "args": "%",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+g",
+        "command": "wisp-vscode.key",
+        "args": "G",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+n",
+        "command": "wisp-vscode.key",
+        "args": "N",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+u",
+        "command": "wisp-vscode.key",
+        "args": "U",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "space",
+        "command": "wisp-vscode.key",
+        "args": "space",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "u",
+        "command": "wisp-vscode.key",
+        "args": "u",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "up",
+        "command": "wisp-vscode.key",
+        "args": "up",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "v",
+        "command": "wisp-vscode.key",
+        "args": "v",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "w",
+        "command": "wisp-vscode.key",
+        "args": "w",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "x",
+        "command": "wisp-vscode.key",
+        "args": "x",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "z",
+        "command": "wisp-vscode.key",
+        "args": "z",
+        "when": "editorTextFocus && wisp.mode != insert"
+      }
+    ]
+  },
+  "displayName": "Wisp VS Code",
+  "description": "Dependency-light Helix/Wisp-style modal editing for VS Code.",
+  "publisher": "local",
+  "categories": [
+    "Other"
+  ]
+}

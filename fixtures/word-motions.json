@@ -1,0 +1,26 @@
+[
+  {
+    "name": "w selects next word",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["w"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 11 }] }
+  },
+  {
+    "name": "b selects previous word",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 11, "head": 11 }],
+    "keys": ["b"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 11 }] }
+  },
+  {
+    "name": "e selects current word",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["e"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 5 }] }
+  }
+]

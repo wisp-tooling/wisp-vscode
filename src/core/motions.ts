@@ -1,0 +1,112 @@
+import { lastLineStart, lineColToOffset, lineRangeAt, offsetToLineCol } from './buffer.js'
+import { cursor, endOf, replaceSelections, startOf } from './selection.js'
+import type { EditorState, Selection } from './types.js'
+
+function isWord(ch: string | undefined): boolean {
+  return ch !== undefined && /[A-Za-z0-9_]/.test(ch)
+}
+
+function wordAt(text: string, pos: number): Selection {
+  if (text.length === 0) return cursor(0)
+  let i = Math.max(0, Math.min(pos, text.length - 1))
+  while (i < text.length && !isWord(text[i])) i++
+  if (i >= text.length) return cursor(text.length)
+  let start = i
+  while (start > 0 && isWord(text[start - 1])) start--
+  let end = i
+  while (end < text.length && isWord(text[end])) end++
+  return { anchor: start, head: end }
+}
+
+export function moveLeft(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const pos = Math.max(0, startOf(sel) - 1)
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : cursor(pos)
+  })
+}
+
+export function moveRight(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const pos = Math.min(state.text.length, endOf(sel) + 1)
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : cursor(pos)
+  })
+}
+
+export function moveVertical(state: EditorState, delta: -1 | 1): EditorState {
+  const preferred = state.preferredColumns ? [...state.preferredColumns] : []
+  const selections = state.selections.map((sel, i) => {
+    const lc = offsetToLineCol(state.text, sel.head)
+    const col = preferred[i] ?? lc.col
+    preferred[i] = col
+    const target = lineColToOffset(state.text, { line: lc.line + delta, col })
+    return state.mode === 'select' ? { anchor: sel.anchor, head: target } : cursor(target)
+  })
+  return { ...state, selections, preferredColumns: preferred }
+}
+
+export function moveWordNext(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    let pos = endOf(sel)
+    while (pos < state.text.length && isWord(state.text[pos])) pos++
+    while (pos < state.text.length && !isWord(state.text[pos])) pos++
+    const word = wordAt(state.text, pos)
+    return state.mode === 'select' ? { anchor: sel.anchor, head: word.head } : word
+  })
+}
+
+export function moveWordPrev(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    let pos = startOf(sel) - 1
+    while (pos > 0 && !isWord(state.text[pos])) pos--
+    while (pos > 0 && isWord(state.text[pos - 1])) pos--
+    const word = wordAt(state.text, Math.max(0, pos))
+    return state.mode === 'select' ? { anchor: sel.anchor, head: word.anchor } : word
+  })
+}
+
+export function moveWordEnd(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const word = wordAt(state.text, endOf(sel))
+    return state.mode === 'select' ? { anchor: sel.anchor, head: word.head } : word
+  })
+}
+
+export function selectLine(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const r = lineRangeAt(state.text, sel.head)
+    return { anchor: r.start, head: r.end }
+  })
+}
+
+export function selectFile(state: EditorState): EditorState {
+  return { ...state, selections: [{ anchor: 0, head: state.text.length }], primary: 0, preferredColumns: undefined }
+}
+
+function gotoTarget(state: EditorState, sel: Selection, target: number): Selection {
+  return state.mode === 'select' ? { anchor: sel.anchor, head: target } : cursor(target)
+}
+
+export function gotoFileStart(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => gotoTarget(state, sel, 0))
+}
+
+export function gotoFileEnd(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => gotoTarget(state, sel, lastLineStart(state.text)))
+}
+
+export function gotoLineStart(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => gotoTarget(state, sel, lineRangeAt(state.text, sel.head).start))
+}
+
+export function gotoLineEnd(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => gotoTarget(state, sel, lineRangeAt(state.text, sel.head).endNoNewline))
+}
+
+export function gotoFirstNonWhitespace(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const r = lineRangeAt(state.text, sel.head)
+    let pos = r.start
+    while (pos < r.endNoNewline && /\s/.test(state.text[pos]!)) pos++
+    return gotoTarget(state, sel, pos)
+  })
+}
