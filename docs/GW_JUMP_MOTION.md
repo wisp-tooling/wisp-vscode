@@ -184,7 +184,7 @@ const decorations = targets.map((t) => ({
 editor.setDecorations(jumpDecoration, decorations)
 ```
 
-Potential issue: `before` decorations shift visual text. That is acceptable for MVP. If it feels too jumpy, use `after` on the previous character or a thinner style later.
+Potential issue: plain `before` decorations shift visual text. The extension uses an overlay-style decoration for MVP: the first label-width characters of the target word are made transparent and the label is rendered with a negative margin so layout shift is minimized. If this proves theme/font dependent, revisit with a custom picker/decorations strategy.
 
 ## Jump session state
 

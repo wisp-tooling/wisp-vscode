@@ -23,11 +23,12 @@ export function jumpActive(): boolean {
 export function startJump(editor: vscode.TextEditor, extend: boolean): void {
   cancelJump(editor)
   const decoration = vscode.window.createTextEditorDecorationType({
+    color: 'transparent',
     before: {
       color: new vscode.ThemeColor('editor.background'),
       backgroundColor: new vscode.ThemeColor('editorWarning.foreground'),
       fontWeight: 'bold',
-      margin: '0 1px 0 0',
+      margin: '0 -2ch 0 0',
     },
     rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
   })
@@ -83,9 +84,10 @@ function collectJumpTargets(editor: vscode.TextEditor): JumpTarget[] {
 
   return collectJumpTargetsFromLines(lines).map((target) => {
     const start = new vscode.Position(target.line, target.start)
+    const labelEnd = new vscode.Position(target.line, Math.min(target.start + target.label.length, target.end))
     return {
       label: target.label,
-      range: new vscode.Range(start, start),
+      range: new vscode.Range(start, labelEnd),
       wordRange: new vscode.Range(target.line, target.start, target.line, target.end),
     }
   })
