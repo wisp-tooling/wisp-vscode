@@ -112,6 +112,14 @@
     "want": { "text": "hello\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
   },
   {
+    "name": "md deletes surrounding pairs for multiple selections",
+    "text": "(one) (two)\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 2, "head": 2 }, { "anchor": 8, "head": 8 }],
+    "keys": ["m", "d", "("],
+    "want": { "text": "one two\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 4, "head": 4 }] }
+  },
+  {
     "name": "miw selects word textobject",
     "text": "hello world\n",
     "mode": "normal",

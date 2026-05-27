@@ -38,6 +38,11 @@ async function handleKey(key: string): Promise<void> {
   const editor = vscode.window.activeTextEditor
   if (!editor) return
 
+  if (key === 'escape' || key === 'ctrl-[') {
+    cancelJump(editor)
+    prefixPicker?.hide()
+  }
+
   if (jumpActive()) {
     await handleJumpInput(editor, key)
     return

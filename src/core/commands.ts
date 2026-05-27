@@ -63,7 +63,7 @@ const delegates: Record<string, DelegateCommand> = {
 export function dispatch(input: EditorState, key: string): DispatchResult {
   let state = normalizeState(input)
 
-  if (key === 'escape') return { kind: 'state', state: withMode(state, 'normal') }
+  if (key === 'escape' || key === 'ctrl-[') return { kind: 'state', state: withMode(state, 'normal') }
 
   if (state.mode === 'insert') return { kind: 'state', state }
 
@@ -113,6 +113,8 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: selectLine(commandState) }
     case '%':
       return { kind: 'state', state: selectFile(commandState) }
+    case ',':
+      return { kind: 'state', state: { ...withCountCleared(commandState), selections: [commandState.selections[commandState.primary]!], primary: 0 } }
     case 'd':
       return { kind: 'state', state: withMode(deleteSelections(commandState), 'normal') }
     case 'c':

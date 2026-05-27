@@ -35,6 +35,11 @@ describe('extension keybindings', () => {
     expect(has('shift+n', 'N')).toBe(true)
   })
 
+  test('captures escape parity and selection collapse keys', () => {
+    expect(has('ctrl+[', 'ctrl-[')).toBe(true)
+    expect(has(', ', ',')).toBe(true)
+  })
+
   test('captures every jump label alphabet key', () => {
     for (const key of 'asdfghjklqwertyuiopzxcvbnm') {
       expect(has(key, key)).toBe(true)

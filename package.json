@@ -36,6 +36,12 @@
     ],
     "keybindings": [
       {
+        "key": ", ",
+        "command": "wisp-vscode.key",
+        "args": ",",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "'",
         "command": "wisp-vscode.key",
         "args": "'",
@@ -141,6 +147,12 @@
         "key": "c",
         "command": "wisp-vscode.key",
         "args": "c",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "ctrl+[",
+        "command": "wisp-vscode.key",
+        "args": "ctrl-[",
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {

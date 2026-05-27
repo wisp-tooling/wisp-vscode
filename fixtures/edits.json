@@ -14,5 +14,14 @@
     "selections": [{ "anchor": 0, "head": 3 }],
     "keys": ["c"],
     "want": { "text": "\ndef\n", "mode": "insert", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "comma keeps only primary selection",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "primary": 1,
+    "keys": [","],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }] }
   }
 ]
