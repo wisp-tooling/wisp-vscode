@@ -93,7 +93,21 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
    - [x] Add `ctrl-u` / `ctrl-d` page movement delegates.
    - [x] Doc sync page movement behavior.
 
-## Next sprint
+## Current sprint
+
+- Sprint: `g w` visible word jump motion
+  - [ ] Implement pure label generation and visible word-start helpers.
+  - [ ] Add pure helper tests for labels and word-start detection.
+  - [ ] Implement VS Code jump controller with decorations.
+  - [ ] Route `g w` into jump session instead of normal word motion.
+  - [ ] Capture two-character label input while jump is active.
+  - [ ] Support normal-mode replace selection and select-mode extension.
+  - [ ] Cancel cleanly on escape, editor/document/visibility changes.
+  - [ ] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
+  - [ ] Local-test in Extension Development Host.
+  - [ ] Doc sync before closing sprint.
+
+## Recently completed sprint
 
 - Sprint: surround and match foundation
   - [x] Define MVP surround/match command subset: `mm`, `ms<char>`, `mi<char>`, `ma<char>`, `md<char>`, `mr<from><to>`.
@@ -101,7 +115,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Delegate or adapter-handle VS Code-specific behavior only when needed.
   - [x] Add fixture/unit coverage.
   - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
-  - [ ] Local-test in Extension Development Host.
+  - [x] Local-test in Extension Development Host.
   - [x] Doc sync before closing sprint.
   - [x] Doc sync textobjects `miw/W` and `mip/P`.
 
