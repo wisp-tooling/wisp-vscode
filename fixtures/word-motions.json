@@ -24,19 +24,51 @@
     "want": { "text": "hello   \nworld\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 8 }] }
   },
   {
-    "name": "b selects previous word",
+    "name": "b selects backward to previous word start",
     "text": "hello world\n",
     "mode": "normal",
     "selections": [{ "anchor": 11, "head": 11 }],
     "keys": ["b"],
-    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 11 }] }
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 11, "head": 6 }] }
   },
   {
-    "name": "e selects current word",
+    "name": "repeated b replaces selection from previous start",
+    "text": "hello world again\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 17, "head": 17 }],
+    "keys": ["b", "b"],
+    "want": { "text": "hello world again\n", "mode": "normal", "selections": [{ "anchor": 12, "head": 6 }] }
+  },
+  {
+    "name": "b skips punctuation and whitespace to previous word start",
+    "text": "hello,   world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 13, "head": 13 }],
+    "keys": ["b"],
+    "want": { "text": "hello,   world\n", "mode": "normal", "selections": [{ "anchor": 13, "head": 9 }] }
+  },
+  {
+    "name": "e selects to current word end",
     "text": "hello world\n",
     "mode": "normal",
     "selections": [{ "anchor": 1, "head": 1 }],
     "keys": ["e"],
-    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 5 }] }
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 5 }] }
+  },
+  {
+    "name": "repeated e replaces selection from previous end",
+    "text": "hello world again\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["e", "e"],
+    "want": { "text": "hello world again\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 11 }] }
+  },
+  {
+    "name": "e skips whitespace to next word end",
+    "text": "hello   world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["e"],
+    "want": { "text": "hello   world\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 13 }] }
   }
 ]

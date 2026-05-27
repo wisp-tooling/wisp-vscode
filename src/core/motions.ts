@@ -56,18 +56,21 @@ export function moveWordNext(state: EditorState): EditorState {
 
 export function moveWordPrev(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    let pos = startOf(sel) - 1
+    const from = startOf(sel)
+    let pos = from - 1
     while (pos > 0 && !isWord(state.text[pos])) pos--
     while (pos > 0 && isWord(state.text[pos - 1])) pos--
-    const word = wordAt(state.text, Math.max(0, pos))
-    return state.mode === 'select' ? { anchor: sel.anchor, head: word.anchor } : word
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor: from, head: pos }
   })
 }
 
 export function moveWordEnd(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const word = wordAt(state.text, endOf(sel))
-    return state.mode === 'select' ? { anchor: sel.anchor, head: word.head } : word
+    const from = endOf(sel)
+    let pos = from
+    while (pos < state.text.length && !isWord(state.text[pos])) pos++
+    while (pos < state.text.length && isWord(state.text[pos])) pos++
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor: from, head: pos }
   })
 }
 
