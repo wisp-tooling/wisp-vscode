@@ -1,31 +1,12 @@
 import * as vscode from 'vscode'
 import { dispatch } from '../core/commands.js'
-import type { DelegateCommand, EditorState, Mode, Selection } from '../core/types.js'
+import type { EditorState, Mode, Selection } from '../core/types.js'
+import { delegateCommands } from './delegates.js'
 
 let mode: Mode = 'normal'
 let pending: string[] | undefined
 let status: vscode.StatusBarItem | undefined
 
-const delegateCommands: Record<DelegateCommand, string> = {
-  undo: 'undo',
-  redo: 'redo',
-  'find.open': 'actions.find',
-  'find.next': 'editor.action.nextMatchFindAction',
-  'find.prev': 'editor.action.previousMatchFindAction',
-  'file.quickOpen': 'workbench.action.quickOpen',
-  'buffer.quickOpen': 'workbench.action.showAllEditors',
-  'command.palette': 'workbench.action.showCommands',
-  'comment.toggle': 'editor.action.commentLine',
-  'lsp.definition': 'editor.action.revealDefinition',
-  'lsp.references': 'editor.action.referenceSearch.trigger',
-  'lsp.rename': 'editor.action.rename',
-  'lsp.codeActions': 'editor.action.quickFix',
-  'lsp.hover': 'editor.action.showHover',
-  'diagnostic.next': 'editor.action.marker.next',
-  'diagnostic.prev': 'editor.action.marker.prev',
-  'fold.close': 'editor.fold',
-  'fold.open': 'editor.unfold',
-}
 
 export function activate(context: vscode.ExtensionContext): void {
   status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100)
