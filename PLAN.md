@@ -85,7 +85,8 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
    - Implement fuller surround and match behavior.
 
 4. UX layer
-   - Implement Wisp picker/prefix UI.
+   - [x] Implement status-bar prefix hint foundation.
+   - [ ] Implement richer Wisp picker UI.
 
 5. Page movement polish — complete
    - [x] Add `ctrl-u` / `ctrl-d` page movement delegates.

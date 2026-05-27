@@ -84,4 +84,4 @@ VS Code implementation options:
 2. quick pick with matching commands,
 3. webview/decorations later.
 
-Start with status bar or quick pick. Do not block core command work on custom UI.
+Current MVP uses status bar hints populated from the pure core prefix table. Quick pick/webview picker UI remains planned.

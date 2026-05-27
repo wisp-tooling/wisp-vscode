@@ -1,5 +1,6 @@
 import * as vscode from 'vscode'
 import { dispatch } from '../core/commands.js'
+import { prefixHints } from '../core/prefixes.js'
 import type { EditorState, Mode, Selection } from '../core/types.js'
 import { delegateCommands } from './delegates.js'
 
@@ -84,10 +85,16 @@ async function setMode(nextMode: Mode, pending?: string[]): Promise<void> {
   await vscode.commands.executeCommand('setContext', 'wisp.mode', nextMode)
   updateCursorStyle(nextMode)
   if (status) {
-    const prefix = pending && pending.length > 0 ? `  ${pending.join(' ')} …` : ''
+    const prefix = pending && pending.length > 0 ? `  ${pending.join(' ')} … ${formatHints(pending)}` : ''
     status.text = `WISP ${nextMode.toUpperCase()}${prefix}`
     status.show()
   }
+}
+
+function formatHints(pending: string[]): string {
+  const hints = prefixHints(pending)
+  if (hints.length === 0) return ''
+  return hints.map((hint) => `${hint.key} ${hint.label}`).join('  ')
 }
 
 function updateCursorStyle(nextMode: Mode): void {
