@@ -82,10 +82,18 @@ function coreToSelection(document: vscode.TextDocument, selection: Selection): v
 async function setMode(nextMode: Mode, pending?: string[]): Promise<void> {
   mode = nextMode
   await vscode.commands.executeCommand('setContext', 'wisp.mode', nextMode)
+  updateCursorStyle(nextMode)
   if (status) {
     const prefix = pending && pending.length > 0 ? `  ${pending.join(' ')} …` : ''
     status.text = `WISP ${nextMode.toUpperCase()}${prefix}`
     status.show()
+  }
+}
+
+function updateCursorStyle(nextMode: Mode): void {
+  const cursorStyle = nextMode === 'insert' ? vscode.TextEditorCursorStyle.Line : vscode.TextEditorCursorStyle.Block
+  for (const editor of vscode.window.visibleTextEditors) {
+    editor.options = { ...editor.options, cursorStyle }
   }
 }
 
