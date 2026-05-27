@@ -71,10 +71,29 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 - VS Code integration foundation: complete.
 - Adapter smoke hardening (light pass): complete.
 
-## Next sprint candidates
+## Short-term plan (approved)
 
-1. Feature sprint: additional motions/commands from backlog.
-2. Delegate behavior polish where command IDs differ by VS Code context/version.
+1. Word-motion expansion and navigation parity
+   - Implement `W`, `B`, `E` motions (WORD semantics).
+   - Ensure `g r` reference navigation/delegation works reliably.
+
+2. Count support and diagnostics completion
+   - Add count support for documented MVP motions.
+   - Add diagnostics coverage for `[d`, `]d`, `[D`, `]D`.
+
+3. Text object/operator expansion
+   - Implement fuller surround and match behavior.
+
+4. UX layer
+   - Implement Wisp picker/prefix UI.
+
+## Next sprint
+
+- Sprint: word-motion expansion + delegate parity
+  - [x] Implement `W`, `B`, `E`.
+  - [x] Add fixtures/tests for WORD semantics and line-boundary behavior.
+  - [x] Validate and harden `g r` delegate path in adapter.
+  - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
 
 ## Backlog
 

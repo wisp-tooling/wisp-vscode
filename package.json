@@ -143,6 +143,12 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "r",
+        "command": "wisp-vscode.key",
+        "args": "r",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "right",
         "command": "wisp-vscode.key",
         "args": "right",
@@ -167,6 +173,18 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "shift+b",
+        "command": "wisp-vscode.key",
+        "args": "B",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+e",
+        "command": "wisp-vscode.key",
+        "args": "E",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "shift+g",
         "command": "wisp-vscode.key",
         "args": "G",
@@ -182,6 +200,12 @@
         "key": "shift+u",
         "command": "wisp-vscode.key",
         "args": "U",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+w",
+        "command": "wisp-vscode.key",
+        "args": "W",
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {

@@ -94,5 +94,29 @@
     "selections": [{ "anchor": 5, "head": 5 }],
     "keys": ["e"],
     "want": { "text": "hello   world\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 13 }] }
+  },
+  {
+    "name": "W treats punctuation as part of WORD",
+    "text": "test-string next\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["W"],
+    "want": { "text": "test-string next\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 12 }] }
+  },
+  {
+    "name": "B treats punctuation as part of WORD",
+    "text": "test-string next\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 16, "head": 16 }],
+    "keys": ["B"],
+    "want": { "text": "test-string next\n", "mode": "normal", "selections": [{ "anchor": 16, "head": 12 }] }
+  },
+  {
+    "name": "E treats punctuation as part of WORD",
+    "text": "test-string next\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["E"],
+    "want": { "text": "test-string next\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 11 }] }
   }
 ]

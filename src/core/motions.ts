@@ -6,6 +6,10 @@ function isWord(ch: string | undefined): boolean {
   return ch !== undefined && /[A-Za-z0-9_]/.test(ch)
 }
 
+function isLongWord(ch: string | undefined): boolean {
+  return ch !== undefined && !/\s/.test(ch)
+}
+
 function wordAt(text: string, pos: number): Selection {
   if (text.length === 0) return cursor(0)
   let i = Math.max(0, Math.min(pos, text.length - 1))
@@ -90,6 +94,56 @@ export function moveWordEnd(state: EditorState): EditorState {
       while (pos < state.text.length && !isWord(state.text[pos])) pos++
     }
     while (pos < state.text.length && isWord(state.text[pos])) pos++
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
+  })
+}
+
+export function moveLongWordNext(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const from = endOf(sel)
+    let pos = from
+    let anchor = from
+    if (state.text[pos] === '\n') {
+      pos++
+      while (pos < state.text.length && state.text[pos] !== '\n' && !isLongWord(state.text[pos])) pos++
+      anchor = pos
+    }
+    while (pos < state.text.length && isLongWord(state.text[pos])) pos++
+    while (pos < state.text.length && state.text[pos] !== '\n' && !isLongWord(state.text[pos])) pos++
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
+  })
+}
+
+export function moveLongWordPrev(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const from = startOf(sel)
+    let pos = from - 1
+    let anchor = from
+    if (state.text[pos] === '\n') {
+      pos--
+      while (pos > 0 && state.text[pos] !== '\n' && !isLongWord(state.text[pos])) pos--
+      anchor = pos + 1
+    } else {
+      while (pos > 0 && !isLongWord(state.text[pos])) pos--
+    }
+    while (pos > 0 && isLongWord(state.text[pos - 1])) pos--
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
+  })
+}
+
+export function moveLongWordEnd(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => {
+    const from = endOf(sel)
+    let pos = from
+    let anchor = from
+    if (state.text[pos] === '\n') {
+      pos++
+      while (pos < state.text.length && state.text[pos] !== '\n' && !isLongWord(state.text[pos])) pos++
+      anchor = pos
+    } else {
+      while (pos < state.text.length && !isLongWord(state.text[pos])) pos++
+    }
+    while (pos < state.text.length && isLongWord(state.text[pos])) pos++
     return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor, head: pos }
   })
 }
