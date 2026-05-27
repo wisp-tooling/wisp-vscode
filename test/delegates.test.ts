@@ -33,6 +33,8 @@ const cases: Array<{ keys: string[]; command: DelegateCommand }> = [
   { keys: ['[', 'D'], command: 'diagnostic.first' },
   { keys: ['z', 'f'], command: 'fold.close' },
   { keys: ['z', 'o'], command: 'fold.open' },
+  { keys: ['ctrl-u'], command: 'page.up' },
+  { keys: ['ctrl-d'], command: 'page.down' },
 ]
 
 describe('delegate dispatch', () => {

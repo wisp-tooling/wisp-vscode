@@ -50,7 +50,7 @@ The current project has no runtime dependencies. Development dependencies are li
 The pure TypeScript core currently includes:
 
 - normal, insert, and select modes
-- `h`, `j`, `k`, `l` and arrow-equivalent movement dispatch
+- `h`, `j`, `k`, `l`, arrow-equivalent movement, and delegated `ctrl-u` / `ctrl-d` page movement
 - `w`, `b`, `e` word motions and `W`, `B`, `E` WORD motions with line-boundary behavior
 - count prefixes for core motions, including multi-digit counts
 - `x`, `%`, `gg`, `G`, `ge`, `gh`, `gl`, `gs` line/file motions

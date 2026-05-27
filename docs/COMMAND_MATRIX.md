@@ -59,6 +59,8 @@ Priority table for the VS Code extension.
 | `m r <from><to>` | surround.replace | Core | P1 | Replace nearest surrounding pair. |
 | `z f` | fold.close | Delegate | P2 | VS Code fold command. |
 | `z o` | fold.open | Delegate | P2 | VS Code unfold command. |
+| `ctrl-u` | page.up | Delegate | P1 | VS Code `cursorPageUp`. |
+| `ctrl-d` | page.down | Delegate | P1 | VS Code `cursorPageDown`. |
 | `ctrl-n` | snippet.next/completion.next | Delegate | P2 | Context dependent. |
 | `ctrl-p` | snippet.prev/completion.prev | Delegate | P2 | Context dependent. |
 

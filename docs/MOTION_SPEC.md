@@ -168,6 +168,10 @@ MVP limitations:
 - `mi`, `ma`, `md`, and `mr` currently focus on nearest pair behavior and primary-edit behavior for delete/replace.
 - Tree-sitter-aware matching is deferred.
 
+## Page motions
+
+`ctrl-u` and `ctrl-d` delegate to VS Code page movement commands for page up/down style navigation in normal/select mode.
+
 ## Search motions
 
 Initial extension can delegate `/`, `n`, `N` to VS Code find actions or implement simple literal search later.

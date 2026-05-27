@@ -20,4 +20,9 @@ describe('extension keybindings', () => {
     expect(has('shift+b', 'B')).toBe(true)
     expect(has('shift+e', 'E')).toBe(true)
   })
+
+  test('captures page movement keys', () => {
+    expect(has('ctrl+u', 'ctrl-u')).toBe(true)
+    expect(has('ctrl+d', 'ctrl-d')).toBe(true)
+  })
 })

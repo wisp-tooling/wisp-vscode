@@ -144,6 +144,18 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "ctrl+d",
+        "command": "wisp-vscode.key",
+        "args": "ctrl-d",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "ctrl+u",
+        "command": "wisp-vscode.key",
+        "args": "ctrl-u",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "d",
         "command": "wisp-vscode.key",
         "args": "d",

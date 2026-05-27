@@ -23,6 +23,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `w`, `b`, `e` behave correctly across line boundaries.
 - [ ] repeated `x` extends by full lines.
 - [ ] `%` selects full file.
+- [ ] `ctrl-u` / `ctrl-d` page up/down in normal mode.
 
 ## Match/surround
 

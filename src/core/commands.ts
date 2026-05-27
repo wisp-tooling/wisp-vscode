@@ -53,6 +53,8 @@ const delegates: Record<string, DelegateCommand> = {
   '[ D': 'diagnostic.first',
   'z f': 'fold.close',
   'z o': 'fold.open',
+  'ctrl-u': 'page.up',
+  'ctrl-d': 'page.down',
 }
 
 export function dispatch(input: EditorState, key: string): DispatchResult {

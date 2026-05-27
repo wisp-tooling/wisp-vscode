@@ -21,4 +21,6 @@ export const delegateCommands: Record<DelegateCommand, string> = {
   'diagnostic.last': 'editor.action.marker.next',
   'fold.close': 'editor.fold',
   'fold.open': 'editor.unfold',
+  'page.up': 'cursorPageUp',
+  'page.down': 'cursorPageDown',
 }

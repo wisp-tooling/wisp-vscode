@@ -23,6 +23,8 @@ const expected: DelegateCommand[] = [
   'diagnostic.last',
   'fold.close',
   'fold.open',
+  'page.up',
+  'page.down',
 ]
 
 describe('vscode delegate command map', () => {

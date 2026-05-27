@@ -36,6 +36,8 @@ export type DelegateCommand =
   | 'diagnostic.last'
   | 'fold.close'
   | 'fold.open'
+  | 'page.up'
+  | 'page.down'
 
 export type DispatchResult =
   | { kind: 'state'; state: EditorState }
