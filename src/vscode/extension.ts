@@ -66,7 +66,16 @@ async function handleKey(key: string): Promise<void> {
       await navigateDiagnosticExtreme(editor, result.command === 'diagnostic.first' ? 'first' : 'last')
       return
     }
+    if (result.command === 'search.selection') {
+      await searchSelection(editor)
+      return
+    }
+    if (result.command === 'search.selectInSelections') {
+      await selectMatchesInSelections(editor)
+      return
+    }
     await vscode.commands.executeCommand(delegateCommands[result.command])
+    if (result.command === 'find.prevOpen') await vscode.commands.executeCommand(delegateCommands['find.prev'])
   }
 }
 
@@ -179,4 +188,74 @@ async function navigateDiagnosticExtreme(editor: vscode.TextEditor, which: 'firs
   editor.selection = new vscode.Selection(target.range.start, target.range.end)
   editor.selections = [editor.selection]
   editor.revealRange(target.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+}
+
+async function searchSelection(editor: vscode.TextEditor): Promise<void> {
+  const selected = editor.document.getText(editor.selection)
+  if (selected.length === 0) await selectWordUnderCursor(editor)
+  await vscode.commands.executeCommand(delegateCommands['search.selection'])
+}
+
+async function selectWordUnderCursor(editor: vscode.TextEditor): Promise<void> {
+  const range = editor.document.getWordRangeAtPosition(editor.selection.active, /[A-Za-z0-9_]+/)
+  if (!range) return
+  editor.selection = new vscode.Selection(range.start, range.end)
+  editor.selections = [editor.selection]
+}
+
+async function selectMatchesInSelections(editor: vscode.TextEditor): Promise<void> {
+  const query = await vscode.window.showInputBox({ prompt: 'Select matches inside current selections', placeHolder: 'literal text or /regex/' })
+  if (!query) return
+  const matcher = createMatcher(query)
+  const next: vscode.Selection[] = []
+
+  for (const selection of editor.selections) {
+    const text = editor.document.getText(selection)
+    const base = editor.document.offsetAt(selection.start)
+    for (const match of findMatches(text, matcher)) {
+      const start = editor.document.positionAt(base + match.start)
+      const end = editor.document.positionAt(base + match.end)
+      next.push(new vscode.Selection(start, end))
+    }
+  }
+
+  if (next.length === 0) {
+    void vscode.window.setStatusBarMessage(`No matches: ${query}`, 1500)
+    return
+  }
+  editor.selections = next
+  editor.revealRange(next[0]!, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+}
+
+type Matcher = { kind: 'literal'; value: string } | { kind: 'regex'; value: RegExp }
+
+function createMatcher(query: string): Matcher {
+  if (query.length > 2 && query.startsWith('/') && query.endsWith('/')) {
+    return { kind: 'regex', value: new RegExp(query.slice(1, -1), 'gu') }
+  }
+  return { kind: 'literal', value: query }
+}
+
+function findMatches(text: string, matcher: Matcher): Array<{ start: number; end: number }> {
+  if (matcher.kind === 'literal') {
+    const matches: Array<{ start: number; end: number }> = []
+    let index = 0
+    while (matcher.value.length > 0) {
+      const found = text.indexOf(matcher.value, index)
+      if (found < 0) break
+      matches.push({ start: found, end: found + matcher.value.length })
+      index = found + Math.max(1, matcher.value.length)
+    }
+    return matches
+  }
+
+  const matches: Array<{ start: number; end: number }> = []
+  matcher.value.lastIndex = 0
+  for (const match of text.matchAll(matcher.value)) {
+    const start = match.index ?? 0
+    const value = match[0]
+    if (value.length === 0) continue
+    matches.push({ start, end: start + value.length })
+  }
+  return matches
 }

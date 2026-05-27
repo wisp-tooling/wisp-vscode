@@ -95,6 +95,16 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
+- Sprint: search motion foundation
+  - [x] Delegate `/`, `?`, `n`, `N` to VS Code find actions.
+  - [x] Add `*` search from current selection/word.
+  - [x] Add `s` select matches inside current selections via input box.
+  - [x] Add delegate/keybinding coverage.
+  - [ ] Local-test in Extension Development Host.
+  - [ ] Doc sync before closing sprint.
+
+## Recently completed sprint
+
 - Sprint: `g w` visible word jump motion
   - [x] Implement pure label generation and visible word-start helpers.
   - [x] Add pure helper tests for labels and word-start detection.
@@ -106,8 +116,6 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Validate (`npm test`, `npm run typecheck`, `npm run compile`, `npm audit`).
   - [x] Local-test in Extension Development Host.
   - [x] Doc sync before closing sprint.
-
-## Recently completed sprint
 
 - Sprint: surround and match foundation
   - [x] Define MVP surround/match command subset: `mm`, `ms<char>`, `mi<char>`, `ma<char>`, `md<char>`, `mr<from><to>`.

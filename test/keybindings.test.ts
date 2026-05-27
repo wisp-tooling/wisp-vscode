@@ -26,6 +26,15 @@ describe('extension keybindings', () => {
     expect(has('ctrl+d', 'ctrl-d')).toBe(true)
   })
 
+  test('captures search keys', () => {
+    expect(has('/', '/')).toBe(true)
+    expect(has('shift+/', '?')).toBe(true)
+    expect(has('shift+8', '*')).toBe(true)
+    expect(has('s', 's')).toBe(true)
+    expect(has('n', 'n')).toBe(true)
+    expect(has('shift+n', 'N')).toBe(true)
+  })
+
   test('captures every jump label alphabet key', () => {
     for (const key of 'asdfghjklqwertyuiopzxcvbnm') {
       expect(has(key, key)).toBe(true)
