@@ -47,8 +47,10 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `space ?` opens command palette.
 - [ ] `space c` toggles comment.
 - [ ] `u` invokes undo delegate.
-- [ ] `/`, `?`, `*`, `n`, `N` share extension search state.
-- [ ] `s` selects literal/regex matches inside current selections.
+- [ ] `/`, `?`, `*`, `s`, `n`, `N` share extension search state.
+- [ ] `*` stores current selection/word without jumping until `n` or `N`.
+- [ ] `?` sets reverse direction so `n` moves backward and `N` moves forward.
+- [ ] `s` selects literal/regex matches inside current selections and defaults to previous query.
 - [ ] `g d` delegates to definition command.
 
 ## Viewport reveal

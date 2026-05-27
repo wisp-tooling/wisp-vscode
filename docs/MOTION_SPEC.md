@@ -200,10 +200,11 @@ Current adapter keeps an extension-level last search query so `/`, `?`, `*`, `n`
 MVP behavior:
 
 - `/`: prompt for search query and select next match
-- `?`: prompt for search query and select previous match
-- `*`: search using current selection or word under cursor
-- `n`: next match for last query
-- `N`: previous match for last query
+- `?`: prompt for search query, set reverse search direction, and select previous match
+- `*`: store current selection or word under cursor as the search query without jumping
+- `s`: defaults to the previous search query and updates shared search state
+- `n`: next match in the active search direction
+- `N`: previous match/opposite of the active search direction
 
 Search query input supports literal text and regex form `/pattern/`.
 

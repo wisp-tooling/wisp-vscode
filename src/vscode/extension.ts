@@ -11,6 +11,7 @@ let count: number | undefined
 let status: vscode.StatusBarItem | undefined
 let prefixPicker: vscode.QuickPick<PrefixPickItem> | undefined
 let lastSearchQuery: string | undefined
+let searchDirection: -1 | 1 = 1
 
 type PrefixPickItem = vscode.QuickPickItem & { key: string }
 
@@ -209,38 +210,39 @@ async function promptSearch(editor: vscode.TextEditor, direction: -1 | 1): Promi
   const query = await vscode.window.showInputBox(options)
   if (!query) return
   lastSearchQuery = query
+  searchDirection = direction
   selectSearchMatch(editor, query, direction)
 }
 
 async function repeatSearch(editor: vscode.TextEditor, direction: -1 | 1): Promise<void> {
+  const effectiveDirection = direction * searchDirection as -1 | 1
   if (!lastSearchQuery) {
-    await vscode.commands.executeCommand(direction > 0 ? delegateCommands['find.next'] : delegateCommands['find.prev'])
+    await vscode.commands.executeCommand(effectiveDirection > 0 ? delegateCommands['find.next'] : delegateCommands['find.prev'])
     return
   }
-  selectSearchMatch(editor, lastSearchQuery, direction)
+  selectSearchMatch(editor, lastSearchQuery, effectiveDirection)
 }
 
 async function searchSelection(editor: vscode.TextEditor): Promise<void> {
+  const originalSelections = editor.selections
   let selected = editor.document.getText(editor.selection)
   if (selected.length === 0) {
-    await selectWordUnderCursor(editor)
-    selected = editor.document.getText(editor.selection)
+    const range = editor.document.getWordRangeAtPosition(editor.selection.active, /[A-Za-z0-9_]+/)
+    if (!range) return
+    selected = editor.document.getText(range)
   }
   if (selected.length === 0) return
   lastSearchQuery = selected
-  selectSearchMatch(editor, selected, 1, editor.document.offsetAt(editor.selection.start))
-}
-
-async function selectWordUnderCursor(editor: vscode.TextEditor): Promise<void> {
-  const range = editor.document.getWordRangeAtPosition(editor.selection.active, /[A-Za-z0-9_]+/)
-  if (!range) return
-  editor.selection = new vscode.Selection(range.start, range.end)
-  editor.selections = [editor.selection]
+  searchDirection = 1
+  editor.selections = originalSelections
 }
 
 async function selectMatchesInSelections(editor: vscode.TextEditor): Promise<void> {
-  const query = await vscode.window.showInputBox({ prompt: 'Select matches inside current selections', placeHolder: 'literal text or /regex/' })
+  const options: vscode.InputBoxOptions = { prompt: 'Select matches inside current selections', placeHolder: 'literal text or /regex/' }
+  if (lastSearchQuery !== undefined) options.value = lastSearchQuery
+  const query = await vscode.window.showInputBox(options)
   if (!query) return
+  lastSearchQuery = query
   const matcher = createMatcher(query)
   const next: vscode.Selection[] = []
 
