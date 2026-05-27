@@ -46,11 +46,11 @@ export function moveVertical(state: EditorState, delta: -1 | 1): EditorState {
 
 export function moveWordNext(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    let pos = endOf(sel)
+    const from = endOf(sel)
+    let pos = from
     while (pos < state.text.length && isWord(state.text[pos])) pos++
-    while (pos < state.text.length && !isWord(state.text[pos])) pos++
-    const word = wordAt(state.text, pos)
-    return state.mode === 'select' ? { anchor: sel.anchor, head: word.head } : word
+    while (pos < state.text.length && state.text[pos] !== '\n' && !isWord(state.text[pos])) pos++
+    return state.mode === 'select' ? { anchor: sel.anchor, head: pos } : { anchor: from, head: pos }
   })
 }
 
@@ -73,8 +73,15 @@ export function moveWordEnd(state: EditorState): EditorState {
 
 export function selectLine(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const r = lineRangeAt(state.text, sel.head)
-    return { anchor: r.start, head: r.end }
+    const start = startOf(sel)
+    const end = endOf(sel)
+    const selectedEndLine = lineRangeAt(state.text, Math.max(start, end - 1))
+    if (start === lineRangeAt(state.text, start).start && end === selectedEndLine.end && end < state.text.length) {
+      return { anchor: start, head: lineRangeAt(state.text, end).end }
+    }
+
+    const current = lineRangeAt(state.text, sel.head)
+    return { anchor: current.start, head: current.end }
   })
 }
 
@@ -92,6 +99,10 @@ export function gotoFileStart(state: EditorState): EditorState {
 
 export function gotoFileEnd(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => gotoTarget(state, sel, lastLineStart(state.text)))
+}
+
+export function gotoFileLastLineEnd(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => gotoTarget(state, sel, state.text.length))
 }
 
 export function gotoLineStart(state: EditorState): EditorState {

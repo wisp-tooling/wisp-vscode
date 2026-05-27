@@ -32,12 +32,12 @@
     "want": { "text": "adef\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 1 }] }
   },
   {
-    "name": "select mode w extends to next word end",
+    "name": "select mode w extends through trailing separators before next word",
     "text": "hello world\n",
     "mode": "select",
     "selections": [{ "anchor": 0, "head": 0 }],
     "keys": ["w"],
-    "want": { "text": "hello world\n", "mode": "select", "selections": [{ "anchor": 0, "head": 11 }] }
+    "want": { "text": "hello world\n", "mode": "select", "selections": [{ "anchor": 0, "head": 6 }] }
   },
   {
     "name": "select mode b extends to previous word start",

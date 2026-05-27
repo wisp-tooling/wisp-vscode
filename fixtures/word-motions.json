@@ -1,11 +1,27 @@
 [
   {
-    "name": "w selects next word",
+    "name": "w selects through trailing separators before next word",
     "text": "hello world\n",
     "mode": "normal",
     "selections": [{ "anchor": 0, "head": 0 }],
     "keys": ["w"],
-    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 11 }] }
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 6 }] }
+  },
+  {
+    "name": "repeated w replaces selection from previous head",
+    "text": "hello world again\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["w", "w"],
+    "want": { "text": "hello world again\n", "mode": "normal", "selections": [{ "anchor": 6, "head": 12 }] }
+  },
+  {
+    "name": "w stops trailing whitespace at newline",
+    "text": "hello   \nworld\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["w"],
+    "want": { "text": "hello   \nworld\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 8 }] }
   },
   {
     "name": "b selects previous word",

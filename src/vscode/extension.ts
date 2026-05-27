@@ -3,6 +3,7 @@ import { dispatch } from '../core/commands.js'
 import type { DelegateCommand, EditorState, Mode, Selection } from '../core/types.js'
 
 let mode: Mode = 'normal'
+let pending: string[] | undefined
 let status: vscode.StatusBarItem | undefined
 
 const delegateCommands: Record<DelegateCommand, string> = {
@@ -48,6 +49,7 @@ async function handleKey(key: string): Promise<void> {
   const state = editorToState(editor)
   const result = dispatch(state, key)
   mode = result.state.mode
+  pending = result.state.pending
 
   await applyState(editor, state, result.state)
   await setMode(result.state.mode, result.state.pending)
@@ -64,6 +66,7 @@ function editorToState(editor: vscode.TextEditor): EditorState {
     selections: editor.selections.map((selection) => selectionToCore(document, selection)),
     primary: Math.max(0, editor.selections.findIndex((selection) => selection.isEqual(editor.selection))),
     mode,
+    pending,
   }
 }
 
@@ -81,6 +84,7 @@ async function applyState(editor: vscode.TextEditor, previous: EditorState, next
   }
 
   editor.selections = next.selections.map((selection) => coreToSelection(editor.document, selection))
+  editor.revealRange(editor.selection, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }
 
 function coreToSelection(document: vscode.TextDocument, selection: Selection): vscode.Selection {

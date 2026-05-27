@@ -1,4 +1,4 @@
-import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
+import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
 import type { DelegateCommand, DispatchResult, EditorState } from './types.js'
 
@@ -90,6 +90,8 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: gotoFileEnd(commandState) }
     case 'g g':
       return { kind: 'state', state: gotoFileStart(commandState) }
+    case 'g e':
+      return { kind: 'state', state: gotoFileLastLineEnd(commandState) }
     case 'g h':
       return { kind: 'state', state: gotoLineStart(commandState) }
     case 'g l':

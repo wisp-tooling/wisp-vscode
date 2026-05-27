@@ -40,6 +40,14 @@
     "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 4 }] }
   },
   {
+    "name": "repeated x extends line selection",
+    "text": "abc\ndef\nghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["x", "x", "x"],
+    "want": { "text": "abc\ndef\nghi\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 12 }] }
+  },
+  {
     "name": "percent selects whole file",
     "text": "abc\ndef\n",
     "mode": "normal",
@@ -70,6 +78,14 @@
     "selections": [{ "anchor": 1, "head": 1 }],
     "keys": ["G"],
     "want": { "text": "abc\ndef", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "ge goes to end of file",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["g", "e"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 8, "head": 8 }] }
   },
   {
     "name": "gh goes to line start",

@@ -149,6 +149,12 @@
         "when": "editorTextFocus && wisp.mode != insert"
       },
       {
+        "key": "s",
+        "command": "wisp-vscode.key",
+        "args": "s",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
         "key": "shift+/",
         "command": "wisp-vscode.key",
         "args": "?",
