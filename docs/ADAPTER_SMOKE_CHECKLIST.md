@@ -26,6 +26,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 ## Core motion behavior spot-check
 
 - [ ] `w`, `b`, `e` behave correctly across line boundaries.
+- [ ] `h`/`l` and left/right arrows move from selection head without skipping active selections.
 - [ ] repeated `x` extends by full lines.
 - [ ] `%` selects full file.
 - [ ] `ctrl-u` / `ctrl-d` page up/down in normal mode.

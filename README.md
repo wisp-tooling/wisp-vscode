@@ -57,6 +57,7 @@ The pure TypeScript core currently includes:
 - `d` delete and `c` change edits
 - match/surround foundation: `mm`, `ms<char>`, `mi<char>`, `ma<char>`, `md<char>`, `mr<from><to>`
 - textobjects for `miw`/`maw`, `miW`/`maW`, and `mip`/`maP`
+- search foundation for `/`, `?`, `*`, `s`, `n`, `N` with shared query state
 - prefix tracking for command sequences such as `g g` / `space ?` across keypresses in the VS Code adapter
 - selection normalization with clamping, sorting, and overlap merging
 - replay fixtures and invariant tests for edge cases

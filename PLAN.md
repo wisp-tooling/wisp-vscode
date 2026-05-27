@@ -96,12 +96,14 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Current sprint
 
 - Sprint: search motion foundation
-  - [x] Implement shared extension search state for `/`, `?`, `*`, `n`, `N`.
-  - [x] Add `*` search from current selection/word.
+  - [x] Implement shared extension search state for `/`, `?`, `*`, `s`, `n`, `N`.
+  - [x] Add `*` search from current selection/word without jumping.
   - [x] Add `s` select matches inside current selections via input box.
+  - [x] Add `?` reverse-direction search semantics.
   - [x] Add `,` collapse-to-primary selection support.
+  - [x] Polish horizontal movement from selection head.
   - [x] Add delegate/keybinding coverage.
-  - [ ] Local-test in Extension Development Host.
+  - [x] Local-test in Extension Development Host.
   - [x] Doc sync before closing sprint.
 
 ## Recently completed sprint

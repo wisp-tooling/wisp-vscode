@@ -32,11 +32,27 @@
     "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 10, "head": 10 }] }
   },
   {
+    "name": "left arrow matches h from selection head",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 6, "head": 11 }],
+    "keys": ["left"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 10, "head": 10 }] }
+  },
+  {
     "name": "l moves right from reversed selection head without skipping selection",
     "text": "hello world\n",
     "mode": "normal",
     "selections": [{ "anchor": 11, "head": 6 }],
     "keys": ["l"],
+    "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 7, "head": 7 }] }
+  },
+  {
+    "name": "right arrow matches l from reversed selection head",
+    "text": "hello world\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 11, "head": 6 }],
+    "keys": ["right"],
     "want": { "text": "hello world\n", "mode": "normal", "selections": [{ "anchor": 7, "head": 7 }] }
   },
   {
