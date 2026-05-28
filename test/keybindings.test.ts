@@ -42,6 +42,7 @@ describe('extension keybindings', () => {
     expect(has('q', 'q')).toBe(true)
     expect(has('shift+q', 'Q')).toBe(true)
     expect(has('shift+w', 'W')).toBe(true)
+    expect(has('shift+r', 'R')).toBe(true)
     expect(has('enter', 'enter')).toBe(true)
     expect(has('a', 'a')).toBe(true)
     expect(has('shift+1', '!')).toBe(true)

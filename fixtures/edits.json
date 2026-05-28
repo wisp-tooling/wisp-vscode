@@ -42,6 +42,30 @@
     "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }], "yanked": ["abc", "def"] }
   },
   {
+    "name": "r replaces selections with repeated character",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["r", "x"],
+    "want": { "text": "xxx xxx\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }] }
+  },
+  {
+    "name": "R replaces selections with yanked text",
+    "text": "abc def ghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }],
+    "keys": ["y", "l", "w", "R"],
+    "want": { "text": "abc abcghi\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }], "yanked": ["abc"] }
+  },
+  {
+    "name": "R replaces multiple selections with matching yanked text",
+    "text": "abc def ghi jkl\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["y", "l", "w", "R"],
+    "want": { "text": "abc abcdefjkl\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }, { "anchor": 8, "head": 11 }], "yanked": ["abc", "def"] }
+  },
+  {
     "name": "Y joins selections into one yank buffer",
     "text": "abc def\n",
     "mode": "normal",

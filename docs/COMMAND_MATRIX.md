@@ -42,6 +42,8 @@ Priority table for the VS Code extension.
 | `?` | search.backward | Adapter | P1 | Prompt and search backward. |
 | `*` | search.selection | Adapter | P1 | Search current selection/word. |
 | `s` | search.selectInSelections | Adapter | P1 | Select matches inside selections. |
+| `r <char>` | replace.char | Core | P0 | Replace each selected character/range with char. |
+| `R` | replace.yanked | Core | P0 | Replace selections with extension yank register. |
 | `y` | yank | Core | P0 | Yank selections to extension register. |
 | `Y` | yank.joined | Core | P1 | Yank selections into one newline-joined extension register. |
 | `p` | paste.after | Core | P0 | Paste extension register after selections/cursors. |

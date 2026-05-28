@@ -50,6 +50,8 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `space d` opens document diagnostics picker.
 - [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.
+- [ ] `r<char>` replaces selections with a repeated character.
+- [ ] `R` replaces selections with the extension-local yank register.
 - [ ] `y`, `Y`, `p`, and `P` use the extension-local yank register.
 - [ ] `p` pastes after collapsed cursors; `P` pastes at/before collapsed cursors.
 - [ ] `space y`, `space p`, and `space P` use the system clipboard.

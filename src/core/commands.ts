@@ -34,6 +34,32 @@ function pastePoint(sel: Selection, where: 'after' | 'before', textLength: numbe
   return where === 'after' ? Math.min(textLength, sel.head + 1) : sel.head
 }
 
+function replaceSelectionsWithTexts(state: EditorState, replacements: string[]): EditorState {
+  const primarySelection = state.selections[state.primary] ?? state.selections[0]!
+  const ordered = state.selections
+    .map((sel, index) => ({ start: startOf(sel), end: endOf(sel), index, text: replacements[index] ?? replacements[state.primary] ?? replacements[0] ?? '', primary: sel === primarySelection }))
+    .sort((a, b) => b.start - a.start)
+  let text = state.text
+  const nextSelections: Array<{ selection: Selection; primary: boolean }> = []
+  for (const item of ordered) {
+    const end = item.start === item.end ? Math.min(text.length, item.end + 1) : item.end
+    text = text.slice(0, item.start) + item.text + text.slice(end)
+    nextSelections.push({ selection: { anchor: item.start, head: item.start + item.text.length }, primary: item.primary })
+  }
+  nextSelections.reverse()
+  const primary = Math.max(0, nextSelections.findIndex((item) => item.primary))
+  return normalizeState({ ...withCountCleared(state), text, selections: nextSelections.map((item) => item.selection), primary, pending: undefined })
+}
+
+function replaceSelectionsWithChar(state: EditorState, char: string): EditorState {
+  return replaceSelectionsWithTexts(state, state.selections.map((sel) => char.repeat(Math.max(1, endOf(sel) - startOf(sel)))))
+}
+
+function replaceSelectionsWithYanked(state: EditorState): EditorState {
+  const yanked = state.yanked && state.yanked.length > 0 ? state.yanked : ['']
+  return replaceSelectionsWithTexts(state, yanked)
+}
+
 function pasteSelections(state: EditorState, where: 'after' | 'before'): EditorState {
   const yanked = state.yanked && state.yanked.length > 0 ? state.yanked : ['']
   if (yanked.every((text) => text.length === 0)) return { ...withCountCleared(state), pending: undefined }
@@ -194,6 +220,8 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: yankSelections(commandState) }
     case 'Y':
       return { kind: 'state', state: yankJoinedSelections(commandState) }
+    case 'R':
+      return { kind: 'state', state: replaceSelectionsWithYanked(commandState) }
     case 'p':
       return { kind: 'state', state: pasteSelections(commandState, 'after') }
     case 'P':
@@ -216,6 +244,10 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: gotoFirstNonWhitespace(commandState) }
     case 'm m':
       return { kind: 'state', state: gotoMatchingBracket(commandState) }
+  }
+
+  if (pending.length === 1 && pending[0] === 'r') {
+    return { kind: 'state', state: replaceSelectionsWithChar(commandState, key) }
   }
 
   if (pending.length === 2 && pending[0] === 'm' && pending[1] === 's') {
@@ -252,7 +284,7 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     return { kind: 'delegate', state: withCountCleared(commandState), command: delegate }
   }
 
-  if (['g', 'space', '[', ']', 'z', 'm', ':'].includes(seq)) {
+  if (['g', 'space', '[', ']', 'z', 'm', ':', 'r'].includes(seq)) {
     return { kind: 'state', state: { ...state, pending: [key] } }
   }
 
