@@ -205,6 +205,14 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 - Delegate rename, code actions, hover.
 - Delegate quick open and command palette.
 
+### Publishing/readiness
+
+- Add Marketplace demo screenshot/GIF to README.
+- Add configurable Opinionated Wisp Mode vs standard Helix mode toggle/docs.
+- Add `@vscode/vsce` only after explicit dependency approval.
+- Package and test local `.vsix` before publishing.
+- Authenticate locally with `npx vsce login wisp-tooling` using an Azure DevOps PAT with Marketplace Publish scope.
+
 ### Performance/security/auditability
 
 - Review per-keypress allocations and hot paths.

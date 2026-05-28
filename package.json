@@ -1,5 +1,5 @@
 {
-  "name": "wisp-vscode-core-seed",
+  "name": "wisp-vscode",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -474,10 +474,28 @@
       }
     ]
   },
-  "displayName": "Wisp VS Code",
-  "description": "Dependency-light Helix/Wisp-style modal editing for VS Code.",
-  "publisher": "local",
+  "displayName": "Wisp: Helix Emulator",
+  "description": "A dependency-light Helix/Wisp-style modal editing emulator for VS Code.",
+  "publisher": "wisp-tooling",
   "categories": [
+    "Keymaps",
     "Other"
-  ]
+  ],
+  "license": "MIT",
+  "icon": "images/wisp-draft-icon.png",
+  "keywords": [
+    "helix",
+    "modal",
+    "vim",
+    "keymap",
+    "wisp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wisp-tooling/wisp-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wisp-tooling/wisp-vscode/issues"
+  },
+  "homepage": "https://github.com/wisp-tooling/wisp-vscode#readme"
 }

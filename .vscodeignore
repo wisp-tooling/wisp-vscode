@@ -25,3 +25,7 @@ pnpm-debug.log*
 !dist/**
 !package.json
 !README.md
+!CHANGELOG.md
+!LICENSE
+!SECURITY.md
+!images/wisp-draft-icon.png

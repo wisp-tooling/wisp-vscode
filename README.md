@@ -4,6 +4,16 @@ Purpose: starter resources for building a pure TypeScript VS Code extension that
 
 This directory is intended to be copied into a new repository.
 
+## Features
+
+- Helix/Wisp-style normal, insert, and select modes.
+- Word, WORD, line, file, goto, search, surround, match, diagnostic, and visible word jump motions.
+- Shared search state for `/`, `?`, `*`, `s`, `n`, and `N`.
+- Command-mode write/quit combinations such as `:w`, `:wa`, `:q`, `:wq`, and `:wqa!`.
+- Native VS Code integration with zero runtime dependencies.
+
+> Screenshot/GIF TODO: add a short Marketplace-friendly demo before public release.
+
 ## Goals
 
 - Implement a useful Helix/Wisp motion emulator for VS Code.
@@ -89,6 +99,7 @@ Implement first:
 Defer:
 
 - exact Wisp picker UI
+- configurable Opinionated Wisp Mode vs standard Helix mode toggle
 - full snippet anchors
 - tree-sitter
 - external `wi` process integration
