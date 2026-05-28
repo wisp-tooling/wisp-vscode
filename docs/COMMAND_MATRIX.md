@@ -54,6 +54,11 @@ Priority table for the VS Code extension.
 | `space h` | lsp.hover | Delegate | P1 | `editor.action.showHover`. |
 | `space s` | symbol.document | Delegate | P1 | `workbench.action.gotoSymbol`. |
 | `space d` | diagnostic.picker | Adapter/API | P1 | Current document diagnostic QuickPick. |
+| `; w` | file.save | Delegate | P1 | Save current file. |
+| `; W` | file.saveAll | Delegate | P2 | Save all files. |
+| `; q` | file.close | Delegate | P1 | Close active editor. |
+| `; x` | file.saveAndClose | Adapter | P1 | Save current file, then close active editor. |
+| `; Q` | workbench.quit | Delegate | P2 | Quit VS Code/window. |
 | `] d` | diagnostic.next | Delegate | P1 | VS Code marker nav. |
 | `[ d` | diagnostic.prev | Delegate | P1 | VS Code marker nav. |
 | `] D` | diagnostic.last | Delegate/API | P1 | Uses VS Code diagnostics API. |
@@ -80,6 +85,7 @@ Implement a lightweight which-key popup after prefix keys:
 
 - `space`
 - `g`
+- `;`
 - `z`
 - `m`
 - `[`

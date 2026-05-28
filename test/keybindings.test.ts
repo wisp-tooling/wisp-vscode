@@ -35,8 +35,12 @@ describe('extension keybindings', () => {
     expect(has('shift+n', 'N')).toBe(true)
   })
 
-  test('captures escape parity and selection collapse keys', () => {
+  test('captures escape parity, command prefix, and selection collapse keys', () => {
     expect(has('ctrl+[', 'ctrl-[')).toBe(true)
+    expect(has(';', ';')).toBe(true)
+    expect(has('q', 'q')).toBe(true)
+    expect(has('shift+q', 'Q')).toBe(true)
+    expect(has('shift+w', 'W')).toBe(true)
     expect(has(', ', ',')).toBe(true)
   })
 

@@ -53,6 +53,11 @@ const delegates: Record<string, DelegateCommand> = {
   'space h': 'lsp.hover',
   'space s': 'symbol.document',
   'space d': 'diagnostic.picker',
+  '; w': 'file.save',
+  '; W': 'file.saveAll',
+  '; q': 'file.close',
+  '; x': 'file.saveAndClose',
+  '; Q': 'workbench.quit',
   '] d': 'diagnostic.next',
   '[ d': 'diagnostic.prev',
   '] D': 'diagnostic.last',
@@ -161,7 +166,7 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     return { kind: 'delegate', state: withCountCleared(commandState), command: delegate }
   }
 
-  if (['g', 'space', '[', ']', 'z', 'm'].includes(seq)) {
+  if (['g', 'space', '[', ']', 'z', 'm', ';'].includes(seq)) {
     return { kind: 'state', state: { ...state, pending: [key] } }
   }
 

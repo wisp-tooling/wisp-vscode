@@ -95,6 +95,16 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
+- Sprint: semicolon file commands
+  - [x] Add `;` prefix hints for save/quit commands.
+  - [x] Implement `; w`, `; W`, `; q`, `; x`, `; Q` delegate paths.
+  - [x] Add keybinding/delegate/prefix coverage.
+  - [ ] Local-test in Extension Development Host.
+  - [x] Validate.
+  - [x] Doc sync before closing sprint.
+
+## Recently completed sprint
+
 - Sprint: readiness/publish foundation
   - [x] Add publishing checklist/playbook.
   - [x] Add initial `.vscodeignore` package exclusions.
@@ -103,8 +113,6 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Add release/security docs placeholders as appropriate.
   - [x] Validate.
   - [x] Doc sync before closing sprint.
-
-## Recently completed sprint
 
 - Sprint: richer Wisp picker UI
   - [x] Reduce status bar prefix noise now that QuickPick is primary.

@@ -14,6 +14,11 @@ describe('prefix hints', () => {
     expect(keys).toContain('s')
   })
 
+  test('semicolon prefix exposes file commands', () => {
+    const keys = prefixHints([';']).map((hint) => hint.key)
+    expect(keys).toEqual(expect.arrayContaining(['w', 'W', 'q', 'x', 'Q']))
+  })
+
   test('match prefix exposes nested surround hints', () => {
     expect(prefixHints(['m']).map((hint) => hint.key)).toContain('s')
     expect(prefixHints(['m', 's']).map((hint) => hint.key)).toContain('(')

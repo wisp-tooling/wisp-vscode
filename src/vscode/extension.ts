@@ -89,6 +89,11 @@ async function handleKey(key: string): Promise<void> {
       await showDiagnosticPicker(editor)
       return
     }
+    if (result.command === 'file.saveAndClose') {
+      await vscode.commands.executeCommand(delegateCommands['file.save'])
+      await vscode.commands.executeCommand(delegateCommands['file.close'])
+      return
+    }
     if (result.command === 'search.selectInSelections') {
       await selectMatchesInSelections(editor)
       return
