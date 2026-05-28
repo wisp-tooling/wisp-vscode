@@ -89,9 +89,9 @@ async function handleKey(key: string): Promise<void> {
       await showDiagnosticPicker(editor)
       return
     }
-    if (result.command === 'file.saveAndClose') {
+    if (result.command === 'file.saveAndClose' || result.command === 'file.saveAndForceClose') {
       await vscode.commands.executeCommand(delegateCommands['file.save'])
-      await vscode.commands.executeCommand(delegateCommands['file.close'])
+      await vscode.commands.executeCommand(result.command === 'file.saveAndForceClose' ? delegateCommands['file.forceClose'] : delegateCommands['file.close'])
       return
     }
     if (result.command === 'workbench.saveAllAndQuit') {

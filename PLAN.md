@@ -99,7 +99,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Check Helix tutor command-mode docs.
   - [x] Add `:` prefix hints for save/quit commands.
   - [x] Keep `;` aligned with Helix selection-collapse behavior.
-  - [x] Implement `: w`, `: wa`, `: q`, `: qa`, `: wq`, `: wqa!` delegate paths.
+  - [x] Implement core command-mode combinations: `:w`, `:w!`, `:wa`, `:wa!`, `:q`, `:q!`, `:qa`, `:qa!`, `:wq`, `:wq!`, `:wqa`, `:wqa!`.
   - [x] Add keybinding/delegate/prefix coverage.
   - [ ] Local-test in Extension Development Host.
   - [x] Validate.

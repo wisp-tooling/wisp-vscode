@@ -51,13 +51,13 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.
 - [ ] `:` opens command picker, shows typed command text, and does not run `w` until Enter.
-- [ ] `:` then `w` then Enter saves current file.
-- [ ] `:` then `wa` then Enter saves all files.
+- [ ] `:` then `w` / `w!` then Enter saves current file.
+- [ ] `:` then `wa` / `wa!` then Enter saves all files.
 - [ ] `:` then `q` then Enter closes active editor.
-- [ ] `:` then `qa` then Enter quits all / quits VS Code.
-- [ ] `:` then `wq` then Enter saves and closes active editor.
-- [ ] `:` then `wqa` then Enter saves all and quits.
-- [ ] `:` then `wqa!` then Enter saves all and quits.
+- [ ] `:` then `q!` then Enter force-closes/reverts active editor.
+- [ ] `:` then `qa` / `qa!` then Enter quits all / quits VS Code.
+- [ ] `:` then `wq` / `wq!` then Enter saves and closes active editor.
+- [ ] `:` then `wqa` / `wqa!` then Enter saves all and quits.
 - [ ] `;` collapses to the primary selection.
 - [ ] `u` invokes undo delegate.
 - [ ] `/`, `?`, `*`, `s`, `n`, `N` share extension search state.
