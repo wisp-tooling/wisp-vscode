@@ -65,7 +65,7 @@ From any offset:
 3. stop before crossing line boundaries,
 4. if already at newline, move to/select first word start on next line.
 
-In normal mode, each `w` replaces the previous selection from the previous head/end (does not keep extending from the original anchor).
+In normal mode, each `w` replaces the previous selection from the previous head/end (does not keep extending from the original anchor). In select mode, `w` moves from the active `head` so reversed selections do not jump across the selected range.
 
 ### `b`
 
@@ -78,7 +78,7 @@ From any offset:
 3. stop at previous word start,
 4. if at a line boundary, do not carry newline/trailing whitespace into selection.
 
-In normal mode, each `b` replaces from the previous selection start.
+In normal mode, each `b` replaces from the previous selection start. In select mode, `b` moves from the active `head` so forward selections can shrink or reverse correctly.
 
 ### `e`
 
@@ -90,7 +90,7 @@ From any offset:
 2. otherwise skip separators to next word and move to its end,
 3. if at a line boundary, move to the next line word end without carrying newline whitespace.
 
-In normal mode, each `e` replaces from the previous selection end.
+In normal mode, each `e` replaces from the previous selection end. In select mode, `e` moves from the active `head`.
 
 ### `W`, `B`, `E`
 

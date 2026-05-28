@@ -118,5 +118,37 @@
     "selections": [{ "anchor": 1, "head": 1 }],
     "keys": ["E"],
     "want": { "text": "test-string next\n", "mode": "normal", "selections": [{ "anchor": 1, "head": 11 }] }
+  },
+  {
+    "name": "select mode w moves from reversed selection head",
+    "text": "one two three\n",
+    "mode": "select",
+    "selections": [{ "anchor": 7, "head": 3 }],
+    "keys": ["w"],
+    "want": { "text": "one two three\n", "mode": "select", "selections": [{ "anchor": 7, "head": 4 }] }
+  },
+  {
+    "name": "select mode b moves from forward selection head",
+    "text": "one two three\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 7 }],
+    "keys": ["b"],
+    "want": { "text": "one two three\n", "mode": "select", "selections": [{ "anchor": 0, "head": 4 }] }
+  },
+  {
+    "name": "select mode W moves from reversed selection head",
+    "text": "one two-three\n",
+    "mode": "select",
+    "selections": [{ "anchor": 13, "head": 3 }],
+    "keys": ["W"],
+    "want": { "text": "one two-three\n", "mode": "select", "selections": [{ "anchor": 13, "head": 4 }] }
+  },
+  {
+    "name": "select mode B moves from forward selection head",
+    "text": "one two-three\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 13 }],
+    "keys": ["B"],
+    "want": { "text": "one two-three\n", "mode": "select", "selections": [{ "anchor": 0, "head": 4 }] }
   }
 ]

@@ -50,7 +50,7 @@ export function moveVertical(state: EditorState, delta: -1 | 1): EditorState {
 
 export function moveWordNext(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const from = endOf(sel)
+    const from = state.mode === 'select' ? sel.head : endOf(sel)
     let pos = from
     let anchor = from
     if (state.text[pos] === '\n') {
@@ -66,7 +66,7 @@ export function moveWordNext(state: EditorState): EditorState {
 
 export function moveWordPrev(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const from = startOf(sel)
+    const from = state.mode === 'select' ? sel.head : startOf(sel)
     let pos = from - 1
     let anchor = from
     if (state.text[pos] === '\n') {
@@ -83,7 +83,7 @@ export function moveWordPrev(state: EditorState): EditorState {
 
 export function moveWordEnd(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const from = endOf(sel)
+    const from = state.mode === 'select' ? sel.head : endOf(sel)
     let pos = from
     let anchor = from
     if (state.text[pos] === '\n') {
@@ -100,7 +100,7 @@ export function moveWordEnd(state: EditorState): EditorState {
 
 export function moveLongWordNext(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const from = endOf(sel)
+    const from = state.mode === 'select' ? sel.head : endOf(sel)
     let pos = from
     let anchor = from
     if (state.text[pos] === '\n') {
@@ -116,7 +116,7 @@ export function moveLongWordNext(state: EditorState): EditorState {
 
 export function moveLongWordPrev(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const from = startOf(sel)
+    const from = state.mode === 'select' ? sel.head : startOf(sel)
     let pos = from - 1
     let anchor = from
     if (state.text[pos] === '\n') {
@@ -133,7 +133,7 @@ export function moveLongWordPrev(state: EditorState): EditorState {
 
 export function moveLongWordEnd(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => {
-    const from = endOf(sel)
+    const from = state.mode === 'select' ? sel.head : endOf(sel)
     let pos = from
     let anchor = from
     if (state.text[pos] === '\n') {

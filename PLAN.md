@@ -95,17 +95,24 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
+- Sprint: multi-selection correctness
+  - [x] Move select-mode word/WORD motions from active head, including reversed selections.
+  - [x] Add regression fixtures for select-mode `w`, `b`, `W`, `B` with non-collapsed selections.
+  - [ ] Audit additional motions/operators for primary-only or range-edge behavior.
+  - [ ] Validate.
+  - [ ] Doc sync before closing sprint.
+
+## Recently completed sprint
+
 - Sprint: Helix command-mode file commands
   - [x] Check Helix tutor command-mode docs.
   - [x] Add `:` prefix hints for save/quit commands.
   - [x] Keep `;` aligned with Helix selection-collapse behavior.
   - [x] Implement core command-mode combinations: `:w`, `:w!`, `:wa`, `:wa!`, `:q`, `:q!`, `:qa`, `:qa!`, `:wq`, `:wq!`, `:wqa`, `:wqa!`.
   - [x] Add keybinding/delegate/prefix coverage.
-  - [ ] Local-test in Extension Development Host.
+  - [x] Local-test in Extension Development Host.
   - [x] Validate.
   - [x] Doc sync before closing sprint.
-
-## Recently completed sprint
 
 - Sprint: readiness/publish foundation
   - [x] Add publishing checklist/playbook.
