@@ -72,6 +72,7 @@ The pure TypeScript core currently includes:
 - `docs/COMMAND_MATRIX.md`: key/command priority table.
 - `docs/VSCODE_ADAPTER.md`: extension integration notes.
 - `docs/ADAPTER_SMOKE_CHECKLIST.md`: manual extension smoke checks.
+- `docs/PUBLISHING_CHECKLIST.md`: release/readiness checklist.
 
 ## MVP scope
 

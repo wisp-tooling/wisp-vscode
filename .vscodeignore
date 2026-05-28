@@ -1,0 +1,27 @@
+# Source/test inputs not needed at extension runtime
+src/**
+test/**
+fixtures/**
+docs/**
+helix-docs/**
+
+# Local/editor files
+.vscode/**
+.git/**
+.gitignore
+AGENT.md
+PLAN.md
+vitest.config.ts
+tsconfig.json
+
+# Dependency/install noise
+node_modules/**
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Keep built extension output and package metadata
+!dist/**
+!package.json
+!README.md

@@ -95,13 +95,23 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
-- Sprint: richer Wisp picker UI
-  - [x] Reduce status bar prefix noise now that QuickPick is primary.
-  - [x] Improve QuickPick title, placeholder, matching, and item formatting.
-  - [ ] Local-test prefix picker flows.
+- Sprint: readiness/publish foundation
+  - [x] Add publishing checklist/playbook.
+  - [x] Add initial `.vscodeignore` package exclusions.
+  - [ ] Review package metadata gaps without locking final naming decisions.
+  - [ ] Add release/security docs placeholders as appropriate.
+  - [ ] Validate.
   - [ ] Doc sync before closing sprint.
 
 ## Recently completed sprint
+
+- Sprint: richer Wisp picker UI
+  - [x] Reduce status bar prefix noise now that QuickPick is primary.
+  - [x] Improve QuickPick title, placeholder, matching, and item formatting.
+  - [x] Restore `space /`, `space d`, and `space s` picker commands.
+  - [x] Add custom Wisp-style picker menu to backlog.
+  - [x] Local-test prefix picker flows.
+  - [x] Doc sync before closing sprint.
 
 - Sprint: search motion foundation
   - [x] Implement shared extension search state for `/`, `?`, `*`, `s`, `n`, `N`.
