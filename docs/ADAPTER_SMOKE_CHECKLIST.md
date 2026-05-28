@@ -50,6 +50,8 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `space d` opens document diagnostics picker.
 - [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.
+- [ ] `y`, `p`, and `P` use the extension-local yank register.
+- [ ] `space y`, `space p`, and `space P` use the system clipboard.
 - [ ] `:` opens command picker, shows typed command text, and does not run `w` until Enter.
 - [ ] `:` then `w` / `w!` then Enter saves current file.
 - [ ] `:` then `wa` / `wa!` then Enter saves all files.

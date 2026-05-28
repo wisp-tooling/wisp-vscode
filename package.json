@@ -471,6 +471,18 @@
         "command": "wisp-vscode.key",
         "args": "-",
         "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+p",
+        "command": "wisp-vscode.key",
+        "args": "P",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+y",
+        "command": "wisp-vscode.key",
+        "args": "Y",
+        "when": "editorTextFocus && wisp.mode != insert"
       }
     ]
   },

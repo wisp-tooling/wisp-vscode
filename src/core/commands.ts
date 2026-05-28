@@ -17,7 +17,38 @@ function repeatMotion(state: EditorState, times: number, motion: (s: EditorState
   return next
 }
 
+function selectedTexts(state: EditorState): string[] {
+  return state.selections.map((sel) => state.text.slice(startOf(sel), endOf(sel)))
+}
+
+function yankSelections(state: EditorState): EditorState {
+  return { ...withCountCleared(state), yanked: selectedTexts(state), pending: undefined }
+}
+
+function pasteSelections(state: EditorState, where: 'after' | 'before'): EditorState {
+  const yanked = state.yanked && state.yanked.length > 0 ? state.yanked : ['']
+  if (yanked.every((text) => text.length === 0)) return { ...withCountCleared(state), pending: undefined }
+  const ordered = state.selections
+    .map((sel, index) => ({ sel, index, at: where === 'after' ? endOf(sel) : startOf(sel), text: yanked[index] ?? yanked[state.primary] ?? yanked[0]! }))
+    .sort((a, b) => b.at - a.at)
+  let text = state.text
+  const nextSelections = state.selections.map((selection) => ({ ...selection }))
+  for (const item of ordered) {
+    text = text.slice(0, item.at) + item.text + text.slice(item.at)
+    nextSelections[item.index] = { anchor: item.at, head: item.at + item.text.length }
+    for (let i = 0; i < nextSelections.length; i++) {
+      if (i === item.index) continue
+      if (startOf(nextSelections[i]!) >= item.at) {
+        nextSelections[i]!.anchor += item.text.length
+        nextSelections[i]!.head += item.text.length
+      }
+    }
+  }
+  return normalizeState({ ...withCountCleared(state), text, selections: nextSelections, pending: undefined })
+}
+
 function deleteSelections(state: EditorState): EditorState {
+  const yanked = selectedTexts(state)
   const primarySelection = state.selections[state.primary] ?? state.selections[0]!
   const primaryStart = startOf(primarySelection)
   const ordered = [...state.selections]
@@ -40,7 +71,7 @@ function deleteSelections(state: EditorState): EditorState {
   }
   cursors.reverse()
   const primary = Math.max(0, cursors.findIndex((item) => item.primary))
-  return normalizeState({ ...state, text, selections: cursors.map((item) => cursor(item.offset)), primary, pending: undefined })
+  return normalizeState({ ...state, text, selections: cursors.map((item) => cursor(item.offset)), primary, pending: undefined, yanked })
 }
 
 const delegates: Record<string, DelegateCommand> = {
@@ -52,6 +83,10 @@ const delegates: Record<string, DelegateCommand> = {
   N: 'find.prev',
   '*': 'search.selection',
   s: 'search.selectInSelections',
+  'space y': 'clipboard.yank',
+  'space Y': 'clipboard.yankPrimary',
+  'space p': 'clipboard.pasteAfter',
+  'space P': 'clipboard.pasteBefore',
   'g d': 'lsp.definition',
   'g r': 'lsp.references',
   'space /': 'search.workspace',
@@ -147,6 +182,12 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     case ',':
     case ';':
       return { kind: 'state', state: { ...withCountCleared(commandState), selections: [commandState.selections[commandState.primary]!], primary: 0 } }
+    case 'y':
+      return { kind: 'state', state: yankSelections(commandState) }
+    case 'p':
+      return { kind: 'state', state: pasteSelections(commandState, 'after') }
+    case 'P':
+      return { kind: 'state', state: pasteSelections(commandState, 'before') }
     case 'd':
       return { kind: 'state', state: withMode(deleteSelections(commandState), 'normal') }
     case 'c':

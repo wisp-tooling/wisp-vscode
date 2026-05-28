@@ -13,6 +13,7 @@ export type EditorState = {
   pending?: string[] | undefined
   count?: number | undefined
   preferredColumns?: Array<number | null> | undefined
+  yanked?: string[] | undefined
 }
 
 export type DelegateCommand =
@@ -25,6 +26,10 @@ export type DelegateCommand =
   | 'search.selection'
   | 'search.selectInSelections'
   | 'search.workspace'
+  | 'clipboard.yank'
+  | 'clipboard.yankPrimary'
+  | 'clipboard.pasteAfter'
+  | 'clipboard.pasteBefore'
   | 'file.quickOpen'
   | 'buffer.quickOpen'
   | 'command.palette'
@@ -69,6 +74,7 @@ export type ReplayCase = {
     mode: Mode
     selections: Selection[]
     primary?: number
+    yanked?: string[]
   }
 }
 
@@ -81,5 +87,6 @@ export function cloneState(state: EditorState): EditorState {
     pending: state.pending ? [...state.pending] : undefined,
     count: state.count,
     preferredColumns: state.preferredColumns ? [...state.preferredColumns] : undefined,
+    yanked: state.yanked ? [...state.yanked] : undefined,
   }
 }

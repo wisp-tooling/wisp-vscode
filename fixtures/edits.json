@@ -34,6 +34,38 @@
     "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }] }
   },
   {
+    "name": "y yanks selections without changing text",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["y"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }], "yanked": ["abc", "def"] }
+  },
+  {
+    "name": "p pastes yanked text after selections",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["y", "p"],
+    "want": { "text": "abcabc defdef\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 6 }, { "anchor": 10, "head": 13 }], "yanked": ["abc", "def"] }
+  },
+  {
+    "name": "P pastes yanked text before selections",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["y", "P"],
+    "want": { "text": "abcabc defdef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 7, "head": 10 }], "yanked": ["abc", "def"] }
+  },
+  {
+    "name": "delete yanks deleted selections",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["d"],
+    "want": { "text": " \n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 1, "head": 1 }], "yanked": ["abc", "def"] }
+  },
+  {
     "name": "delete preserves primary selection identity",
     "text": "abc def ghi\n",
     "mode": "normal",

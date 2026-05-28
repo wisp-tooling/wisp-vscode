@@ -85,6 +85,14 @@ async function handleKey(key: string): Promise<void> {
       await searchSelection(editor)
       return
     }
+    if (result.command === 'clipboard.yank' || result.command === 'clipboard.yankPrimary') {
+      await yankToClipboard(editor, result.command === 'clipboard.yankPrimary')
+      return
+    }
+    if (result.command === 'clipboard.pasteAfter' || result.command === 'clipboard.pasteBefore') {
+      await pasteFromClipboard(editor, result.command === 'clipboard.pasteAfter' ? 'after' : 'before')
+      return
+    }
     if (result.command === 'diagnostic.picker') {
       await showDiagnosticPicker(editor)
       return
@@ -261,6 +269,27 @@ function selectDiagnostic(editor: vscode.TextEditor, diagnostic: vscode.Diagnost
   editor.selection = new vscode.Selection(diagnostic.range.start, diagnostic.range.end)
   editor.selections = [editor.selection]
   editor.revealRange(diagnostic.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+}
+
+async function yankToClipboard(editor: vscode.TextEditor, primaryOnly: boolean): Promise<void> {
+  const selections = primaryOnly ? [editor.selection] : editor.selections
+  await vscode.env.clipboard.writeText(selections.map((selection) => editor.document.getText(selection)).join('\n'))
+}
+
+async function pasteFromClipboard(editor: vscode.TextEditor, where: 'after' | 'before'): Promise<void> {
+  const text = await vscode.env.clipboard.readText()
+  if (text.length === 0) return
+  const ordered = editor.selections
+    .map((selection, index) => ({ selection, index, position: where === 'after' ? selection.end : selection.start }))
+    .sort((a, b) => editor.document.offsetAt(b.position) - editor.document.offsetAt(a.position))
+  const inserted = editor.selections.map((selection) => {
+    const startOffset = editor.document.offsetAt(where === 'after' ? selection.end : selection.start)
+    return { startOffset, endOffset: startOffset + text.length }
+  })
+  await editor.edit((edit) => {
+    for (const item of ordered) edit.insert(item.position, text)
+  })
+  editor.selections = inserted.map((range) => new vscode.Selection(editor.document.positionAt(range.startOffset), editor.document.positionAt(range.endOffset)))
 }
 
 async function promptSearch(editor: vscode.TextEditor, direction: -1 | 1): Promise<void> {

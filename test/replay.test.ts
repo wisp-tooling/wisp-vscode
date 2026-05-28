@@ -18,6 +18,7 @@ describe('replay fixtures', () => {
       expect(got.mode).toBe(c.want.mode)
       expect(got.selections).toEqual(c.want.selections)
       expect(got.primary).toBe(c.want.primary ?? 0)
+      if (c.want.yanked) expect(got.yanked).toEqual(c.want.yanked)
     })
   }
 })

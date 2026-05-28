@@ -12,6 +12,8 @@ describe('prefix hints', () => {
     expect(keys).toContain('/')
     expect(keys).toContain('d')
     expect(keys).toContain('s')
+    expect(keys).toContain('y')
+    expect(keys).toContain('p')
   })
 
   test('colon prefix exposes Helix command-mode file commands', () => {

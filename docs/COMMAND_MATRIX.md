@@ -42,6 +42,13 @@ Priority table for the VS Code extension.
 | `?` | search.backward | Adapter | P1 | Prompt and search backward. |
 | `*` | search.selection | Adapter | P1 | Search current selection/word. |
 | `s` | search.selectInSelections | Adapter | P1 | Select matches inside selections. |
+| `y` | yank | Core | P0 | Yank selections to extension register. |
+| `p` | paste.after | Core | P0 | Paste extension register after selections. |
+| `P` | paste.before | Core | P0 | Paste extension register before selections. |
+| `space y` | clipboard.yank | Adapter | P0 | Yank selections to system clipboard. |
+| `space Y` | clipboard.yankPrimary | Adapter | P1 | Yank primary selection to system clipboard. |
+| `space p` | clipboard.pasteAfter | Adapter | P1 | Paste system clipboard after selections. |
+| `space P` | clipboard.pasteBefore | Adapter | P1 | Paste system clipboard before selections. |
 | `n` | search.next | Adapter | P1 | Next extension search match. |
 | `N` | search.prev | Adapter | P1 | Previous extension search match. |
 | `space /` | search.workspace | Delegate | P1 | `workbench.action.findInFiles`. |

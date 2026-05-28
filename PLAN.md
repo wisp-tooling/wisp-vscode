@@ -95,6 +95,16 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
+- Sprint: yank/paste essentials
+  - [x] Check Helix tutor/keymap docs for `y`, `p`, `P`, and Space clipboard behavior.
+  - [x] Add extension-local yank register for `y`, `p`, and `P`.
+  - [x] Make `d`/`c` update the local yank register.
+  - [x] Add Space clipboard delegates for yank/paste.
+  - [x] Validate.
+  - [x] Doc sync before closing sprint.
+
+## Paused sprint
+
 - Sprint: multi-selection correctness
   - [x] Move select-mode word/WORD motions from active head, including reversed selections.
   - [x] Add regression fixtures for select-mode `w`, `b`, `W`, `B` with non-collapsed selections.
