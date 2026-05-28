@@ -50,9 +50,12 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `space d` opens document diagnostics picker.
 - [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.
-- [ ] `:` then `w` saves current file.
-- [ ] `:` then `q` closes active editor.
-- [ ] `:` then `wq` saves and closes active editor.
+- [ ] `:` then `w` then Enter saves current file.
+- [ ] `:` then `wa` then Enter saves all files.
+- [ ] `:` then `q` then Enter closes active editor.
+- [ ] `:` then `qa` then Enter quits all / quits VS Code.
+- [ ] `:` then `wq` then Enter saves and closes active editor.
+- [ ] `:` then `wqa!` then Enter saves all and quits.
 - [ ] `;` collapses to the primary selection.
 - [ ] `u` invokes undo delegate.
 - [ ] `/`, `?`, `*`, `s`, `n`, `N` share extension search state.

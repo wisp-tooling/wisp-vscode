@@ -55,13 +55,15 @@ const delegates: Record<string, DelegateCommand> = {
   'space d': 'diagnostic.picker',
   ': w': 'file.save',
   ': write': 'file.save',
-  ': W': 'file.saveAll',
+  ': wa': 'file.saveAll',
+  ': write-all': 'file.saveAll',
   ': q': 'file.close',
   ': quit': 'file.close',
+  ': qa': 'workbench.quit',
+  ': quit-all': 'workbench.quit',
   ': wq': 'file.saveAndClose',
   ': write-quit': 'file.saveAndClose',
-  ': q!': 'workbench.quit',
-  ': quit!': 'workbench.quit',
+  ': wqa!': 'workbench.saveAllAndQuit',
   '] d': 'diagnostic.next',
   '[ d': 'diagnostic.prev',
   '] D': 'diagnostic.last',
@@ -164,6 +166,17 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
   }
   if (pending.length === 3 && pending[0] === 'm' && pending[1] === 'r') {
     return { kind: 'state', state: replaceSurround(commandState, pending[2]!, key) }
+  }
+
+  if (pending[0] === ':') {
+    if (key === 'enter') {
+      const delegate = delegates[`: ${pending.slice(1).join('')}`]
+      return delegate
+        ? { kind: 'delegate', state: withCountCleared(commandState), command: delegate }
+        : { kind: 'state', state: { ...withCountCleared(commandState), pending: undefined } }
+    }
+    if (key === 'escape' || key === 'ctrl-[') return { kind: 'state', state: withMode(commandState, 'normal') }
+    return { kind: 'state', state: { ...state, pending: [...pending, key] } }
   }
 
   const delegate = delegates[seq]

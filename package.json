@@ -453,6 +453,24 @@
         "command": "wisp-vscode.key",
         "args": ":",
         "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "enter",
+        "command": "wisp-vscode.key",
+        "args": "enter",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "shift+1",
+        "command": "wisp-vscode.key",
+        "args": "!",
+        "when": "editorTextFocus && wisp.mode != insert"
+      },
+      {
+        "key": "hyphen",
+        "command": "wisp-vscode.key",
+        "args": "-",
+        "when": "editorTextFocus && wisp.mode != insert"
       }
     ]
   },

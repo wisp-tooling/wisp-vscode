@@ -55,10 +55,11 @@ Priority table for the VS Code extension.
 | `space s` | symbol.document | Delegate | P1 | `workbench.action.gotoSymbol`. |
 | `space d` | diagnostic.picker | Adapter/API | P1 | Current document diagnostic QuickPick. |
 | `:` `w` / `write` | file.save | Delegate | P1 | Helix-style write/save current file. |
-| `:` `W` | file.saveAll | Delegate | P2 | Save all files convenience command. |
+| `:` `wa` / `write-all` | file.saveAll | Delegate | P2 | Helix-style write all/save all files. |
 | `:` `q` / `quit` | file.close | Delegate | P1 | Helix-style quit/close active editor. |
+| `:` `qa` / `quit-all` | workbench.quit | Delegate | P2 | Helix-style quit all approximation. |
 | `:` `wq` / `write-quit` | file.saveAndClose | Adapter | P1 | Helix-style write then quit. |
-| `:` `q!` / `quit!` | workbench.quit | Delegate | P2 | Force quit VS Code/window approximation. |
+| `:` `wqa!` | workbench.saveAllAndQuit | Adapter | P2 | Write all, then force quit VS Code/window approximation. |
 | `] d` | diagnostic.next | Delegate | P1 | VS Code marker nav. |
 | `[ d` | diagnostic.prev | Delegate | P1 | VS Code marker nav. |
 | `] D` | diagnostic.last | Delegate/API | P1 | Uses VS Code diagnostics API. |

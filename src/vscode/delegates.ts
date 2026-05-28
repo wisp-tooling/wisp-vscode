@@ -26,6 +26,7 @@ export const delegateCommands: Record<DelegateCommand, string> = {
   'file.close': 'workbench.action.closeActiveEditor',
   'file.saveAndClose': 'workbench.action.files.save',
   'workbench.quit': 'workbench.action.quit',
+  'workbench.saveAllAndQuit': 'workbench.action.files.saveAll',
   'diagnostic.next': 'editor.action.marker.next',
   'diagnostic.prev': 'editor.action.marker.prev',
   'diagnostic.first': 'editor.action.marker.prev',

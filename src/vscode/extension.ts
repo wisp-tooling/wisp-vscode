@@ -94,6 +94,11 @@ async function handleKey(key: string): Promise<void> {
       await vscode.commands.executeCommand(delegateCommands['file.close'])
       return
     }
+    if (result.command === 'workbench.saveAllAndQuit') {
+      await vscode.commands.executeCommand(delegateCommands['file.saveAll'])
+      await vscode.commands.executeCommand(delegateCommands['workbench.quit'])
+      return
+    }
     if (result.command === 'search.selectInSelections') {
       await selectMatchesInSelections(editor)
       return

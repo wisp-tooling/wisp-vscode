@@ -28,6 +28,7 @@ const expected: DelegateCommand[] = [
   'file.close',
   'file.saveAndClose',
   'workbench.quit',
+  'workbench.saveAllAndQuit',
   'diagnostic.next',
   'diagnostic.prev',
   'diagnostic.first',

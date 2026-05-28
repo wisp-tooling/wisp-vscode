@@ -28,10 +28,11 @@ const hints: Record<string, PrefixHint[]> = {
   ],
   ':': [
     { key: 'w', label: 'write / save file' },
-    { key: 'W', label: 'write all / save all files' },
+    { key: 'wa', label: 'write-all / save all files' },
     { key: 'q', label: 'quit / close editor' },
+    { key: 'qa', label: 'quit-all / quit VS Code' },
     { key: 'wq', label: 'write-quit / save and close editor' },
-    { key: 'q!', label: 'force quit VS Code' },
+    { key: 'wqa!', label: 'write-quit-all force' },
   ],
   '[': [
     { key: 'd', label: 'previous diagnostic' },

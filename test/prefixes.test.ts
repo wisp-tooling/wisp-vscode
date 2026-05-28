@@ -16,7 +16,7 @@ describe('prefix hints', () => {
 
   test('colon prefix exposes Helix command-mode file commands', () => {
     const keys = prefixHints([':']).map((hint) => hint.key)
-    expect(keys).toEqual(expect.arrayContaining(['w', 'W', 'q', 'wq', 'q!']))
+    expect(keys).toEqual(expect.arrayContaining(['w', 'wa', 'q', 'qa', 'wq', 'wqa!']))
   })
 
   test('match prefix exposes nested surround hints', () => {
