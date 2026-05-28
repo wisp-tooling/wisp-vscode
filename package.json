@@ -489,7 +489,7 @@
   },
   "displayName": "Wisp: Helix Emulator",
   "description": "A dependency-light Helix/Wisp-style modal editing emulator for VS Code.",
-  "publisher": "wisp-tooling",
+  "publisher": "WispTooling",
   "categories": [
     "Keymaps",
     "Other"
