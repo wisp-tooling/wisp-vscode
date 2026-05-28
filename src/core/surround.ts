@@ -114,11 +114,25 @@ export function replaceSurround(state: EditorState, fromDelimiter: string, toDel
   const from = pairs[fromDelimiter]
   const to = pairs[toDelimiter]
   if (!from || !to) return { ...state, pending: undefined }
-  const found = findEnclosingPair(state.text, state.selections[state.primary]?.head ?? 0, from)
-  if (!found) return { ...state, pending: undefined }
-  let text = state.text.slice(0, found.close) + to.close + state.text.slice(found.close + from.close.length)
-  text = text.slice(0, found.open) + to.open + text.slice(found.open + from.open.length)
-  return normalizeState({ ...state, text, selections: [cursor(found.open)], primary: 0, pending: undefined })
+  const edits = state.selections
+    .map((selection) => findEnclosingPair(state.text, selection.head, from))
+    .filter((found): found is { open: number; close: number } => found !== undefined)
+    .filter((found, index, all) => all.findIndex((other) => other.open === found.open && other.close === found.close) === index)
+    .sort((a, b) => b.open - a.open)
+  if (edits.length === 0) return { ...state, pending: undefined }
+
+  let text = state.text
+  for (const found of edits) {
+    text = text.slice(0, found.close) + to.close + text.slice(found.close + from.close.length)
+    text = text.slice(0, found.open) + to.open + text.slice(found.open + from.open.length)
+  }
+  const cursors = edits
+    .map((found) => {
+      const deltaBefore = edits.filter((other) => other.open < found.open).length * (to.open.length + to.close.length - from.open.length - from.close.length)
+      return cursor(found.open + deltaBefore)
+    })
+    .reverse()
+  return normalizeState({ ...state, text, selections: cursors, primary: 0, pending: undefined })
 }
 
 export function selectTextObject(state: EditorState, object: string, includeAround: boolean): EditorState {

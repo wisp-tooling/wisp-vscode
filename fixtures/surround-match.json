@@ -120,6 +120,22 @@
     "want": { "text": "one two\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 4, "head": 4 }] }
   },
   {
+    "name": "mr replaces surrounding pairs for multiple selections",
+    "text": "(one) (two)\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 2, "head": 2 }, { "anchor": 8, "head": 8 }],
+    "keys": ["m", "r", "(", "["],
+    "want": { "text": "[one] [two]\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 6, "head": 6 }] }
+  },
+  {
+    "name": "mr replaces duplicate enclosing pair once",
+    "text": "(one two)\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 2, "head": 2 }, { "anchor": 6, "head": 6 }],
+    "keys": ["m", "r", "(", "["],
+    "want": { "text": "[one two]\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
     "name": "miw selects word textobject",
     "text": "hello world\n",
     "mode": "normal",
