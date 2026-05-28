@@ -46,7 +46,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 ## Delegate commands
 
 - [ ] `space ?` opens command palette.
-- [ ] `space /` opens grouped workspace search QuickPick with query, file path separators, line/column, and preview; accepting a match opens/selects it.
+- [ ] `space /` opens live grouped workspace search QuickPick; typing a query updates file path separators, line/column, and preview; accepting a match opens/selects it.
 - [ ] `space d` opens document diagnostics picker.
 - [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.

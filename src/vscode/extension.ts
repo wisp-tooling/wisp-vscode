@@ -278,14 +278,53 @@ function selectDiagnostic(editor: vscode.TextEditor, diagnostic: vscode.Diagnost
   editor.revealRange(diagnostic.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }
 
-async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
-  const options: vscode.InputBoxOptions = { prompt: 'Workspace search', placeHolder: 'literal text or /regex/' }
-  if (lastSearchQuery !== undefined) options.value = lastSearchQuery
-  const query = await vscode.window.showInputBox(options)
-  if (!query) return
-  lastSearchQuery = query
-  searchDirection = 1
+type SearchPickItem = vscode.QuickPickItem & { uri?: vscode.Uri; range?: vscode.Range }
 
+async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
+  const picker = vscode.window.createQuickPick<SearchPickItem>()
+  picker.title = 'Workspace search'
+  picker.placeholder = 'Type a literal pattern or /regex/; matches appear below grouped by file'
+  picker.matchOnDescription = true
+  picker.matchOnDetail = true
+  picker.ignoreFocusOut = false
+  picker.value = lastSearchQuery ?? ''
+  picker.busy = false
+
+  let request = 0
+  const refresh = async (query: string): Promise<void> => {
+    const current = ++request
+    if (!query) {
+      picker.items = []
+      picker.title = 'Workspace search'
+      return
+    }
+    picker.busy = true
+    const { items, total, files } = await workspaceSearchItems(query)
+    if (current !== request) return
+    picker.items = items
+    picker.title = `/${query}/  ${total}${total === 1 ? ' match' : ' matches'} in ${files}${files === 1 ? ' file' : ' files'}`
+    picker.busy = false
+  }
+
+  picker.onDidChangeValue((value) => { void refresh(value.trim()) })
+  picker.onDidAccept(() => {
+    const picked = picker.selectedItems[0]
+    if (!picked?.uri || !picked.range) return
+    lastSearchQuery = picker.value.trim()
+    searchDirection = 1
+    picker.hide()
+    void vscode.window.showTextDocument(picked.uri).then((target) => {
+      target.selection = new vscode.Selection(picked.range!.start, picked.range!.end)
+      target.selections = [target.selection]
+      target.revealRange(picked.range!, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+    })
+  })
+  picker.onDidHide(() => picker.dispose())
+  picker.show()
+  if (picker.value) void refresh(picker.value.trim())
+}
+
+async function workspaceSearchItems(query: string): Promise<{ items: SearchPickItem[]; total: number; files: number }> {
   const matcher = createMatcher(query)
   const files = await vscode.workspace.findFiles('**/*', '{**/node_modules/**,**/.git/**,**/dist/**}', 1000)
   const groups: Array<{ uri: vscode.Uri; path: string; matches: Array<{ range: vscode.Range; line: string }> }> = []
@@ -304,12 +343,6 @@ async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
     if (matches.length > 0) groups.push({ uri, path: vscode.workspace.asRelativePath(uri), matches })
   }
 
-  if (total === 0) {
-    void vscode.window.setStatusBarMessage(`No workspace matches: ${query}`, 1500)
-    return
-  }
-
-  type SearchPickItem = vscode.QuickPickItem & { uri?: vscode.Uri; range?: vscode.Range }
   const items: SearchPickItem[] = groups.flatMap((group) => [
     { label: group.path, kind: vscode.QuickPickItemKind.Separator },
     ...group.matches.map((match) => ({
@@ -321,18 +354,7 @@ async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
       range: match.range,
     })),
   ])
-
-  const picked = await vscode.window.showQuickPick(items, {
-    title: `/${query}/  ${total}${total === 1 ? ' match' : ' matches'} in ${groups.length}${groups.length === 1 ? ' file' : ' files'}`,
-    placeHolder: 'Select a workspace search match',
-    matchOnDescription: true,
-    matchOnDetail: true,
-  })
-  if (!picked?.uri || !picked.range) return
-  const target = await vscode.window.showTextDocument(picked.uri)
-  target.selection = new vscode.Selection(picked.range.start, picked.range.end)
-  target.selections = [target.selection]
-  target.revealRange(picked.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+  return { items, total, files: groups.length }
 }
 
 async function yankToClipboard(editor: vscode.TextEditor): Promise<void> {
