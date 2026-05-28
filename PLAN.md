@@ -153,6 +153,13 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 - Add mode status bar.
 - Add prefix status display.
 
+### Picker/UI
+
+- Build a custom Wisp-style picker menu for prefix hints and project pickers.
+  - Prefer a lightweight, auditable implementation.
+  - Evaluate VS Code-native options first: QuickPick, editor decorations, webview.
+  - If using webview, require strict CSP and no external assets/scripts.
+
 ### VS Code adapter
 
 - Map VS Code document text/selections to `EditorState`.
