@@ -32,5 +32,23 @@
     "primary": 1,
     "keys": [";"],
     "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }] }
+  },
+  {
+    "name": "delete preserves primary selection identity",
+    "text": "abc def ghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }, { "anchor": 8, "head": 11 }],
+    "primary": 1,
+    "keys": ["d"],
+    "want": { "text": "  \n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 1, "head": 1 }, { "anchor": 2, "head": 2 }], "primary": 1 }
+  },
+  {
+    "name": "change preserves primary selection identity",
+    "text": "abc def ghi\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }, { "anchor": 8, "head": 11 }],
+    "primary": 2,
+    "keys": ["c"],
+    "want": { "text": "  \n", "mode": "insert", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 1, "head": 1 }, { "anchor": 2, "head": 2 }], "primary": 2 }
   }
 ]

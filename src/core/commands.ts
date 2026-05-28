@@ -18,18 +18,29 @@ function repeatMotion(state: EditorState, times: number, motion: (s: EditorState
 }
 
 function deleteSelections(state: EditorState): EditorState {
+  const primarySelection = state.selections[state.primary] ?? state.selections[0]!
+  const primaryStart = startOf(primarySelection)
   const ordered = [...state.selections]
-    .map((sel) => ({ start: startOf(sel), end: endOf(sel) }))
+    .map((sel) => ({ start: startOf(sel), end: endOf(sel), primary: sel === primarySelection }))
     .sort((a, b) => b.start - a.start)
   let text = state.text
-  const cursors: number[] = []
+  const deletedRanges: Array<{ start: number; end: number }> = []
+  const cursors: Array<{ offset: number; primary: boolean }> = []
   for (const r of ordered) {
     const end = r.start === r.end ? Math.min(text.length, r.end + 1) : r.end
     text = text.slice(0, r.start) + text.slice(end)
-    cursors.push(r.start)
+    deletedRanges.push({ start: r.start, end })
+    cursors.push({ offset: r.start, primary: r.primary })
+  }
+  for (const item of cursors) {
+    const removedBefore = deletedRanges
+      .filter((range) => range.start < item.offset)
+      .reduce((sum, range) => sum + range.end - range.start, 0)
+    item.offset -= removedBefore
   }
   cursors.reverse()
-  return normalizeState({ ...state, text, selections: cursors.map(cursor), primary: 0, pending: undefined })
+  const primary = Math.max(0, cursors.findIndex((item) => item.primary))
+  return normalizeState({ ...state, text, selections: cursors.map((item) => cursor(item.offset)), primary, pending: undefined })
 }
 
 const delegates: Record<string, DelegateCommand> = {
