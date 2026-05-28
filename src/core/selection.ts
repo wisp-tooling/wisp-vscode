@@ -22,23 +22,25 @@ export function normalizeSelection(sel: Selection, textLength: number): Selectio
 
 export function normalizeState(state: EditorState): EditorState {
   const selections = state.selections.length > 0 ? state.selections : [cursor(0)]
+  const inputPrimary = clamp(state.primary, 0, selections.length - 1)
   const normalized = selections
-    .map((s) => normalizeSelection(s, state.text.length))
-    .sort((a, b) => startOf(a) - startOf(b) || endOf(a) - endOf(b))
+    .map((selection, index) => ({ selection: normalizeSelection(selection, state.text.length), primary: index === inputPrimary }))
+    .sort((a, b) => startOf(a.selection) - startOf(b.selection) || endOf(a.selection) - endOf(b.selection))
 
-  const merged: Selection[] = []
-  for (const sel of normalized) {
+  const merged: Array<{ selection: Selection; primary: boolean }> = []
+  for (const item of normalized) {
     const previous = merged[merged.length - 1]
-    if (!previous || startOf(sel) >= endOf(previous)) {
-      merged.push(sel)
+    if (!previous || startOf(item.selection) >= endOf(previous.selection)) {
+      merged.push({ selection: item.selection, primary: item.primary })
       continue
     }
-    previous.anchor = startOf(previous)
-    previous.head = Math.max(endOf(previous), endOf(sel))
+    previous.primary ||= item.primary
+    previous.selection.anchor = startOf(previous.selection)
+    previous.selection.head = Math.max(endOf(previous.selection), endOf(item.selection))
   }
 
-  const primary = clamp(state.primary, 0, merged.length - 1)
-  return { ...state, selections: merged, primary }
+  const primary = Math.max(0, merged.findIndex((item) => item.primary))
+  return { ...state, selections: merged.map((item) => item.selection), primary }
 }
 
 export function replaceSelections(state: EditorState, f: (sel: Selection, index: number) => Selection): EditorState {

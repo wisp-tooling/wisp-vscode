@@ -45,6 +45,30 @@ describe('core invariants', () => {
     })
   }
 
+  test('normalization preserves primary selection after sorting', () => {
+    const state = normalizeState({
+      text: 'abc def ghi\n',
+      mode: 'normal',
+      selections: [{ anchor: 8, head: 11 }, { anchor: 0, head: 3 }, { anchor: 4, head: 7 }],
+      primary: 2,
+    })
+
+    expect(state.selections).toEqual([{ anchor: 0, head: 3 }, { anchor: 4, head: 7 }, { anchor: 8, head: 11 }])
+    expect(state.primary).toBe(1)
+  })
+
+  test('normalization preserves primary selection after merging overlaps', () => {
+    const state = normalizeState({
+      text: 'abcdef\n',
+      mode: 'normal',
+      selections: [{ anchor: 0, head: 3 }, { anchor: 2, head: 5 }],
+      primary: 1,
+    })
+
+    expect(state.selections).toEqual([{ anchor: 0, head: 5 }])
+    expect(state.primary).toBe(0)
+  })
+
   test('completed prefix command clears pending state', () => {
     let state: EditorState = normalizeState({
       text: 'abc\ndef\n',

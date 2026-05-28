@@ -98,6 +98,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 - Sprint: multi-selection correctness
   - [x] Move select-mode word/WORD motions from active head, including reversed selections.
   - [x] Add regression fixtures for select-mode `w`, `b`, `W`, `B` with non-collapsed selections.
+  - [x] Preserve primary selection identity through normalization sorting/merging.
   - [ ] Audit additional motions/operators for primary-only or range-edge behavior.
   - [ ] Validate.
   - [ ] Doc sync before closing sprint.
