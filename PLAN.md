@@ -99,10 +99,10 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Add publishing checklist/playbook.
   - [x] Add initial `.vscodeignore` package exclusions.
   - [x] Record temporary org namespace: `wisp-tooling`.
-  - [ ] Review package metadata gaps without locking final naming decisions.
-  - [ ] Add release/security docs placeholders as appropriate.
-  - [ ] Validate.
-  - [ ] Doc sync before closing sprint.
+  - [x] Review package metadata gaps without locking final naming decisions.
+  - [x] Add release/security docs placeholders as appropriate.
+  - [x] Validate.
+  - [x] Doc sync before closing sprint.
 
 ## Recently completed sprint
 

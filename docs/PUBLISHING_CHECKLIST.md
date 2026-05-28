@@ -18,8 +18,8 @@ This project is intended to be publishable as a public, dependency-light VS Code
 - [ ] Create public GitHub repository under `wisp-tooling` after organization setup.
 - [ ] Do not push anything to the internet until explicitly approved.
 - [ ] Add `LICENSE` after license decision.
-- [ ] Add `CHANGELOG.md` with release notes.
-- [ ] Add `SECURITY.md` with vulnerability reporting path.
+- [x] Add `CHANGELOG.md` with unreleased release notes placeholder.
+- [x] Add `SECURITY.md` with temporary vulnerability reporting guidance.
 - [ ] Add contribution/development notes if accepting external PRs.
 - [ ] Confirm `helix-docs/` remains local-only and untracked.
 - [ ] Confirm no screenshots, generated files, or local artifacts leak into the package.

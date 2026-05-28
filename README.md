@@ -73,6 +73,8 @@ The pure TypeScript core currently includes:
 - `docs/VSCODE_ADAPTER.md`: extension integration notes.
 - `docs/ADAPTER_SMOKE_CHECKLIST.md`: manual extension smoke checks.
 - `docs/PUBLISHING_CHECKLIST.md`: release/readiness checklist.
+- `CHANGELOG.md`: unreleased change log.
+- `SECURITY.md`: security policy placeholder.
 
 ## MVP scope
 
