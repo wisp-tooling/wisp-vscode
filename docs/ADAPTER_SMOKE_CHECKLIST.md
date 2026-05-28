@@ -56,6 +56,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `:` then `q` then Enter closes active editor.
 - [ ] `:` then `qa` then Enter quits all / quits VS Code.
 - [ ] `:` then `wq` then Enter saves and closes active editor.
+- [ ] `:` then `wqa` then Enter saves all and quits.
 - [ ] `:` then `wqa!` then Enter saves all and quits.
 - [ ] `;` collapses to the primary selection.
 - [ ] `u` invokes undo delegate.

@@ -38,6 +38,7 @@ const cases: Array<{ keys: string[]; command: DelegateCommand }> = [
   { keys: [':', 'q', 'enter'], command: 'file.close' },
   { keys: [':', 'q', 'a', 'enter'], command: 'workbench.quit' },
   { keys: [':', 'w', 'q', 'enter'], command: 'file.saveAndClose' },
+  { keys: [':', 'w', 'q', 'a', 'enter'], command: 'workbench.saveAllAndQuit' },
   { keys: [':', 'w', 'q', 'a', '!', 'enter'], command: 'workbench.saveAllAndQuit' },
   { keys: [']', 'd'], command: 'diagnostic.next' },
   { keys: ['[', 'd'], command: 'diagnostic.prev' },

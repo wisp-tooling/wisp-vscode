@@ -32,6 +32,7 @@ const hints: Record<string, PrefixHint[]> = {
     { key: 'q', label: 'quit / close editor' },
     { key: 'qa', label: 'quit-all / quit VS Code' },
     { key: 'wq', label: 'write-quit / save and close editor' },
+    { key: 'wqa', label: 'write-quit-all / save all and quit' },
     { key: 'wqa!', label: 'write-quit-all force' },
   ],
   '[': [

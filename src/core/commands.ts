@@ -63,6 +63,7 @@ const delegates: Record<string, DelegateCommand> = {
   ': quit-all': 'workbench.quit',
   ': wq': 'file.saveAndClose',
   ': write-quit': 'file.saveAndClose',
+  ': wqa': 'workbench.saveAllAndQuit',
   ': wqa!': 'workbench.saveAllAndQuit',
   '] d': 'diagnostic.next',
   '[ d': 'diagnostic.prev',

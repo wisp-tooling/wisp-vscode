@@ -59,6 +59,7 @@ Priority table for the VS Code extension.
 | `:` `q` / `quit` | file.close | Delegate | P1 | Helix-style quit/close active editor. |
 | `:` `qa` / `quit-all` | workbench.quit | Delegate | P2 | Helix-style quit all approximation. |
 | `:` `wq` / `write-quit` | file.saveAndClose | Adapter | P1 | Helix-style write then quit. |
+| `:` `wqa` | workbench.saveAllAndQuit | Adapter | P2 | Write all, then quit VS Code/window approximation. |
 | `:` `wqa!` | workbench.saveAllAndQuit | Adapter | P2 | Write all, then force quit VS Code/window approximation. |
 | `] d` | diagnostic.next | Delegate | P1 | VS Code marker nav. |
 | `[ d` | diagnostic.prev | Delegate | P1 | VS Code marker nav. |
