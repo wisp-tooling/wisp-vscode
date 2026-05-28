@@ -1,4 +1,4 @@
-import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace, insertAtLineStart, insertAtLineEnd } from './motions.js'
+import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace, insertAtLineStart, insertAtLineEnd, findChar } from './motions.js'
 import { lineRangeAt } from './buffer.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
 import { deleteSurround, gotoMatchingBracket, replaceSurround, selectSurround, selectTextObject, surroundSelections } from './surround.js'
@@ -283,6 +283,12 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     return { kind: 'state', state: replaceSelectionsWithChar(commandState, key) }
   }
 
+  if (pending.length === 1 && ['f', 'F', 't', 'T'].includes(pending[0]!)) {
+    const direction = pending[0] === 'f' || pending[0] === 't' ? 1 : -1
+    const till = pending[0] === 't' || pending[0] === 'T'
+    return { kind: 'state', state: findChar(commandState, key, direction, till) }
+  }
+
   if (pending.length === 2 && pending[0] === 'm' && pending[1] === 's') {
     return { kind: 'state', state: surroundSelections(commandState, key) }
   }
@@ -317,7 +323,7 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
     return { kind: 'delegate', state: withCountCleared(commandState), command: delegate }
   }
 
-  if (['g', 'space', '[', ']', 'z', 'm', ':', 'r'].includes(seq)) {
+  if (['g', 'space', '[', ']', 'z', 'm', ':', 'r', 'f', 'F', 't', 'T'].includes(seq)) {
     return { kind: 'state', state: { ...state, pending: [key] } }
   }
 

@@ -25,6 +25,10 @@ Priority table for the VS Code extension.
 | `w` | move.word.next | Core | P0 | Selection-first. |
 | `b` | move.word.prev | Core | P0 | Selection-first. |
 | `e` | move.word.end | Core | P1 | Selection-first. |
+| `f<char>` | find.nextChar | Core | P0 | Find next char on current line. |
+| `F<char>` | find.prevChar | Core | P0 | Find previous char on current line. |
+| `t<char>` | find.tillNextChar | Core | P0 | Move before next char on current line. |
+| `T<char>` | find.tillPrevChar | Core | P0 | Move after previous char on current line. |
 | `W` | move.WORD.next | Core | P1 | Non-whitespace WORD semantics. |
 | `B` | move.WORD.prev | Core | P1 | Non-whitespace WORD semantics. |
 | `E` | move.WORD.end | Core | P1 | Non-whitespace WORD semantics. |

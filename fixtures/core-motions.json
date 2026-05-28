@@ -152,6 +152,63 @@
     "want": { "text": "abc\ndef\n", "mode": "select", "selections": [{ "anchor": 0, "head": 3 }] }
   },
   {
+    "name": "f moves to next character on line",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["f", "d"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "t moves till next character on line",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["t", "d"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 3 }] }
+  },
+  {
+    "name": "F moves to previous character on line",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 7, "head": 7 }],
+    "keys": ["F", "d"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "T moves till previous character on line",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 7, "head": 7 }],
+    "keys": ["T", "d"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 5, "head": 5 }] }
+  },
+  {
+    "name": "select mode f extends to next character",
+    "text": "abc def\n",
+    "mode": "select",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["f", "d"],
+    "want": { "text": "abc def\n", "mode": "select", "selections": [{ "anchor": 0, "head": 4 }] }
+  },
+  {
+    "name": "find character does not cross line boundary",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }],
+    "keys": ["f", "d"],
+    "want": { "text": "abc\ndef\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "multi-selection f preserves primary",
+    "text": "abc def\nabc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 8, "head": 8 }],
+    "primary": 1,
+    "keys": ["f", "d"],
+    "want": { "text": "abc def\nabc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 4 }, { "anchor": 12, "head": 12 }], "primary": 1 }
+  },
+  {
     "name": "multi-selection horizontal motion preserves primary",
     "text": "abc def ghi\n",
     "mode": "normal",

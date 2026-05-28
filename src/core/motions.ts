@@ -206,3 +206,19 @@ export function insertAtLineStart(state: EditorState): EditorState {
 export function insertAtLineEnd(state: EditorState): EditorState {
   return replaceSelections(state, (sel) => cursor(lineRangeAt(state.text, sel.head).endNoNewline))
 }
+
+export function findChar(state: EditorState, char: string, direction: -1 | 1, till: boolean): EditorState {
+  return replaceSelections(state, (sel) => {
+    const line = lineRangeAt(state.text, sel.head)
+    let pos = sel.head + direction
+    const limit = direction > 0 ? line.endNoNewline : line.start - 1
+    while (direction > 0 ? pos < limit : pos > limit) {
+      if (state.text[pos] === char) {
+        const target = till ? pos - direction : pos
+        return state.mode === 'select' ? { anchor: sel.anchor, head: target } : cursor(target)
+      }
+      pos += direction
+    }
+    return sel
+  })
+}
