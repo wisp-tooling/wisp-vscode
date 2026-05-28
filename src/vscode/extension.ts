@@ -161,20 +161,26 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
   const picker = vscode.window.createQuickPick<PrefixPickItem>()
   let dispatched = false
   prefixPicker = picker
-  const prefix = nextPending.join(' ')
+  const isCommandMode = nextPending[0] === ':'
+  const commandText = isCommandMode ? nextPending.slice(1).join('') : ''
+  const prefix = isCommandMode ? `:${commandText}` : nextPending.join(' ')
   picker.title = `Wisp ${prefix} …`
-  picker.placeholder = `Type one of: ${hints.map((hint) => hint.key).join('  ')}  •  arrows + Enter also work`
+  picker.placeholder = isCommandMode
+    ? 'Type a command, then press Enter. Examples: w, wa, q, qa, wq, wqa!'
+    : `Type one of: ${hints.map((hint) => hint.key).join('  ')}  •  arrows + Enter also work`
   picker.matchOnDescription = true
   picker.matchOnDetail = true
   picker.ignoreFocusOut = false
+  picker.value = commandText
   picker.items = hints.map((hint) => ({
     label: `$(keyboard) ${hint.key}`,
     description: hint.label,
-    detail: `${prefix} ${hint.key}`,
+    detail: isCommandMode ? `:${hint.key}` : `${prefix} ${hint.key}`,
     alwaysShow: true,
     key: hint.key,
   }))
   picker.onDidChangeValue((value) => {
+    if (isCommandMode) return
     const typed = value.trim()
     const matched = picker.items.find((item) => item.key === typed)
     if (!matched) return
@@ -186,7 +192,11 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
     const picked = picker.selectedItems[0]
     dispatched = true
     picker.hide()
-    if (picked) void handleKey(picked.key)
+    if (isCommandMode) {
+      void submitCommandText(picker.value.trim() || picked?.key || '')
+    } else if (picked) {
+      void handleKey(picked.key)
+    }
   })
   picker.onDidHide(() => {
     picker.dispose()
@@ -194,6 +204,12 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
     if (!dispatched && pending) void clearPendingPrefix()
   })
   picker.show()
+}
+
+async function submitCommandText(text: string): Promise<void> {
+  pending = [':']
+  for (const char of text) await handleKey(char)
+  await handleKey('enter')
 }
 
 async function clearPendingPrefix(): Promise<void> {

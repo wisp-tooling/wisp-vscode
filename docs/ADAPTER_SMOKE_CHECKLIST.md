@@ -50,6 +50,7 @@ Run in VS Code Extension Development Host after `npm run compile`.
 - [ ] `space d` opens document diagnostics picker.
 - [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.
+- [ ] `:` opens command picker, shows typed command text, and does not run `w` until Enter.
 - [ ] `:` then `w` then Enter saves current file.
 - [ ] `:` then `wa` then Enter saves all files.
 - [ ] `:` then `q` then Enter closes active editor.
