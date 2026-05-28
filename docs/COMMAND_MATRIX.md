@@ -53,7 +53,7 @@ Priority table for the VS Code extension.
 | `space P` | clipboard.pasteBefore | Adapter | P1 | Paste system clipboard before selections. |
 | `n` | search.next | Adapter | P1 | Next extension search match. |
 | `N` | search.prev | Adapter | P1 | Previous extension search match. |
-| `space /` | search.workspace | Adapter | P1 | QuickPick workspace search showing relative path, line/column, and line preview. |
+| `space /` | search.workspace | Adapter | P1 | Grouped QuickPick workspace search showing query, file groups, line/column, and line preview. |
 | `space f` | file.quickOpen | Delegate | P0 | `workbench.action.quickOpen`. |
 | `space b` | buffer.quickOpen | Delegate | P1 | `workbench.action.showAllEditors`. |
 | `space ?` | command.palette | Delegate | P0 | `workbench.action.showCommands`. |

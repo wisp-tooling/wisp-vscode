@@ -288,33 +288,47 @@ async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
 
   const matcher = createMatcher(query)
   const files = await vscode.workspace.findFiles('**/*', '{**/node_modules/**,**/.git/**,**/dist/**}', 1000)
-  const items: Array<vscode.QuickPickItem & { uri: vscode.Uri; range: vscode.Range }> = []
+  const groups: Array<{ uri: vscode.Uri; path: string; matches: Array<{ range: vscode.Range; line: string }> }> = []
+  let total = 0
   for (const uri of files) {
-    if (items.length >= 250) break
+    if (total >= 250) break
     const document = await vscode.workspace.openTextDocument(uri)
-    const text = document.getText()
-    for (const match of findMatches(text, matcher)) {
-      if (items.length >= 250) break
+    const matches: Array<{ range: vscode.Range; line: string }> = []
+    for (const match of findMatches(document.getText(), matcher)) {
+      if (total >= 250) break
       const start = document.positionAt(match.start)
       const end = document.positionAt(match.end)
-      const line = document.lineAt(start.line).text.trim()
-      items.push({
-        label: vscode.workspace.asRelativePath(uri),
-        description: `${start.line + 1}:${start.character + 1}`,
-        detail: line,
-        uri,
-        range: new vscode.Range(start, end),
-      })
+      matches.push({ range: new vscode.Range(start, end), line: document.lineAt(start.line).text.trim() })
+      total++
     }
+    if (matches.length > 0) groups.push({ uri, path: vscode.workspace.asRelativePath(uri), matches })
   }
 
-  if (items.length === 0) {
+  if (total === 0) {
     void vscode.window.setStatusBarMessage(`No workspace matches: ${query}`, 1500)
     return
   }
 
-  const picked = await vscode.window.showQuickPick(items, { placeHolder: `Workspace matches for ${query}` })
-  if (!picked) return
+  type SearchPickItem = vscode.QuickPickItem & { uri?: vscode.Uri; range?: vscode.Range }
+  const items: SearchPickItem[] = groups.flatMap((group) => [
+    { label: group.path, kind: vscode.QuickPickItemKind.Separator },
+    ...group.matches.map((match) => ({
+      label: `$(chevron-right) ${match.range.start.line + 1}:${match.range.start.character + 1}`,
+      description: group.path,
+      detail: match.line,
+      alwaysShow: true,
+      uri: group.uri,
+      range: match.range,
+    })),
+  ])
+
+  const picked = await vscode.window.showQuickPick(items, {
+    title: `/${query}/  ${total}${total === 1 ? ' match' : ' matches'} in ${groups.length}${groups.length === 1 ? ' file' : ' files'}`,
+    placeHolder: 'Select a workspace search match',
+    matchOnDescription: true,
+    matchOnDetail: true,
+  })
+  if (!picked?.uri || !picked.range) return
   const target = await vscode.window.showTextDocument(picked.uri)
   target.selection = new vscode.Selection(picked.range.start, picked.range.end)
   target.selections = [target.selection]
