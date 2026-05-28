@@ -326,10 +326,10 @@ async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
 
 async function workspaceSearchItems(query: string): Promise<{ items: SearchPickItem[]; total: number; files: number }> {
   const matcher = createMatcher(query)
-  const files = await vscode.workspace.findFiles('**/*', '{**/node_modules/**,**/.git/**,**/dist/**}', 1000)
+  const uris = await workspaceSearchUris()
   const groups: Array<{ uri: vscode.Uri; path: string; matches: Array<{ range: vscode.Range; line: string }> }> = []
   let total = 0
-  for (const uri of files) {
+  for (const uri of uris) {
     if (total >= 250) break
     const document = await vscode.workspace.openTextDocument(uri)
     const matches: Array<{ range: vscode.Range; line: string }> = []
@@ -355,6 +355,20 @@ async function workspaceSearchItems(query: string): Promise<{ items: SearchPickI
     })),
   ])
   return { items, total, files: groups.length }
+}
+
+async function workspaceSearchUris(): Promise<vscode.Uri[]> {
+  const workspaceFolders = vscode.workspace.workspaceFolders
+  if (workspaceFolders && workspaceFolders.length > 0) {
+    return vscode.workspace.findFiles('**/*', '{**/node_modules/**,**/.git/**,**/dist/**}', 1000)
+  }
+
+  const openUris = vscode.workspace.textDocuments
+    .filter((document) => document.uri.scheme === 'file')
+    .map((document) => document.uri)
+  const active = vscode.window.activeTextEditor?.document.uri
+  const uris = active && active.scheme === 'file' ? [active, ...openUris] : openUris
+  return uris.filter((uri, index, all) => all.findIndex((other) => other.toString() === uri.toString()) === index)
 }
 
 async function yankToClipboard(editor: vscode.TextEditor): Promise<void> {
