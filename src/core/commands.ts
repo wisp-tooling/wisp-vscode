@@ -1,4 +1,5 @@
-import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
+import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace, insertAtLineStart, insertAtLineEnd } from './motions.js'
+import { lineRangeAt } from './buffer.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
 import { deleteSurround, gotoMatchingBracket, replaceSurround, selectSurround, selectTextObject, surroundSelections } from './surround.js'
 import type { DelegateCommand, DispatchResult, EditorState, Selection } from './types.js'
@@ -32,6 +33,30 @@ function yankJoinedSelections(state: EditorState): EditorState {
 function pastePoint(sel: Selection, where: 'after' | 'before', textLength: number): number {
   if (startOf(sel) !== endOf(sel)) return where === 'after' ? endOf(sel) : startOf(sel)
   return where === 'after' ? Math.min(textLength, sel.head + 1) : sel.head
+}
+
+function insertNewLines(state: EditorState, where: 'above' | 'below'): EditorState {
+  const ordered = state.selections
+    .map((sel, index) => {
+      const range = lineRangeAt(state.text, sel.head)
+      const at = where === 'above' ? range.start : range.end
+      return { at, index, primary: index === state.primary }
+    })
+    .filter((item, index, all) => all.findIndex((other) => other.at === item.at) === index)
+    .sort((a, b) => b.at - a.at)
+  let text = state.text
+  const cursors: Array<{ offset: number; primary: boolean }> = []
+  for (const item of ordered) {
+    text = text.slice(0, item.at) + '\n' + text.slice(item.at)
+    cursors.push({ offset: item.at, primary: item.primary })
+  }
+  for (const item of cursors) {
+    const insertedBefore = ordered.filter((edit) => edit.at < item.offset).length
+    item.offset += insertedBefore
+  }
+  cursors.reverse()
+  const primary = Math.max(0, cursors.findIndex((item) => item.primary))
+  return normalizeState({ ...withCountCleared(state), text, selections: cursors.map((item) => cursor(item.offset)), primary, pending: undefined })
 }
 
 function replaceSelectionsWithTexts(state: EditorState, replacements: string[]): EditorState {
@@ -183,6 +208,14 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: withMode(commandState, 'insert') }
     case 'a':
       return { kind: 'state', state: withMode(moveRight(commandState), 'insert') }
+    case 'I':
+      return { kind: 'state', state: withMode(insertAtLineStart(commandState), 'insert') }
+    case 'A':
+      return { kind: 'state', state: withMode(insertAtLineEnd(commandState), 'insert') }
+    case 'o':
+      return { kind: 'state', state: withMode(insertNewLines(commandState, 'below'), 'insert') }
+    case 'O':
+      return { kind: 'state', state: withMode(insertNewLines(commandState, 'above'), 'insert') }
     case 'v':
       return { kind: 'state', state: withMode(commandState, 'select') }
     case 'h':

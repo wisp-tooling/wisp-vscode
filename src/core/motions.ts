@@ -198,3 +198,11 @@ export function gotoFirstNonWhitespace(state: EditorState): EditorState {
     return gotoTarget(state, sel, pos)
   })
 }
+
+export function insertAtLineStart(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => cursor(lineRangeAt(state.text, sel.head).start))
+}
+
+export function insertAtLineEnd(state: EditorState): EditorState {
+  return replaceSelections(state, (sel) => cursor(lineRangeAt(state.text, sel.head).endNoNewline))
+}

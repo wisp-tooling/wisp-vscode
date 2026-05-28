@@ -42,6 +42,47 @@
     "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }], "yanked": ["abc", "def"] }
   },
   {
+    "name": "I enters insert at line start",
+    "text": "  abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 4, "head": 4 }],
+    "keys": ["I"],
+    "want": { "text": "  abc\n", "mode": "insert", "selections": [{ "anchor": 0, "head": 0 }] }
+  },
+  {
+    "name": "A enters insert at line end",
+    "text": "abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["A"],
+    "want": { "text": "abc\n", "mode": "insert", "selections": [{ "anchor": 3, "head": 3 }] }
+  },
+  {
+    "name": "o opens line below and enters insert",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["o"],
+    "want": { "text": "abc\n\ndef\n", "mode": "insert", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "O opens line above and enters insert",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 5, "head": 5 }],
+    "keys": ["O"],
+    "want": { "text": "abc\n\ndef\n", "mode": "insert", "selections": [{ "anchor": 4, "head": 4 }] }
+  },
+  {
+    "name": "multi-selection o opens lines below and preserves primary",
+    "text": "abc\ndef\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }, { "anchor": 5, "head": 5 }],
+    "primary": 1,
+    "keys": ["o"],
+    "want": { "text": "abc\n\ndef\n\n", "mode": "insert", "selections": [{ "anchor": 4, "head": 4 }, { "anchor": 9, "head": 9 }], "primary": 1 }
+  },
+  {
     "name": "r replaces selections with repeated character",
     "text": "abc def\n",
     "mode": "normal",

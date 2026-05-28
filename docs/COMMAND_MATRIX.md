@@ -13,6 +13,10 @@ Priority table for the VS Code extension.
 | `escape` | mode.normal/cancel | Core | P0 | Always reliable. |
 | `i` | mode.insert | Core | P0 | Let VS Code type normally after mode switch. |
 | `a` | mode.append | Core | P0 | Move right then insert. |
+| `I` | mode.insert.lineStart | Core | P0 | Enter insert at line start. |
+| `A` | mode.insert.lineEnd | Core | P0 | Enter insert at line end. |
+| `o` | open.below | Core | P0 | Open line below and enter insert. |
+| `O` | open.above | Core | P0 | Open line above and enter insert. |
 | `v` | mode.select | Core | P1 | Select mode extension semantics. |
 | `h` | move.left | Core | P0 | Also arrow left. |
 | `j` | move.down | Core | P0 | Also arrow down. |

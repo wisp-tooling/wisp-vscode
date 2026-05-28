@@ -96,8 +96,8 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 ## Current sprint
 
 - Sprint: priority insert/find motions
-  - [ ] Implement `o` / `O` open line commands.
-  - [ ] Implement `I` / `A` line insert/append commands.
+  - [x] Implement `o` / `O` open line commands.
+  - [x] Implement `I` / `A` line insert/append commands.
   - [ ] Implement `f` / `F` find-character motions.
   - [ ] Implement `t` / `T` till-character motions.
   - [ ] Add replay/keybinding coverage.
