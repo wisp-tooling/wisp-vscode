@@ -186,7 +186,7 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 - More complete multiple-selection behavior for all motions.
 - Search command modeling or simple literal search, if still desirable after adapter delegation.
-- Additional edit commands beyond `d`/`c`.
+- Additional edit command expansion beyond `d`/`c`/`y`/`p`/`P`.
 
 ### VS Code extension shell
 
