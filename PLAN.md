@@ -112,9 +112,10 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Apply `mr<from><to>` surround replacement across all selections, de-duplicating shared pairs.
   - [x] Preserve primary selection identity for multi-selection `d`/`c` edits.
   - [x] Preserve primary selection identity for multi-selection `md`/`mr` surround operations.
-  - [ ] Audit additional motions/operators for primary-only or range-edge behavior.
-  - [ ] Validate.
-  - [ ] Doc sync before closing sprint.
+  - [x] Add regression coverage for primary preservation across representative multi-selection motions.
+  - [x] Audit additional motions/operators for primary-only or range-edge behavior.
+  - [x] Validate.
+  - [x] Doc sync before closing sprint.
 
 ## Recently completed sprint
 
