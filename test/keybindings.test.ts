@@ -38,6 +38,7 @@ describe('extension keybindings', () => {
   test('captures escape parity, command prefix, and selection collapse keys', () => {
     expect(has('ctrl+[', 'ctrl-[')).toBe(true)
     expect(has(';', ';')).toBe(true)
+    expect(has('shift+;', ':')).toBe(true)
     expect(has('q', 'q')).toBe(true)
     expect(has('shift+q', 'Q')).toBe(true)
     expect(has('shift+w', 'W')).toBe(true)

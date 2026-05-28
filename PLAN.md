@@ -95,9 +95,11 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
-- Sprint: semicolon file commands
-  - [x] Add `;` prefix hints for save/quit commands.
-  - [x] Implement `; w`, `; W`, `; q`, `; x`, `; Q` delegate paths.
+- Sprint: Helix command-mode file commands
+  - [x] Check Helix tutor command-mode docs.
+  - [x] Add `:` prefix hints for save/quit commands.
+  - [x] Keep `;` aligned with Helix selection-collapse behavior.
+  - [x] Implement `: w`, `: W`, `: q`, `: wq`, `: q!` delegate paths.
   - [x] Add keybinding/delegate/prefix coverage.
   - [ ] Local-test in Extension Development Host.
   - [x] Validate.

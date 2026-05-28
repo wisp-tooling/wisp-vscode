@@ -14,9 +14,9 @@ describe('prefix hints', () => {
     expect(keys).toContain('s')
   })
 
-  test('semicolon prefix exposes file commands', () => {
-    const keys = prefixHints([';']).map((hint) => hint.key)
-    expect(keys).toEqual(expect.arrayContaining(['w', 'W', 'q', 'x', 'Q']))
+  test('colon prefix exposes Helix command-mode file commands', () => {
+    const keys = prefixHints([':']).map((hint) => hint.key)
+    expect(keys).toEqual(expect.arrayContaining(['w', 'W', 'q', 'wq', 'q!']))
   })
 
   test('match prefix exposes nested surround hints', () => {

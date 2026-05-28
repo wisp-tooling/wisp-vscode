@@ -23,5 +23,14 @@
     "primary": 1,
     "keys": [","],
     "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }] }
+  },
+  {
+    "name": "semicolon keeps only primary selection",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "primary": 1,
+    "keys": [";"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 4, "head": 7 }] }
   }
 ]
