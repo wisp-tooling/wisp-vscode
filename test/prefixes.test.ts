@@ -6,8 +6,12 @@ describe('prefix hints', () => {
     expect(prefixHints(['g']).map((hint) => hint.key)).toEqual(['g', 'e', 'h', 'l', 's', 'd', 'r', 'w'])
   })
 
-  test('space prefix exposes command palette', () => {
-    expect(prefixHints(['space']).some((hint) => hint.key === '?' && hint.label === 'command palette')).toBe(true)
+  test('space prefix exposes picker commands', () => {
+    const keys = prefixHints(['space']).map((hint) => hint.key)
+    expect(keys).toContain('?')
+    expect(keys).toContain('/')
+    expect(keys).toContain('d')
+    expect(keys).toContain('s')
   })
 
   test('match prefix exposes nested surround hints', () => {

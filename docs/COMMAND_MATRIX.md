@@ -44,6 +44,7 @@ Priority table for the VS Code extension.
 | `s` | search.selectInSelections | Adapter | P1 | Select matches inside selections. |
 | `n` | search.next | Adapter | P1 | Next extension search match. |
 | `N` | search.prev | Adapter | P1 | Previous extension search match. |
+| `space /` | search.workspace | Delegate | P1 | `workbench.action.findInFiles`. |
 | `space f` | file.quickOpen | Delegate | P0 | `workbench.action.quickOpen`. |
 | `space b` | buffer.quickOpen | Delegate | P1 | `workbench.action.showAllEditors`. |
 | `space ?` | command.palette | Delegate | P0 | `workbench.action.showCommands`. |
@@ -51,6 +52,8 @@ Priority table for the VS Code extension.
 | `space r` | lsp.rename | Delegate | P1 | `editor.action.rename`. |
 | `space a` | lsp.codeActions | Delegate | P1 | `editor.action.quickFix`. |
 | `space h` | lsp.hover | Delegate | P1 | `editor.action.showHover`. |
+| `space s` | symbol.document | Delegate | P1 | `workbench.action.gotoSymbol`. |
+| `space d` | diagnostic.picker | Adapter/API | P1 | Current document diagnostic QuickPick. |
 | `] d` | diagnostic.next | Delegate | P1 | VS Code marker nav. |
 | `[ d` | diagnostic.prev | Delegate | P1 | VS Code marker nav. |
 | `] D` | diagnostic.last | Delegate/API | P1 | Uses VS Code diagnostics API. |

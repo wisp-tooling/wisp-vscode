@@ -15,6 +15,7 @@ const hints: Record<string, PrefixHint[]> = {
     { key: 'w', label: 'visible word jump' },
   ],
   space: [
+    { key: '/', label: 'workspace search' },
     { key: 'f', label: 'quick open' },
     { key: 'b', label: 'buffers' },
     { key: '?', label: 'command palette' },
@@ -22,6 +23,8 @@ const hints: Record<string, PrefixHint[]> = {
     { key: 'r', label: 'rename' },
     { key: 'a', label: 'code actions' },
     { key: 'h', label: 'hover' },
+    { key: 's', label: 'document symbols' },
+    { key: 'd', label: 'diagnostics' },
   ],
   '[': [
     { key: 'd', label: 'previous diagnostic' },

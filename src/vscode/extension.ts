@@ -85,6 +85,10 @@ async function handleKey(key: string): Promise<void> {
       await searchSelection(editor)
       return
     }
+    if (result.command === 'diagnostic.picker') {
+      await showDiagnosticPicker(editor)
+      return
+    }
     if (result.command === 'search.selectInSelections') {
       await selectMatchesInSelections(editor)
       return
@@ -196,15 +200,41 @@ function updateCursorStyle(nextMode: Mode): void {
 }
 
 async function navigateDiagnosticExtreme(editor: vscode.TextEditor, which: 'first' | 'last'): Promise<void> {
-  const diagnostics = vscode.languages
+  const diagnostics = sortedDiagnostics(editor)
+  if (diagnostics.length === 0) return
+  const target = which === 'first' ? diagnostics[0]! : diagnostics[diagnostics.length - 1]!
+  selectDiagnostic(editor, target)
+}
+
+async function showDiagnosticPicker(editor: vscode.TextEditor): Promise<void> {
+  const diagnostics = sortedDiagnostics(editor)
+  if (diagnostics.length === 0) {
+    void vscode.window.setStatusBarMessage('No diagnostics in current document', 1500)
+    return
+  }
+
+  const picked = await vscode.window.showQuickPick(
+    diagnostics.map((diagnostic) => ({
+      label: `${diagnostic.range.start.line + 1}:${diagnostic.range.start.character + 1} ${diagnostic.message}`,
+      description: vscode.DiagnosticSeverity[diagnostic.severity],
+      diagnostic,
+    })),
+    { placeHolder: 'Document diagnostics' },
+  )
+  if (picked) selectDiagnostic(editor, picked.diagnostic)
+}
+
+function sortedDiagnostics(editor: vscode.TextEditor): vscode.Diagnostic[] {
+  return vscode.languages
     .getDiagnostics(editor.document.uri)
     .slice()
     .sort((a, b) => editor.document.offsetAt(a.range.start) - editor.document.offsetAt(b.range.start))
-  if (diagnostics.length === 0) return
-  const target = which === 'first' ? diagnostics[0]! : diagnostics[diagnostics.length - 1]!
-  editor.selection = new vscode.Selection(target.range.start, target.range.end)
+}
+
+function selectDiagnostic(editor: vscode.TextEditor, diagnostic: vscode.Diagnostic): void {
+  editor.selection = new vscode.Selection(diagnostic.range.start, diagnostic.range.end)
   editor.selections = [editor.selection]
-  editor.revealRange(target.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+  editor.revealRange(diagnostic.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }
 
 async function promptSearch(editor: vscode.TextEditor, direction: -1 | 1): Promise<void> {

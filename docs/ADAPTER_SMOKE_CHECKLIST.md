@@ -46,6 +46,9 @@ Run in VS Code Extension Development Host after `npm run compile`.
 ## Delegate commands
 
 - [ ] `space ?` opens command palette.
+- [ ] `space /` opens workspace search.
+- [ ] `space d` opens document diagnostics picker.
+- [ ] `space s` opens document symbols picker.
 - [ ] `space c` toggles comment.
 - [ ] `u` invokes undo delegate.
 - [ ] `/`, `?`, `*`, `s`, `n`, `N` share extension search state.
