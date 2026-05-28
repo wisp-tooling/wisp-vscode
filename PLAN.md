@@ -95,6 +95,17 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
+- Sprint: priority insert/find motions
+  - [ ] Implement `o` / `O` open line commands.
+  - [ ] Implement `I` / `A` line insert/append commands.
+  - [ ] Implement `f` / `F` find-character motions.
+  - [ ] Implement `t` / `T` till-character motions.
+  - [ ] Add replay/keybinding coverage.
+  - [ ] Validate.
+  - [ ] Doc sync before closing sprint.
+
+## Recently completed sprint
+
 - Sprint: yank/paste essentials
   - [x] Check Helix tutor/keymap docs for `y`, `p`, `P`, and Space clipboard behavior.
   - [x] Add extension-local yank register for `y`, `p`, and `P`.
@@ -102,8 +113,6 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Add Space clipboard delegates for yank/paste.
   - [x] Validate.
   - [x] Doc sync before closing sprint.
-
-## Paused sprint
 
 - Sprint: multi-selection correctness
   - [x] Move select-mode word/WORD motions from active head, including reversed selections.
@@ -186,7 +195,12 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 - More complete multiple-selection behavior for all motions.
 - Search command modeling or simple literal search, if still desirable after adapter delegation.
-- Additional edit command expansion beyond `d`/`c`/`y`/`p`/`P`.
+- Additional edit command expansion beyond `d`/`c`/`y`/`p`/`P`/`r`/`R`/`o`/`O`/`I`/`A`.
+- Selection manipulation commands: `Alt-;`, `Alt-:`, `Alt-s`, `S`, `_`, `&`, `Alt-minus`.
+- Named registers via `"<reg>`.
+- Full command mode parser/history/path args.
+- Macro record/playback.
+- Tree-sitter/syntax-aware behavior, pending dependency/design approval.
 
 ### VS Code extension shell
 
