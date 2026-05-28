@@ -87,6 +87,10 @@ async function handleKey(key: string): Promise<void> {
       await searchSelection(editor)
       return
     }
+    if (result.command === 'search.workspace') {
+      await workspaceSearchPicker(editor)
+      return
+    }
     if (result.command === 'clipboard.yank') {
       await yankToClipboard(editor)
       return
@@ -272,6 +276,49 @@ function selectDiagnostic(editor: vscode.TextEditor, diagnostic: vscode.Diagnost
   editor.selection = new vscode.Selection(diagnostic.range.start, diagnostic.range.end)
   editor.selections = [editor.selection]
   editor.revealRange(diagnostic.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
+}
+
+async function workspaceSearchPicker(editor: vscode.TextEditor): Promise<void> {
+  const options: vscode.InputBoxOptions = { prompt: 'Workspace search', placeHolder: 'literal text or /regex/' }
+  if (lastSearchQuery !== undefined) options.value = lastSearchQuery
+  const query = await vscode.window.showInputBox(options)
+  if (!query) return
+  lastSearchQuery = query
+  searchDirection = 1
+
+  const matcher = createMatcher(query)
+  const files = await vscode.workspace.findFiles('**/*', '{**/node_modules/**,**/.git/**,**/dist/**}', 1000)
+  const items: Array<vscode.QuickPickItem & { uri: vscode.Uri; range: vscode.Range }> = []
+  for (const uri of files) {
+    if (items.length >= 250) break
+    const document = await vscode.workspace.openTextDocument(uri)
+    const text = document.getText()
+    for (const match of findMatches(text, matcher)) {
+      if (items.length >= 250) break
+      const start = document.positionAt(match.start)
+      const end = document.positionAt(match.end)
+      const line = document.lineAt(start.line).text.trim()
+      items.push({
+        label: vscode.workspace.asRelativePath(uri),
+        description: `${start.line + 1}:${start.character + 1}`,
+        detail: line,
+        uri,
+        range: new vscode.Range(start, end),
+      })
+    }
+  }
+
+  if (items.length === 0) {
+    void vscode.window.setStatusBarMessage(`No workspace matches: ${query}`, 1500)
+    return
+  }
+
+  const picked = await vscode.window.showQuickPick(items, { placeHolder: `Workspace matches for ${query}` })
+  if (!picked) return
+  const target = await vscode.window.showTextDocument(picked.uri)
+  target.selection = new vscode.Selection(picked.range.start, picked.range.end)
+  target.selections = [target.selection]
+  target.revealRange(picked.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }
 
 async function yankToClipboard(editor: vscode.TextEditor): Promise<void> {
