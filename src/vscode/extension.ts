@@ -131,16 +131,10 @@ async function setMode(nextMode: Mode, pending?: string[]): Promise<void> {
   await vscode.commands.executeCommand('setContext', 'wisp.mode', nextMode)
   updateCursorStyle(nextMode)
   if (status) {
-    const prefix = pending && pending.length > 0 ? `  ${pending.join(' ')} … ${formatHints(pending)}` : ''
+    const prefix = pending && pending.length > 0 ? `  ${pending.join(' ')} …` : ''
     status.text = `WISP ${nextMode.toUpperCase()}${prefix}`
     status.show()
   }
-}
-
-function formatHints(pending: string[]): string {
-  const hints = prefixHints(pending)
-  if (hints.length === 0) return ''
-  return hints.map((hint) => `${hint.key} ${hint.label}`).join('  ')
 }
 
 function showPrefixPicker(nextPending: string[] | undefined): void {
@@ -153,10 +147,19 @@ function showPrefixPicker(nextPending: string[] | undefined): void {
   const picker = vscode.window.createQuickPick<PrefixPickItem>()
   let dispatched = false
   prefixPicker = picker
-  picker.title = nextPending.join(' ')
-  picker.placeholder = 'Type a listed key to run it immediately, or use arrows and Enter.'
+  const prefix = nextPending.join(' ')
+  picker.title = `Wisp ${prefix} …`
+  picker.placeholder = `Type one of: ${hints.map((hint) => hint.key).join('  ')}  •  arrows + Enter also work`
   picker.matchOnDescription = true
-  picker.items = hints.map((hint) => ({ label: hint.key, description: hint.label, detail: `${nextPending.join(' ')} ${hint.key}`, key: hint.key }))
+  picker.matchOnDetail = true
+  picker.ignoreFocusOut = false
+  picker.items = hints.map((hint) => ({
+    label: `$(keyboard) ${hint.key}`,
+    description: hint.label,
+    detail: `${prefix} ${hint.key}`,
+    alwaysShow: true,
+    key: hint.key,
+  }))
   picker.onDidChangeValue((value) => {
     const typed = value.trim()
     const matched = picker.items.find((item) => item.key === typed)

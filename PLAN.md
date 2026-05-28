@@ -95,6 +95,14 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
 
 ## Current sprint
 
+- Sprint: richer Wisp picker UI
+  - [x] Reduce status bar prefix noise now that QuickPick is primary.
+  - [x] Improve QuickPick title, placeholder, matching, and item formatting.
+  - [ ] Local-test prefix picker flows.
+  - [ ] Doc sync before closing sprint.
+
+## Recently completed sprint
+
 - Sprint: search motion foundation
   - [x] Implement shared extension search state for `/`, `?`, `*`, `s`, `n`, `N`.
   - [x] Add `*` search from current selection/word without jumping.
@@ -106,7 +114,6 @@ Goal: define a pure core boundary for delegated commands, then build the minimal
   - [x] Local-test in Extension Development Host.
   - [x] Doc sync before closing sprint.
 
-## Recently completed sprint
 
 - Sprint: `g w` visible word jump motion
   - [x] Implement pure label generation and visible word-start helpers.
