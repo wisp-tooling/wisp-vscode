@@ -4,6 +4,7 @@ test/**
 fixtures/**
 docs/**
 helix-docs/**
+images/*.original.png
 
 # Local/editor files
 .vscode/**
