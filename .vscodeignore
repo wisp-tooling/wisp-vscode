@@ -22,10 +22,16 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Keep built extension output and package metadata
-!dist/**
+!dist/src/**
 !package.json
 !README.md
 !CHANGELOG.md
 !LICENSE
 !SECURITY.md
 !images/wisp-draft-icon.png
+
+dist/test
+dist/test/**
+dist/fixtures
+dist/fixtures/**
+dist/package.json
