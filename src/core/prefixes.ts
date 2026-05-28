@@ -26,7 +26,6 @@ const hints: Record<string, PrefixHint[]> = {
     { key: 's', label: 'document symbols' },
     { key: 'd', label: 'diagnostics' },
     { key: 'y', label: 'yank to system clipboard' },
-    { key: 'Y', label: 'yank primary to system clipboard' },
     { key: 'p', label: 'paste system clipboard after' },
     { key: 'P', label: 'paste system clipboard before' },
   ],

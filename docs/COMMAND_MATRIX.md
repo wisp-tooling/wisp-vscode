@@ -43,11 +43,11 @@ Priority table for the VS Code extension.
 | `*` | search.selection | Adapter | P1 | Search current selection/word. |
 | `s` | search.selectInSelections | Adapter | P1 | Select matches inside selections. |
 | `y` | yank | Core | P0 | Yank selections to extension register. |
-| `p` | paste.after | Core | P0 | Paste extension register after selections. |
-| `P` | paste.before | Core | P0 | Paste extension register before selections. |
+| `Y` | yank.joined | Core | P1 | Yank selections into one newline-joined extension register. |
+| `p` | paste.after | Core | P0 | Paste extension register after selections/cursors. |
+| `P` | paste.before | Core | P0 | Paste extension register before selections/cursors. |
 | `space y` | clipboard.yank | Adapter | P0 | Yank selections to system clipboard. |
-| `space Y` | clipboard.yankPrimary | Adapter | P1 | Yank primary selection to system clipboard. |
-| `space p` | clipboard.pasteAfter | Adapter | P1 | Paste system clipboard after selections. |
+| `space p` | clipboard.pasteAfter | Adapter | P1 | Paste system clipboard after selections/cursors. |
 | `space P` | clipboard.pasteBefore | Adapter | P1 | Paste system clipboard before selections. |
 | `n` | search.next | Adapter | P1 | Next extension search match. |
 | `N` | search.prev | Adapter | P1 | Previous extension search match. |

@@ -11,7 +11,6 @@ export const delegateCommands: Record<DelegateCommand, string> = {
   'search.selectInSelections': 'actions.find',
   'search.workspace': 'workbench.action.findInFiles',
   'clipboard.yank': 'editor.action.clipboardCopyAction',
-  'clipboard.yankPrimary': 'editor.action.clipboardCopyAction',
   'clipboard.pasteAfter': 'editor.action.clipboardPasteAction',
   'clipboard.pasteBefore': 'editor.action.clipboardPasteAction',
   'file.quickOpen': 'workbench.action.quickOpen',

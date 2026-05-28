@@ -12,6 +12,7 @@ let status: vscode.StatusBarItem | undefined
 let prefixPicker: vscode.QuickPick<PrefixPickItem> | undefined
 let lastSearchQuery: string | undefined
 let searchDirection: -1 | 1 = 1
+let yanked: string[] | undefined
 
 type PrefixPickItem = vscode.QuickPickItem & { key: string }
 
@@ -63,6 +64,7 @@ async function handleKey(key: string): Promise<void> {
   mode = result.state.mode
   pending = result.state.pending
   count = result.state.count
+  yanked = result.state.yanked
 
   await applyState(editor, state, result.state)
   await setMode(result.state.mode, result.state.pending)
@@ -85,8 +87,8 @@ async function handleKey(key: string): Promise<void> {
       await searchSelection(editor)
       return
     }
-    if (result.command === 'clipboard.yank' || result.command === 'clipboard.yankPrimary') {
-      await yankToClipboard(editor, result.command === 'clipboard.yankPrimary')
+    if (result.command === 'clipboard.yank') {
+      await yankToClipboard(editor)
       return
     }
     if (result.command === 'clipboard.pasteAfter' || result.command === 'clipboard.pasteBefore') {
@@ -124,6 +126,7 @@ function editorToState(editor: vscode.TextEditor): EditorState {
     mode,
     pending,
     count,
+    yanked,
   }
 }
 
@@ -271,25 +274,29 @@ function selectDiagnostic(editor: vscode.TextEditor, diagnostic: vscode.Diagnost
   editor.revealRange(diagnostic.range, vscode.TextEditorRevealType.InCenterIfOutsideViewport)
 }
 
-async function yankToClipboard(editor: vscode.TextEditor, primaryOnly: boolean): Promise<void> {
-  const selections = primaryOnly ? [editor.selection] : editor.selections
-  await vscode.env.clipboard.writeText(selections.map((selection) => editor.document.getText(selection)).join('\n'))
+async function yankToClipboard(editor: vscode.TextEditor): Promise<void> {
+  await vscode.env.clipboard.writeText(editor.selections.map((selection) => editor.document.getText(selection)).join('\n'))
 }
 
 async function pasteFromClipboard(editor: vscode.TextEditor, where: 'after' | 'before'): Promise<void> {
   const text = await vscode.env.clipboard.readText()
   if (text.length === 0) return
   const ordered = editor.selections
-    .map((selection, index) => ({ selection, index, position: where === 'after' ? selection.end : selection.start }))
+    .map((selection, index) => ({ selection, index, position: pastePosition(editor.document, selection, where) }))
     .sort((a, b) => editor.document.offsetAt(b.position) - editor.document.offsetAt(a.position))
   const inserted = editor.selections.map((selection) => {
-    const startOffset = editor.document.offsetAt(where === 'after' ? selection.end : selection.start)
+    const startOffset = editor.document.offsetAt(pastePosition(editor.document, selection, where))
     return { startOffset, endOffset: startOffset + text.length }
   })
   await editor.edit((edit) => {
     for (const item of ordered) edit.insert(item.position, text)
   })
   editor.selections = inserted.map((range) => new vscode.Selection(editor.document.positionAt(range.startOffset), editor.document.positionAt(range.endOffset)))
+}
+
+function pastePosition(document: vscode.TextDocument, selection: vscode.Selection, where: 'after' | 'before'): vscode.Position {
+  if (!selection.isEmpty) return where === 'after' ? selection.end : selection.start
+  return where === 'after' ? document.positionAt(Math.min(document.getText().length, document.offsetAt(selection.active) + 1)) : selection.active
 }
 
 async function promptSearch(editor: vscode.TextEditor, direction: -1 | 1): Promise<void> {

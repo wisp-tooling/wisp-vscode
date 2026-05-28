@@ -1,7 +1,7 @@
 import { moveLeft, moveRight, moveVertical, moveWordNext, moveWordPrev, moveWordEnd, moveLongWordNext, moveLongWordPrev, moveLongWordEnd, selectLine, selectFile, gotoFileStart, gotoFileEnd, gotoFileLastLineEnd, gotoLineStart, gotoLineEnd, gotoFirstNonWhitespace } from './motions.js'
 import { cursor, endOf, normalizeState, startOf } from './selection.js'
 import { deleteSurround, gotoMatchingBracket, replaceSurround, selectSurround, selectTextObject, surroundSelections } from './surround.js'
-import type { DelegateCommand, DispatchResult, EditorState } from './types.js'
+import type { DelegateCommand, DispatchResult, EditorState, Selection } from './types.js'
 
 function withMode(state: EditorState, mode: EditorState['mode']): EditorState {
   return { ...state, mode, pending: undefined, count: undefined }
@@ -25,11 +25,20 @@ function yankSelections(state: EditorState): EditorState {
   return { ...withCountCleared(state), yanked: selectedTexts(state), pending: undefined }
 }
 
+function yankJoinedSelections(state: EditorState): EditorState {
+  return { ...withCountCleared(state), yanked: [selectedTexts(state).join('\n')], pending: undefined }
+}
+
+function pastePoint(sel: Selection, where: 'after' | 'before', textLength: number): number {
+  if (startOf(sel) !== endOf(sel)) return where === 'after' ? endOf(sel) : startOf(sel)
+  return where === 'after' ? Math.min(textLength, sel.head + 1) : sel.head
+}
+
 function pasteSelections(state: EditorState, where: 'after' | 'before'): EditorState {
   const yanked = state.yanked && state.yanked.length > 0 ? state.yanked : ['']
   if (yanked.every((text) => text.length === 0)) return { ...withCountCleared(state), pending: undefined }
   const ordered = state.selections
-    .map((sel, index) => ({ sel, index, at: where === 'after' ? endOf(sel) : startOf(sel), text: yanked[index] ?? yanked[state.primary] ?? yanked[0]! }))
+    .map((sel, index) => ({ sel, index, at: pastePoint(sel, where, state.text.length), text: yanked[index] ?? yanked[state.primary] ?? yanked[0]! }))
     .sort((a, b) => b.at - a.at)
   let text = state.text
   const nextSelections = state.selections.map((selection) => ({ ...selection }))
@@ -84,7 +93,6 @@ const delegates: Record<string, DelegateCommand> = {
   '*': 'search.selection',
   s: 'search.selectInSelections',
   'space y': 'clipboard.yank',
-  'space Y': 'clipboard.yankPrimary',
   'space p': 'clipboard.pasteAfter',
   'space P': 'clipboard.pasteBefore',
   'g d': 'lsp.definition',
@@ -184,6 +192,8 @@ export function dispatch(input: EditorState, key: string): DispatchResult {
       return { kind: 'state', state: { ...withCountCleared(commandState), selections: [commandState.selections[commandState.primary]!], primary: 0 } }
     case 'y':
       return { kind: 'state', state: yankSelections(commandState) }
+    case 'Y':
+      return { kind: 'state', state: yankJoinedSelections(commandState) }
     case 'p':
       return { kind: 'state', state: pasteSelections(commandState, 'after') }
     case 'P':

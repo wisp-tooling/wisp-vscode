@@ -42,12 +42,36 @@
     "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }], "yanked": ["abc", "def"] }
   },
   {
+    "name": "Y joins selections into one yank buffer",
+    "text": "abc def\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
+    "keys": ["Y"],
+    "want": { "text": "abc def\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }], "yanked": ["abc\ndef"] }
+  },
+  {
     "name": "p pastes yanked text after selections",
     "text": "abc def\n",
     "mode": "normal",
     "selections": [{ "anchor": 0, "head": 3 }, { "anchor": 4, "head": 7 }],
     "keys": ["y", "p"],
     "want": { "text": "abcabc defdef\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 6 }, { "anchor": 10, "head": 13 }], "yanked": ["abc", "def"] }
+  },
+  {
+    "name": "p pastes after a cursor outside the cursor position",
+    "text": "abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["w", "y", "escape", "h", "p"],
+    "want": { "text": "abcbc\n", "mode": "normal", "selections": [{ "anchor": 3, "head": 5 }], "yanked": ["bc"] }
+  },
+  {
+    "name": "P pastes at a cursor inside the cursor position",
+    "text": "abc\n",
+    "mode": "normal",
+    "selections": [{ "anchor": 1, "head": 1 }],
+    "keys": ["w", "y", "escape", "h", "P"],
+    "want": { "text": "abbcc\n", "mode": "normal", "selections": [{ "anchor": 2, "head": 4 }], "yanked": ["bc"] }
   },
   {
     "name": "P pastes yanked text before selections",

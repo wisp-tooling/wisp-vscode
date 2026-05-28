@@ -27,7 +27,6 @@ export type DelegateCommand =
   | 'search.selectInSelections'
   | 'search.workspace'
   | 'clipboard.yank'
-  | 'clipboard.yankPrimary'
   | 'clipboard.pasteAfter'
   | 'clipboard.pasteBefore'
   | 'file.quickOpen'

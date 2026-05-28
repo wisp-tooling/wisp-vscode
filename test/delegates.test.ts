@@ -34,7 +34,6 @@ const cases: Array<{ keys: string[]; command: DelegateCommand }> = [
   { keys: ['space', 's'], command: 'symbol.document' },
   { keys: ['space', 'd'], command: 'diagnostic.picker' },
   { keys: ['space', 'y'], command: 'clipboard.yank' },
-  { keys: ['space', 'Y'], command: 'clipboard.yankPrimary' },
   { keys: ['space', 'p'], command: 'clipboard.pasteAfter' },
   { keys: ['space', 'P'], command: 'clipboard.pasteBefore' },
   { keys: [':', 'w', 'enter'], command: 'file.save' },
