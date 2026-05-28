@@ -4,7 +4,8 @@ This project is intended to be publishable as a public, dependency-light VS Code
 
 ## Product decisions
 
-- [ ] Choose GitHub organization or user namespace.
+- [x] Choose temporary GitHub organization or user namespace: `wisp-tooling`.
+- [ ] Create/confirm the `wisp-tooling` organization before any remote push.
 - [ ] Choose repository name.
 - [ ] Choose VS Code Marketplace publisher ID.
 - [ ] Choose final extension display name.
@@ -14,7 +15,8 @@ This project is intended to be publishable as a public, dependency-light VS Code
 
 ## Repository readiness
 
-- [ ] Create public GitHub repository.
+- [ ] Create public GitHub repository under `wisp-tooling` after organization setup.
+- [ ] Do not push anything to the internet until explicitly approved.
 - [ ] Add `LICENSE` after license decision.
 - [ ] Add `CHANGELOG.md` with release notes.
 - [ ] Add `SECURITY.md` with vulnerability reporting path.
