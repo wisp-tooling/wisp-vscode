@@ -117,7 +117,8 @@
     "mode": "normal",
     "selections": [{ "anchor": 2, "head": 2 }, { "anchor": 8, "head": 8 }],
     "keys": ["m", "d", "("],
-    "want": { "text": "one two\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 4, "head": 4 }] }
+    "primary": 1,
+    "want": { "text": "one two\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 4, "head": 4 }], "primary": 1 }
   },
   {
     "name": "mr replaces surrounding pairs for multiple selections",
@@ -125,7 +126,8 @@
     "mode": "normal",
     "selections": [{ "anchor": 2, "head": 2 }, { "anchor": 8, "head": 8 }],
     "keys": ["m", "r", "(", "["],
-    "want": { "text": "[one] [two]\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 6, "head": 6 }] }
+    "primary": 1,
+    "want": { "text": "[one] [two]\n", "mode": "normal", "selections": [{ "anchor": 0, "head": 0 }, { "anchor": 6, "head": 6 }], "primary": 1 }
   },
   {
     "name": "mr replaces duplicate enclosing pair once",

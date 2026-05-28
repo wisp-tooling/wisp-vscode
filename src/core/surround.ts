@@ -89,6 +89,7 @@ export function selectSurround(state: EditorState, delimiter: string, includeDel
 export function deleteSurround(state: EditorState, delimiter: string): EditorState {
   const pair = pairs[delimiter]
   if (!pair) return { ...state, pending: undefined }
+  const primaryFound = findEnclosingPair(state.text, state.selections[state.primary]?.head ?? 0, pair)
   const edits = state.selections
     .map((selection) => findEnclosingPair(state.text, selection.head, pair))
     .filter((found): found is { open: number; close: number } => found !== undefined)
@@ -104,16 +105,18 @@ export function deleteSurround(state: EditorState, delimiter: string): EditorSta
   const cursors = edits
     .map((found) => {
       const removedBefore = edits.filter((other) => other.open < found.open).length * (pair.open.length + pair.close.length)
-      return cursor(found.open - removedBefore)
+      return { selection: cursor(found.open - removedBefore), primary: primaryFound?.open === found.open && primaryFound.close === found.close }
     })
     .reverse()
-  return normalizeState({ ...state, text, selections: cursors, primary: 0, pending: undefined })
+  const primary = Math.max(0, cursors.findIndex((item) => item.primary))
+  return normalizeState({ ...state, text, selections: cursors.map((item) => item.selection), primary, pending: undefined })
 }
 
 export function replaceSurround(state: EditorState, fromDelimiter: string, toDelimiter: string): EditorState {
   const from = pairs[fromDelimiter]
   const to = pairs[toDelimiter]
   if (!from || !to) return { ...state, pending: undefined }
+  const primaryFound = findEnclosingPair(state.text, state.selections[state.primary]?.head ?? 0, from)
   const edits = state.selections
     .map((selection) => findEnclosingPair(state.text, selection.head, from))
     .filter((found): found is { open: number; close: number } => found !== undefined)
@@ -129,10 +132,11 @@ export function replaceSurround(state: EditorState, fromDelimiter: string, toDel
   const cursors = edits
     .map((found) => {
       const deltaBefore = edits.filter((other) => other.open < found.open).length * (to.open.length + to.close.length - from.open.length - from.close.length)
-      return cursor(found.open + deltaBefore)
+      return { selection: cursor(found.open + deltaBefore), primary: primaryFound?.open === found.open && primaryFound.close === found.close }
     })
     .reverse()
-  return normalizeState({ ...state, text, selections: cursors, primary: 0, pending: undefined })
+  const primary = Math.max(0, cursors.findIndex((item) => item.primary))
+  return normalizeState({ ...state, text, selections: cursors.map((item) => item.selection), primary, pending: undefined })
 }
 
 export function selectTextObject(state: EditorState, object: string, includeAround: boolean): EditorState {
